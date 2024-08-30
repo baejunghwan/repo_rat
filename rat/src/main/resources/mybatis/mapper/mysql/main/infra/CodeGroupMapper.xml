@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dto 내용 -->
+<mapper namespace="com.zoo.infra.codegroup.CodeGroupDao">
+	 
+<!-- 	dao 내용 -->
+	<resultMap type="com.zoo.infra.codegroup.CodeGroupDto" id="resultMapObj">
+	
+	</resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	SELECT
+	   a.ifcgSeq
+	   ,a.ifcgSeq
+	   ,a.ifcgName
+	   ,a.ifcgUseNy
+	   ,a.ifcgOrder
+	   ,a.ifcgDesc
+	   ,a.ifcgDelNy
+	   ,a.regDateTime
+	   ,a.modDateTime
+	FROM
+		infrCodeGroup a
+	ORDER BY
+		a.ifcgSeq desc
+	</select>
+	
+	<insert id="insert">
+	INSERT INTO infrCodeGROUP (
+	    ,ifcgName
+	    ,ifcgUseNy
+	    ,ifcgOrder
+	    ,ifcgDesc
+	    ,ifcgDelNy
+	    ,regDateTime
+	    ,modDateTime
+	) VALUES (
+	    ,"통신사"
+	    ,1
+	    ,1
+	    ,0
+	    ,0
+	    ,now()
+	    ,now()
+	)    
+<!-- ,#{ifcgName} -->
+<!-- 이 양식으로 맞춰줘야 값이 넘어간다  -->
+	</insert>
+	
+</mapper>
