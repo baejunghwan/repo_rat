@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dto 내용 -->
+<mapper namespace="com.zoo.infra.code.CodeDao">
+
+	<!-- dao 내용 -->
+	<resultMap type="com.zoo.infra.code.CodeDto"
+		id="resultMapObj">
+	</resultMap>
+	
+	<sql id="selectCommon">
+		FROM infrCode a
+		LEFT JOIN infrCodeGroup b on b.ifcgSeq = a.infrcodegroup_ifcgSeq
+		WHERE 1=1
+	<if test="shUseNy != null and !shUseNy.equals('')"> AND a.ifcgUseNy= #{shUseNy}</if>
+	<if test="shDelNy != null and !shDelNy.equals('')"> AND a.ifcgDelNy = #{shDelNy}</if>
+	<choose>
+		<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+	</choose>
+	<choose>
+		<when test="shOption == 1">AND a.ifcdSeq = #{shValue}</when>
+		<when test="shOption == 2">AND a.ifcdName LIKE CONCAT('%',#{shValue},'%')</when>
+	</choose>	
+	</sql>
+
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT
+		a.ifcdSeq
+		,a.ifcdName
+		,a.ifcdUseNy
+		,a.ifcdOrder
+		,a.ifcdDesc
+		,a.ifcdDelNy
+		,a.regDateTime
+		,a.modDateTime
+		,a.infrcodegroup_ifcgSeq
+		
+		,b.ifcgName
+		,b.ifcgSeq
+	
+		,(SELECT count(a.ifcdSeq) FROM infrCode a WHERE 1=1 AND
+		a.infrcodegroup_ifcgSeq = b.ifcgSeq)
+		AS xifcdSeqCount
+		
+		FROM infrCode a 
+		LEFT JOIN infrCodeGroup b  
+		ON b.ifcgSeq = a.infrcodegroup_ifcgSeq 
+		WHERE 1=1 
+<!-- 		사용,삭제여부 -->
+		<if test="shUseNy != null and !shUseNy.equals('')"> AND a.ifcdUseNy= #{shUseNy}</if>
+		<if test="shDelNy != null and !shDelNy.equals('')"> AND a.ifcdDelNy = #{shDelNy}</if>
+<!-- 	일련번호, 코드이름 -->
+		<choose>
+			<when test="shOption == 1">AND a.ifcdSeq = #{shValue}</when>
+			<when test="shOption == 2">AND a.ifcdName LIKE CONCAT('%',#{shValue},'%')</when>
+		</choose>	
+<!-- 	달력 -->
+		<choose> 
+			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+		ORDER BY
+		a.ifcdSeq desc
+	</select>
+	
+
+	<select id="selectOne" resultMap="resultMapObj">
+<!-- 	mfom 용도 -->
+		SELECT
+		a.ifcdSeq
+		,a.ifcdName
+		,a.ifcdUseNy
+		,a.ifcdOrder
+		,a.ifcdDesc
+		,a.ifcdDelNy
+		,a.regDateTime
+		,a.modDateTime
+		FROM
+		infrCode a
+		WHERE 1=1
+		AND a.ifcdSeq = #{ifcdSeq}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO infrCode (
+		ifcdName
+		,ifcdUseNy
+		,ifcdOrder
+		,ifcdDesc
+		,ifcdDelNy
+		,regDateTime
+		,modDateTime
+		,infrcodegroup_ifcgSeq
+		) VALUES (
+		#{ifcdName}
+		,1
+		,#{ifcdOrder}
+		,#{ifcdDesc}
+		,0
+		,now()
+		,now()
+		,#{infrcodegroup_ifcgSeq}
+		)
+		<selectKey resultType="String" keyProperty="ifcdSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+
+	<update id="update">
+		UPDATE infrCode
+		SET
+		ifcdName = #{ifcdName}
+		,ifcdUseNy = #{ifcdUseNy}
+		,ifcdOrder = #{ifcdOrder}
+		WHERE 1=1
+		AND ifcdSeq
+		= #{ifcdSeq}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM infrCode
+		WHERE 1=1
+		AND ifcdSeq =
+		#{ifcdSeq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE infrCode
+		SET
+		ifcdDelNy = 1
+		WHERE 1=1
+		AND
+		ifcdSeq = #{ifcdSeq}
+	</update>
+	<!-- 	cache -->
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			a.ifcdSeq
+			, a.ifcdName
+			, b.ifcgSeq
+		FROM
+			infrCode AS a, infrCodeGroup AS b 
+		WHERE 1=1
+			AND a.ifcdDelNy = 0
+		    AND a.ifcdUseNy = 1
+   </select>
+</mapper> 

@@ -20,7 +20,7 @@
 		<link rel="shortcut icon" href="/xdm/v1/images/favicon.svg" />
 
 		<!-- Title -->
-		<title>CodeGroup</title>
+		<title>Member</title>
 
 		<!-- *************
 			************ Common Css Files *************
@@ -86,7 +86,7 @@
 							<div class="dropdown-menu dropdown-menu-end shadow-lg">
 								<div class="dropdown-item">
 									<div class="d-flex py-2 border-bottom">
-										<img src="/xdm/v1/images/user.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
+<!-- 										<img src="assets/images/user.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" /> -->
 										<div class="m-0">
 											<h6 class="mb-1 fw-semibold">사람1</h6>
 											<p class="mb-1">사람2</p>
@@ -96,7 +96,7 @@
 								</div>
 								<div class="dropdown-item">
 									<div class="d-flex py-2 border-bottom">
-										<img src="/xdm/v1/images/user2.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
+<!-- 										<img src="assets/images/user2.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" /> -->
 										<div class="m-0">
 											<h6 class="mb-1 fw-semibold">인간1</h6>
 											<p class="mb-1">인간2</p>
@@ -106,7 +106,7 @@
 								</div>
 								<div class="dropdown-item">
 									<div class="d-flex py-2">
-										<img src="/xdm/v1/images/user1.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
+<!-- 										<img src="assets/images/user1.png" class="img-3x me-3 rounded-3" alt="Admin Dashboards" /> -->
 										<div class="m-0">
 											<h6 class="mb-1 fw-semibold">친구1</h6>
 											<p class="mb-1">친구2</p>
@@ -132,7 +132,7 @@
 							<a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
 								<span class="user-name d-none d-md-block"></span>
 								<span class="avatar">
-									<img src="/xdm/v1/images/user2.png" alt="Admin Templates" />
+									<img src="assets/images/user2.png" alt="Admin Templates" />
 									<span class="status online"></span>
 								</span>
 							</a>
@@ -454,93 +454,107 @@
 					<!-- </div> -->
 					<!-- Main header ends -->
 
-		<!-- Content wrapper start -->
-		<div class="content-wrapper"> 
-			<div><p style="color: blue;">page 1 > page 2 ><span style="color: black;">&nbsp Default</span></p>
-			</div> 
-			<strong><h1>CodeGroup</h1></strong>
-			<!-- Row start --> 
+					<!-- Content wrapper start -->
+				<div class="content-wrapper"> 
+					<div><p style="color: blue;">page 1 > page 2 ><span style="color: black;">&nbsp Default</span></p>
+					</div> 
+					<strong><h1>Member</h1></strong>
+		
+				<!-- Row start --> 
 			<section>
 				<div class="container-main"> 
 					<!-- 추가 영역 --> 
 						<div class="card"> 
-							<strong><h4>기본정보</h4></strong> 
-						<hr> 
+							<div><strong><h4>Member</h4></strong> 
+						</div><hr> 
 							<div class="card-body"> 
-								<form id="form" name="form" method="post" action="/xdm/v1/infra/codegroup/codeGroupXdmInst"> 
 								<div class="row gx-3"> 
 									<div class="col-sm-3 col-mg-3 col-lg-3 col-12"> 
 										<div class="m-0"> 
-											<label class="form-label" for="ifcgSeq">코드그룹 코드<span style="color: red;">*</span></label>
-											<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" class="form-control" placeholder="자동완성" readonly />
+											<form id="form" name="form" method="post" action="/xdm/v1/infra/member/memberXdmInst" autocomplete="off"> 
+<!-- 										<div th:replace="~{xdm/v1/infra/member/memberXdmVo :: vo}></div> -->
+										
+<!-- 										수정해야 하는 부분  -->
+										<div class="m-0"> 
+										<label class="form-label" for="ifcgSeq">코드그룹<span style="color: red;">*</span></label> 
+										<select class="form-select" aria-label="Default select example" id="ifcgSeq" name="infrcodegroup_ifcgSeq"> 
+											<option th:each="list : ${list}" th:text="${list.ifcgName}" th:value="${list.ifcgSeq}"> 
+											</option>
+										</select> 
+										
 										</div> 
-									</div>	
-<!-- 									<div class="col-sm-3 col-mg-3 col-lg-3 col-12">  -->
-<!-- 										<div class="m-0">  -->
-<!-- 										<div th:replace="~{xdm/v1/infra/codegroup/codeGroupXdmVo :: vo}></div> -->
-<!-- 											<label class="form-label">코드그룹<span style="color: red;">*</span></label>  -->
-<!-- 											<select class="form-select" aria-label="Default select example" id="ifcgSeq" name="infrcodegroup_ifcgSeq">  -->
-<!-- 												<option th:each="list : ${list}" th:text="${list.ifcgName}" th:value="${list.ifcgSeq}">  -->
-<!-- 												</option> -->
-<!-- 											</select>  -->
-<!-- 										</div>  -->
-<!-- 									</div> -->
+										</div>
+									</div>
 								<div class="row gx-3">
-								<div class="col-lg-3 col-sm-6 col-12">
-										<label class="form-label" for="ifcgName">코드그룹 이름<span style="color: red;">*</span></label>
-											<input type="text" id="ifcgName" name="ifcgName" th:value="${item?.ifcgName}" class="form-control" value="text" placeholder="한글, 영대소문자, 숫자" autocomplete="off">
-											<div class="invalid-feedback" id="ifcgNameFeedback">
-										</div>	
-									</div>
 									<div class="col-lg-3 col-sm-6 col-12">
 										<div class="m-0">
-											<label for="ifcgUseNy" class="form-label">사용여부<span style="color: red;">*</span></label>
-											<select id="ifcgUseNy" name="ifcgUseNy" th:value="${item?.ifcgUseNy}" class="form-select" aria-label="Default select example">
-												<option value="">사용여부</option>
-												<option value="1" th:selected="${item?.ifcgUseNy == 1}">사용</option>
-												<option value="0" th:selected="${item?.ifcgUseNy == 0}">미사용</option>
+<!-- 										여기서부터 확인  -->
+											<label for="memberUseNy" class="form-label">사용여부<span style="color: red;">*</span></label>
+											<select id="memberUseNy" name="memberUseNy" th:value="${item?.memberUseNy}" class="form-select" aria-label="Default select example">
+												<option value="1" th:selected="${item?.memberUseNy == 1}">사용</option>
+												<option value="0" th:selected="${item?.memberUseNy == 0}">미사용</option>
 											</select>
-											<div class="invalid-feedback" id="ifcgUseNyFeedback"></div>
+											<div class="invalid-feedback" id="memberUseNyFeedback"></div>
 										</div>
 									</div>
 									<div class="col-lg-3 col-sm-6 col-12">
 										<div class="m-0">
-										<label class="form-label" for="ifcgOrder">순서<span style="color: red;">*</span></label>
-										<input type="number" id="ifcgOrder" name="ifcgOrder" th:value="${item?.ifcgOrder}" value="text" class="form-control" placeholder="숫자를 입력하세요" autocomplete="off">
+										<label class="form-label" for="memberOrder">순서<span style="color: red;">*</span></label>
+										<input type="number" id="ifcgOrder" name="ifcgOrder" th:value="${item?.memberOrder}" value="number" class="form-control" placeholder="숫자를 입력하세요">
 										</div>
+									</div>
+									<div class="col-lg-3 col-sm-6 col-12">
+									<label class="form-label" for="memberName">멤버 이름<span style="color: red;">*</span></label>
+											<input type="text" id="memberName" name="memberName" th:value="${item?.memberName}" class="form-control" value="text">
+											<div class="invalid-feedback" id="memberNameFeedback"></div>	
+									</div>
+									<div class="col-lg-3 col-sm-6 col-12">
+									
+<!-- 									수정해야 하는 부분  -->
+									<div class="col-md-3">
+									<label for="memberGender" class="form-label fs--1">성별 <span class="text-danger fs-0">*</span></label>
+									<select id="memberGender" name="memberGender" class="form-select">
+										<option value="">선택하세요</option>
+										<option th:each="list : ${@codeService.selectListCachedCode(3)}" th:value="${list.ifcdSeq}" th:text="${list.ifcdName}" th:selected="${list.ifcdSeq} == ${item?.memberGender}"></option>
+									</select>							
+									<div class="invalid-feedback" id="memberGenderFeedback"></div>
+									</div>
+									
+									
+									
 									</div>
 								</div>
 									<div class="col-sm-6 col-mg-6 col-lg-6 col-12">
 										<div class="m-0">
 											<label class="form-label">설명</label>
-											<textarea class="form-control" rows="5" id="ifcgDesc" name="ifcgDesc" th:value="${item?.ifcgDesc}"></textarea>
+											<textarea class="form-control" rows="5" id="memberDesc" name="memberDesc" th:value="${item?.memberDesc}"></textarea>
 										</div>
 									</div>
 								</div>
-							</br>
-							<!-- button start -->
-								<div class="container-button">										
+								</br>
+									<!-- button start -->
+										<div class="container-button">										
 									<div class="d-flex gap-2 justify-content-end">
-										<a class="icon" href="/xdm/v1/infra/codegroup/codeGroupXdmList">
-											<button type="submit"  class="btn btn-outline-secondary">
+										<a class="icon" href="/xdm/v1/infra/member/memberXdmList">
+											<button type="button" class="btn btn-outline-secondary">
 													<i class="bi bi-list-ul"></i>
 											</button>
 										</a>
 									</div>
-								<div class="d-flex gap-2 justify-content-end">
-									<div class="icon">
-										<button type="button" class="btn btn-outline-secondary" id="btnSubmit">
+									<div class="d-flex gap-2 justify-content-end">
+										<button type="submit" class="btn">
+											<div class="icon">
 												<i class="bi bi-server"></i>
+											</div>
 										</button>
 									</div>
 								</div>
-							</div>
-						</form> 
+							</form> 
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
 		<!-- Row end -->
 
@@ -571,7 +585,9 @@
 		<script src="/xdm/v1/js/modernizr.js"></script>
 		<script src="/xdm/v1/js/moment.js"></script>
 
-		<!-- ******* Vendor Js Files *********** -->
+		<!-- *************
+			************ Vendor Js Files *************
+		************* -->
 
 		<!-- Overlay Scroll JS -->
 		<script src="/xdm/v1/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
@@ -582,59 +598,16 @@
 		<script src="/xdm/v1/vendor/newsticker/custom-newsTicker.js"></script>
 
 		<!-- Main Js Required -->
-		<script src="/xdm/v1/js/main.js"></script> 
+		<script src="/xdm/v1/js/main.js">
+		
+		document.getElementById("btnUelete").onclick = function () {
+			let form = document.querySelector("form[name=form]");
+			form.action = "/xdm/v1/infra/member/memberXdmUele";
+			form.submit();
+		}
+	</script> 
 
-<!-- 		<script src="/xdm/v1/js/includeXdmForm.js"></script> 		 -->
-		
-		<script>
-//	 	var abc = document.getElementById("ifcgName");
-//	 	alert(abc);
-//	 	alert(abc.value);
-//	 	alert(document.getElementById("ifcgName").value);
-		
-// -----------------------------------------------------------------
-		document.getElementById("btnSubmit").onclick = function (){
-// 		alert(document.getElementById("ifcgName").value);	 
-		
-	    var ifcgName = document.getElementById("ifcgName");
-	    var ifcgNameValue = document.getElementById("ifcgName").value.trim();
-		
-	    if (ifcgNameValue == "" || ifcgNameValue == null) {
-			alert("이름을 입력해 주세요");
-			ifcgName.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-	    var ifcgUseNy = document.getElementById("ifcgUseNy");
-	    var ifcgUseNyValue = document.getElementById("ifcgUseNy").value.trim();
-
-	    if (ifcgUseNyValue == "" || ifcgUseNyValue == null) {
-			alert("사용여부를 선택해 주세요");
-			ifcgUseNy.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-	    var ifcgOrder = document.getElementById("ifcgOrder");
-	    var ifcgOrderValue = document.getElementById("ifcgOrder").value.trim();
-
-	    if (ifcgOrderValue == "" || ifcgOrderValue == null) {
-			alert("순서를 입력해 주세요");
-			ifcgOrder.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-		form.action = "/xdm/v1/infra/codegroup/codeGroupXdmInst";
-		form.submit();
-		
-	}
-		</script>
-		
+		<script src="/xdm/v1/js/includeXdmForm.js"></script> 		
 	</body>
 
 </html>

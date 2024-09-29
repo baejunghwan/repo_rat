@@ -22,7 +22,7 @@
 <link rel="shortcut icon" href="/xdm/v1/images/favicon.svg" />
 
 <!-- Title -->
-<title>CodeGroup</title>
+<title>Member</title>
 
 <!-- * Common Css Files * -->
 <!-- Bootstrap css -->
@@ -76,11 +76,11 @@
 	/* 			 a.item {grid-area: header} */
 }
 
-/* .pagination { */
-/* 	display: flex; */
-/* 	justify-content: center; */
-/* 	align-items: center; */
-/* } */
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 </style>
 </head>
 
@@ -130,7 +130,7 @@
 						<div class="dropdown-menu dropdown-menu-end shadow-lg">
 							<div class="dropdown-item">
 								<div class="d-flex py-2 border-bottom">
-									<img src="/xdm/v1/images/user.png" class="img-3x me-3 rounded-3"
+									<img src="assets/images/user.png" class="img-3x me-3 rounded-3"
 										alt="Admin Dashboards" />
 									<div class="m-0">
 										<h6 class="mb-1 fw-semibold">Sophie Michiels</h6>
@@ -141,7 +141,7 @@
 							</div>
 							<div class="dropdown-item">
 								<div class="d-flex py-2 border-bottom">
-									<img src="/xdm/v1/images/user2.png"
+									<img src="assets/images/user2.png"
 										class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
 									<div class="m-0">
 										<h6 class="mb-1 fw-semibold">Benjamin Michiels</h6>
@@ -152,7 +152,7 @@
 							</div>
 							<div class="dropdown-item">
 								<div class="d-flex py-2">
-									<img src="/xdm/v1/images/user1.png"
+									<img src="assets/images/user1.png"
 										class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
 									<div class="m-0">
 										<h6 class="mb-1 fw-semibold">Jehovah Roy</h6>
@@ -181,7 +181,7 @@
 						<a href="#" id="userSettings" class="user-settings"
 							data-toggle="dropdown" aria-haspopup="true"> <span
 							class="user-name d-none d-md-block">Michelle White</span> <span
-							class="avatar"> <img src="/xdm/v1/images/user2.png"
+							class="avatar"> <img src="assets/images/user2.png"
 								alt="Admin Templates" /> <span class="status online"></span>
 						</span>
 						</a>
@@ -349,70 +349,71 @@
 				</div>
 				<!-- Sidebar menu ends -->
 			</nav>
-			
 			<!-- Sidebar wrapper end -->
-			<form id="formList" name="formList" method="post" action="/xdm/v1/infra/codegroup/codeGroupXdmList" autocomplete="off">
-				<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
-				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+			<form id="selectList" method="post"
+				action="/xdm/v1/infra/member/memberXdmList">
 				<!-- Content wrapper scroll start -->
 				<div class="content-wrapper">
 					<div class="content-wrapper-scroll">
 						<p class="content-text-color">page 1</p>
 						>
 						<p class="content-text-color">page 2</p>
-						> <strong>Default</strong> <strong><h2>CodeGroup</h2></strong>
+						> <strong>Default</strong> <strong><h2>Member</h2></strong>
 						<div class="inputs">
 							<div>
-								<select id="shUseNy" name="shUseNy" class="form-select">
-									<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
-									<option value="1" th:selected="${vo.shUseNy == 1}">사용여부Y</option>
-									<option value="0" th:selected="${vo.shUseNy == 0}">사용여부N</option>
+								<select name="memberUseNy" class="form-select">
+									<option value="" hidden>사용여부</option>
+									<option value="0">사용여부N</option>
+									<option value="1">사용여부Y</option>
 								</select>
 							</div>
 							<div>
-								<select id="shDelNy" name="shDelNy" class="form-select">
-									<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
-									<option value="1" th:selected="${vo.shDelNy == 1}">삭제여부Y</option>
-									<option value="0" th:selected="${vo.shDelNy == 0}">삭제여부N</option>
+								<select name="memberDelNy" class="form-select">
+									<option value="" hidden>삭제여부</option>
+									<option value="0">삭제여부N</option>
+									<option value="1">삭제여부Y</option>
 								</select>
 							</div>
 							<div>
-								<select id="shOptionDate" name="shOptionDate" class="form-select">
-									<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
-									<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
-									<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+								<select name="memberOptionDate" class="form-select">
+									<option value="" hidden>날짜구분</option>
+									<option value="1">등록일</option>
+									<option value="2">수정일</option>
 								</select>
 							</div>
 							<div>
+								<!-- 						<input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control"> -->
 								<input type="text" id="shDateStart" name="shDateStart"
-									placeholder="시작일" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" class="form-control" autocomplete="off">
+									placeholder="시작일" class="form-control" autocomplete="off">
 							</div>
 							<div>
+								<!-- 						<input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control"> -->
 								<input type="text" id="shDateEnd" name="shDateEnd"
-									placeholder="종료일" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" class="form-control" autocomplete="off">
+									placeholder="종료일" class="form-control" autocomplete="off">
 							</div>
 							<br>
 							<div>
-								<select id="shOption" name="shOption" class="form-select"
+								<select name="shOption" class="form-select"
 									aria-label="Default select example">
-									<option value="" th:selected="${vo.shOption == null}" hidden>검색구분</option>
-									<option value="1" th:selected="${vo.shOption == 1}">일련번호</option>
-									<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+									<option value="" hidden>검색조건</option>
+									<option value="1">일련번호</option>
+									<option value="2">코드그룹 이름</option>
 								</select>
 							</div>
 							<div>
-								<input type="text" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" class="form-control"
+								<input name="shValue" type="text" class="form-control"
 									placeholder="검색어" autocomplete="off">
-								<div class="invalid-feedback" id="shValueFeedback"></div>
 							</div>
-							<div class="col">
-							<button type="submit" id="btnSearch" name="btnSearch" class="btn btn-outline-secondary btn-sm btn_custom">
+							<button type="submit" class="btn btn-outline-secondary">
+								<div class="icon">
 									<i class="bi bi-search"></i>
-							</button>	
-							<button type="submit" id="btnReset" name="btnReset" class="btn btn-outline-secondary btn-sm btn_custom">
-									<i class="bi bi-arrow-clockwise"></i>
+								</div>
 							</button>
-							</div>
+							<button type="submit" class="btn btn-outline-secondary" action="/xdm/v1/infra/codegroup/memberXdmList.html">
+								<div class="icon">
+									<i class="bi bi-arrow-clockwise"></i>
+								</div>
+							</button>
 						</div>
 						<!-- Main header ends -->
 
@@ -424,99 +425,89 @@
 							<div class="col-sm-12 col-12">
 								<!-- Card start -->
 								<div class="card">
-								    <div class="card-header d-flex justify-content-between align-items-center">
-								        <div class="card-title" style="margin-top: 4px;">
-								            <span class="align-middle" th:text="'Total: ' + ${vo.totalRows}"></span>
-								        </div>
-									        <div class="col-3 col-md-2 col-xl-2 text-end">
-									            <select class="form-select form-select-sm" id="changeRowNum" name="changeRowNum">
-									                <option value="5" th:selected="${vo.rowNumToShow eq 5}">5</option>
-									                <option value="10" th:selected="${vo.rowNumToShow eq 10}">10</option>
-									                <option value="50" th:selected="${vo.rowNumToShow eq 50}">50</option>
-									            </select>
-									        </div>
-									    </div>
-								    
-											<div class="card-body">
-												<div class="table-responsive">	
-													<table class="table custom-table">
-														<thead>
-															<tr>
-																<th>
-																	<div class="form-check">
-																		<input class="form-check-input" type="checkbox"
-																			id="flexCheckChecked" checked>
-																	</div>
-																</th>
-																<th>그룹 번호</th>
-																<th>코드그룹 이름</th>
-																<th>코드 번호</th>
-																<th>코드 이름</th>
-																<th>해당그룹 사용중 코드수</th>
-																<th>순서</th>
-																<th>사용여부</th>
-																<th>삭제여부</th>
-																<th>등록시간</th>
-																<th>변경시간</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr th:if="${#lists.isEmpty(list)}">
-																<td colspan="10">
-																	<p>There are no data!</p>
-																</td>
-															</tr>
-															<tr th:if="${!#lists.isEmpty(list)}"
-																th:each="list : ${list}">
-																<td>
-																	<div class="form-check">
-																		<input class="form-check-input" type="checkbox"
-																			id="flexCheckChecked" checked>
-																	</div>
-																</td>
-																<!-- # = 순번처리  -->
-<!-- 																<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td> -->
-															    <td th:text="${list.ifcgSeq}"></td>
-																<td class="ifcgSeq align-middle fw-semi-bold"><a
-																	th:href="@{/xdm/v1/infra/codegroup/codeGroupXdmMfom(ifcgSeq=${list.ifcgSeq})}"
-																	th:text="${list?.ifcgName}"></a></td>	
-																	
-																<td th:text="${list.ifcdSeq}"></td>
-																<td th:text="${list.ifcdSeq == list.ifcgSeq ? list.ifcdName : ''}"></td>
-																
-																<td th:text="${list.xifcgSeqCount}"></td>
-																<td th:text="${list?.ifcgOrder}"></td>
-																<td th:if="${list.ifcgUseNy eq 0}"
-																	class="ifcgUseNy align-middle">N</td>
-																<td th:unless="${list.ifcgUseNy eq 0}"
-																	class="ifcgUseNy align-middle">Y</td>
-																<td th:if="${list.ifcgDelNy eq 0}"
-																	class="ifcgDelNy align-middle">N</td>
-																<td th:unless="${list.ifcgDelNy eq 0}"
-																	class="ifcgDelNy align-middle">Y</td>
-																<td
-																	th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-																	class="regDateTime align-middle"></td>
-																<td
-																	th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-																	class="modDateTime align-middle"></td>
-															</tr>
-														</tbody>
-													</table>
-											
-										<!-- pagination -->
-											<div class="container-fluid px-0 mt-2 mb-2">
-												<div class="row">
-													<div class="col">
-														<ul class="pagination justify-content-center mb-0">
-															<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;"><a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"><i class="bi bi-arrow-left"></i></a></li>
-														<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;"><a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a></li>
-														<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;"><a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"><i class="bi bi-arrow-right"></i></a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-											
+									<div class="card-header">
+										<div class="card-title">Total: 171</div>
+									</div>
+									<div class="card-body">
+										<div class="table-responsive">
+											<table class="table custom-table">
+												<thead>
+													<tr>
+														<th>
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox"
+																	id="flexCheckChecked" checked>
+															</div>
+														</th>
+														<th>#</th>
+														<th>코드그룹 이름</th>
+														<th>코드번호</th>
+														<th>멤버이름</th>
+														<th>성별</th>
+														<th>사용여부</th>
+														<th>삭제여부</th>
+														<th>등록시간</th>
+														<th>변경시간</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:if="${#lists.isEmpty(list)}">
+														<td colspan="10">
+															<p>There are no data!</p>
+														</td>
+													</tr>
+													<tr th:if="${!#lists.isEmpty(list)}"
+														th:each="list : ${list}">
+														<td>
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox"
+																	id="flexCheckChecked" checked>
+															</div>
+														</td>
+														<!-- # = 순번처리  -->
+														<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td>
+														<td class="ifcgSeq align-middle fw-semi-bold"><a
+															th:href="@{/xdm/v1/infra/member/memberXdmMfom(memberSeq=${list.memberSeq})}"
+															th:text="${list?.memberName}"></a></td>
+														<td th:text="${list.memberSeq}"></td>
+														<td th:text="${list.memberName}"></td>
+														
+														<td th:if="${list.memberGender != null}" th:text="${@codeService.selectOneCachedCode(list.memberGender)}" class="memberGender align-middle"></td>
+														<td th:unless="${list.memberGender != null}" class="memberGender align-middle"></td>
+															
+														<td th:if="${list.memberUseNy eq 0}"
+															class="memberUseNy align-middle">N</td>
+														<td th:unless="${list.memberUseNy eq 0}"
+															class="memberUseNy align-middle">Y</td>
+
+														<td th:if="${list.memberDelNy eq 0}"
+															class="memberDelNy align-middle">N</td>
+														<td th:unless="${list.memberDelNy eq 0}"
+															class="memberDelNy align-middle">Y</td>
+															
+														<td
+															th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"
+															class="regDateTime align-middle"></td>
+														<td
+															th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"
+															class="modDateTime align-middle"></td>
+													</tr>
+												</tbody>
+											</table>
+											<nav aria-label="...">
+												<ul class="pagination">
+													<li class="page-item active" aria-current="page"><a
+														class="page-link" href="#">1</a></li>
+													<li class="page-item"><a class="page-link" href="#">2</a></li>
+													<li class="page-item"><a class="page-link" href="#">3</a></li>
+													<li class="page-item"><a class="page-link" href="#">4</a>
+													</li>
+													<li class="page-item"><a class="page-link" href="#">5</a>
+													</li>
+													<li class="page-item disabled"><a class="page-link"
+														href="#" tabindex="-1" aria-disabled="true">></a></li>
+												</ul>
+											</nav>
 											<div class=btn12>
 												<button type="button" class="btn btn-input1"
 													data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -581,7 +572,7 @@
 													</div>
 												</button>
 												<button type="button" class="btn btn-input3"
-													onclick="location.href='/xdm/v1/infra/codegroup/codeGroupXdmForm'">
+													onclick="location.href='/xdm/v1/infra/member/memberXdmMfom'">
 													<div class="icon1">
 														<i class="bi bi-plus-lg"></i>
 													</div>
@@ -630,7 +621,7 @@
 		<script src="/xdm/v1/js/main.js"></script>
 
 		<!-- 	by developer -->
-<!-- 		<script src="/xdm/v1/jquery/jquery-3.7.1.min.js"></script> -->
+		<script src="/xdm/v1/jquery/jquery-3.7.1.min.js"></script>
 
 		<!-- script -->
 		<script type="text/javascript">
@@ -644,33 +635,5 @@
 		</script>
 		<script src="/xdm/v1/js/datetimepicker/jquery.datetimepicker.full.min.js"></script>
 		
-<!-- 		paging -->
-		<script>		
-// 		goList = function (thisPage) {
-// 	    document.querySelector("input[name=thisPage]").value = thisPage;
-
-// 	    form.action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-// 	    document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-// 	    form.submit();
-// 		}
-	    </script>		
-
-		<script>	 
-	    goList = function (thisPage) {
-	    document.querySelector("input[name=thisPage]").value = thisPage;
-	    document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-	    document.querySelector("form[name=formList]").submit();
-		}
-        </script> 
-        
-        <script>
-        document.getElementById("changeRowNum").onchange = function () {
-    	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-    	    form.action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-    	    form.submit();
-    	}
-        // document는 그냥 화면에 보여준다는 의미, .getElementById는 js에 원래 내장되어있는 함수
-        </script>
-        
 	</body>				
-</html>	
+</html>

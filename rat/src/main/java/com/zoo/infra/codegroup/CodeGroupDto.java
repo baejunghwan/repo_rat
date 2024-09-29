@@ -3,16 +3,28 @@ package com.zoo.infra.codegroup;
 import java.util.Date;
 
 public class CodeGroupDto {
-	
+
 	private String ifcgSeq;
 	private String ifcgName;
 	private Integer ifcgUseNy;
 	private Integer ifcgOrder;
 	private String ifcgDesc;
-	private Integer ifcgDelny;
+	private Integer ifcgDelNy;
 	private Date regDateTime;
 	private Date modDateTime;
-//	----------------------
+
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	// count
+	private Integer xifcgSeqCount;
+	
+	private String ifcdSeq;
+	private String ifcdName;
+	// search
+	private Integer shDelNy;
+	private Integer shUseNy;
+	private Integer shOption;
+	private String shValue;
+	// ----------------------
 	public String getIfcgSeq() {
 		return ifcgSeq;
 	}
@@ -43,11 +55,11 @@ public class CodeGroupDto {
 	public void setIfcgDesc(String ifcgDesc) {
 		this.ifcgDesc = ifcgDesc;
 	}
-	public Integer getIfcgDelny() {
-		return ifcgDelny;
+	public Integer getIfcgDelNy() {
+		return ifcgDelNy;
 	}
-	public void setIfcgDelny(Integer ifcgDelny) {
-		this.ifcgDelny = ifcgDelny;
+	public void setIfcgDelNy(Integer ifcgDelNy) {
+		this.ifcgDelNy = ifcgDelNy;
 	}
 	public Date getRegDateTime() {
 		return regDateTime;
@@ -61,6 +73,47 @@ public class CodeGroupDto {
 	public void setModDateTime(Date modDateTime) {
 		this.modDateTime = modDateTime;
 	}
-	
+	public Integer getXifcgSeqCount() {
+		return xifcgSeqCount;
+	}
+	public void setXifcgSeqCount(Integer xifcgSeqCount) {
+		this.xifcgSeqCount = xifcgSeqCount;
+	}
+	public String getIfcdSeq() {
+		return ifcdSeq;
+	}
+	public void setIfcdSeq(String ifcdSeq) {
+		this.ifcdSeq = ifcdSeq;
+	}
+	public String getIfcdName() {
+		return ifcdName;
+	}
+	public void setIfcdName(String ifcdName) {
+		this.ifcdName = ifcdName;
+	}
+	public Integer getShDelNy() {
+		return shDelNy;
+	}
+	public void setShDelNy(Integer shDelNy) {
+		this.shDelNy = shDelNy;
+	}
+	public Integer getShUseNy() {
+		return shUseNy;
+	}
+	public void setShUseNy(Integer shUseNy) {
+		this.shUseNy = shUseNy;
+	}
+	public Integer getShOption() {
+		return shOption;
+	}
+	public void setShOption(Integer shOption) {
+		this.shOption = shOption;
+	}
+	public String getShValue() {
+		return shValue;
+	}
+	public void setShValue(String shValue) {
+		this.shValue = shValue;
+	}
 	
 }

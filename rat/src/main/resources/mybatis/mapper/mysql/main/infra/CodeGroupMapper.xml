@@ -1,51 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- dto 내용 -->
+	<!-- dto 내용 -->
 <mapper namespace="com.zoo.infra.codegroup.CodeGroupDao">
-	 
-<!-- 	dao 내용 -->
+
+	<!-- dao 내용 -->
 	<resultMap type="com.zoo.infra.codegroup.CodeGroupDto" id="resultMapObj">
-	
 	</resultMap>
 	
-	<select id="selectList" resultMap="resultMapObj">
-	SELECT
-	   a.ifcgSeq
-	   ,a.ifcgSeq
-	   ,a.ifcgName
-	   ,a.ifcgUseNy
-	   ,a.ifcgOrder
-	   ,a.ifcgDesc
-	   ,a.ifcgDelNy
-	   ,a.regDateTime
-	   ,a.modDateTime
-	FROM
-		infrCodeGroup a
-	ORDER BY
-		a.ifcgSeq desc
+	<sql id="selectCommon">
+		FROM infrCodeGroup a
+		LEFT JOIN infrCode b on b.infrcodegroup_ifcgSeq = a.ifcgSeq
+		WHERE 1=1
+	<if test="shUseNy != null and !shUseNy.equals('')"> AND a.ifcgUseNy= #{shUseNy}</if>
+	<if test="shDelNy != null and !shDelNy.equals('')"> AND a.ifcgDelNy = #{shDelNy}</if>
+	<choose>
+		<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+	</choose>
+	<choose>
+		<when test="shOption == 1">AND a.ifcgSeq = #{shValue}</when>
+		<when test="shOption == 2">AND a.ifcgName LIKE CONCAT('%',#{shValue},'%')</when>
+<!-- 		<when test="shOption == 3">AND a.ifcgNameEng LIKE CONCAT('%',#{shValue},'%')</when> -->
+	</choose>	
+	</sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
 	</select>
-	
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.* FROM (
+		SELECT
+		a.ifcgSeq
+		,a.ifcgName
+		,a.ifcgUseNy
+		,a.ifcgOrder
+		,a.ifcgDesc
+		,a.ifcgDelNy
+		,a.regDateTime
+		,a.modDateTime
+		
+		,b.ifcdName
+		,b.ifcdSeq
+		
+		,(SELECT count(b.ifcdSeq) FROM infrCode b WHERE 1=1 AND b.infrcodegroup_ifcgSeq = a.ifcgSeq)
+		
+		AS xifcgSeqCount
+		
+		<include refid="selectCommon"/>
+		ORDER BY
+		a.ifcgSeq DESC
+			) aa
+		limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+		a.ifcgSeq
+		,a.ifcgName
+		,a.ifcgUseNy
+		,a.ifcgOrder
+		,a.ifcgDesc
+		,a.ifcgDelNy
+		,a.regDateTime
+		,a.modDateTime
+		FROM
+		infrCodeGroup a
+		WHERE 1=1
+		AND a.ifcgSeq = #{ifcgSeq}
+	</select>
+
 	<insert id="insert">
-	INSERT INTO infrCodeGROUP (
-	    ,ifcgName
-	    ,ifcgUseNy
-	    ,ifcgOrder
-	    ,ifcgDesc
-	    ,ifcgDelNy
-	    ,regDateTime
-	    ,modDateTime
-	) VALUES (
-	    ,"통신사"
-	    ,1
-	    ,1
-	    ,0
-	    ,0
-	    ,now()
-	    ,now()
-	)    
-<!-- ,#{ifcgName} -->
-<!-- 이 양식으로 맞춰줘야 값이 넘어간다  -->
+		INSERT INTO infrcodegroup (
+		ifcgName
+		,ifcgUseNy
+		,ifcgOrder
+		,ifcgDesc
+		,ifcgDelNy
+		,regDateTime
+		,modDateTime
+		) VALUES (
+		#{ifcgName}
+		,#{ifcgUseNy}
+		,#{ifcgOrder} 	
+		,#{ifcgDesc}
+		,0
+		,now()
+		,now()
+		)
+		<selectKey resultType="String" keyProperty="ifcgSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
 	</insert>
+
+	<update id="update">
+		UPDATE infrCodeGroup
+		SET
+		ifcgName = #{ifcgName}
+		,ifcgUseNy = #{ifcgUseNy}
+		,ifcgOrder = #{ifcgOrder}
+		WHERE 1=1
+		AND ifcgSeq
+		= #{ifcgSeq}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM infrCodeGroup
+		WHERE 1=1
+		AND ifcgSeq =
+		#{ifcgSeq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE infrCodeGroup
+		SET
+		ifcgDelNy = 1
+		WHERE 1=1
+		AND
+		ifcgSeq = #{ifcgSeq}
+	</update>
 	
-</mapper>
+</mapper> 

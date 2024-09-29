@@ -2375,30 +2375,6 @@ button:focus:not(:focus-visible) {
     border:1px solid #ffcd68;
     background:#ffd98c
 }
-.btn-success {
-    color:#fff;
-    background:#FF0000;
-    border:1px solid #FF0000
-}
-/* 내가 추가 success2,3 */
-.btn-success2 {
-    /* margin-left: auto; */
-    color:#fff;
-    background:#1E821E;
-    border:1px solid #1E821E
-}
-.btn-success3 {
-    /* margin-left: auto; */
-    color:#fff;
-    background:#0000FF;
-    border:1px solid #0000FF
-}
-/* .card-head {
-    background-color: #eef1f6;
-    border-style: solid;
-    border-color: #adaead;
-    border-width: 1px;
-} */
 .btn-success:hover {
     color:#fff !important;
     background:#0a9126 !important;
@@ -3148,4 +3124,29 @@ input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus
     border:1px solid #c8d0da;
     color:#232629;
     background-color:#fff
+}
+/* List화면 하단 버튼들 정적인 이미지 표현  */
+.btn-input1 {
+	color: #ffffff;
+	background-color: #db1212;
+	border: #db1212;
+	display: inline-flex;
+}
+.btn-input2 {
+	color: #ffffff; 
+	background-color: #138f13;
+	border: #138f13;
+}
+.btn-input3 {
+	color: #ffffff;
+	background-color: #0d78d6;
+	border: #0d78d6;
+}
+.btn12 {
+	display: inline-block;
+	float: left;
+}
+.btn34 {
+	display: inline-block;
+	float: right;
 }

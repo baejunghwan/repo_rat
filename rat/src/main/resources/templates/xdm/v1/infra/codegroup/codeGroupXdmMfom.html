@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<!-- 	등록fom -->
+<!-- 	수정fom -->
 
 	<head>
 		<!-- Required meta tags -->
@@ -51,18 +51,18 @@
 			<div class="page-header">
 
 				<!-- Sidebar brand starts -->
-				<div class="brand">
-					<a href="index.html" class="logo">
-						<img src="/xdm/v1/images/logo.svg" class="d-none d-md-block me-4" alt="Sapphire Admin Dashboard" />
-						<img src="/xdm/v1/images/logo-sm.svg" class="d-block d-md-none me-4" alt="Sapphire Admin Dashboard" />
-					</a>
-				</div>
+					<div class="brand">
+						<a href="index.html" class="logo">
+							<img src="/xdm/v1/images/logo.svg" class="d-none d-md-block me-4" alt="Sapphire Admin Dashboard" />
+							<img src="/xdm/v1/images/logo-sm.svg" class="d-block d-md-none me-4" alt="Sapphire Admin Dashboard" />
+						</a>
+					</div>
 				<!-- Sidebar brand ends -->
 
 				<div class="toggle-sidebar" id="toggle-sidebar">
 					<i class="bi bi-list"></i>
 				</div>
-
+				
 				<!-- Header actions ccontainer start -->
 				<div class="header-actions-container">
 
@@ -454,93 +454,140 @@
 					<!-- </div> -->
 					<!-- Main header ends -->
 
-		<!-- Content wrapper start -->
-		<div class="content-wrapper"> 
-			<div><p style="color: blue;">page 1 > page 2 ><span style="color: black;">&nbsp Default</span></p>
-			</div> 
-			<strong><h1>CodeGroup</h1></strong>
-			<!-- Row start --> 
+					<!-- Content wrapper start -->
+				<div class="content-wrapper"> 
+					
+					<div><p style="color: blue;">page 1 > page 2 ><span style="color: black;">&nbsp Default</span></p>
+					<strong><h1>CodeGroup</h1></strong></div>
+		
+				<!-- Row start --> 
 			<section>
-				<div class="container-main"> 
-					<!-- 추가 영역 --> 
+				<div class="container-main">
+					<!-- 추가 영역 -->
 						<div class="card"> 
-							<strong><h4>기본정보</h4></strong> 
-						<hr> 
+							<div><strong><h4>기본정보</h4></strong> 
+						</div><hr> 
 							<div class="card-body"> 
-								<form id="form" name="form" method="post" action="/xdm/v1/infra/codegroup/codeGroupXdmInst"> 
+							<form name="form" method="post" action="/xdm/v1/infra/codegroup/codeGroupXdmUpdate">
 								<div class="row gx-3"> 
 									<div class="col-sm-3 col-mg-3 col-lg-3 col-12"> 
 										<div class="m-0"> 
-											<label class="form-label" for="ifcgSeq">코드그룹 코드<span style="color: red;">*</span></label>
-											<input type="text" id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}" class="form-control" placeholder="자동완성" readonly />
-										</div> 
-									</div>	
-<!-- 									<div class="col-sm-3 col-mg-3 col-lg-3 col-12">  -->
-<!-- 										<div class="m-0">  -->
-<!-- 										<div th:replace="~{xdm/v1/infra/codegroup/codeGroupXdmVo :: vo}></div> -->
-<!-- 											<label class="form-label">코드그룹<span style="color: red;">*</span></label>  -->
-<!-- 											<select class="form-select" aria-label="Default select example" id="ifcgSeq" name="infrcodegroup_ifcgSeq">  -->
-<!-- 												<option th:each="list : ${list}" th:text="${list.ifcgName}" th:value="${list.ifcgSeq}">  -->
-<!-- 												</option> -->
-<!-- 											</select>  -->
-<!-- 										</div>  -->
-<!-- 									</div> -->
-								<div class="row gx-3">
-								<div class="col-lg-3 col-sm-6 col-12">
-										<label class="form-label" for="ifcgName">코드그룹 이름<span style="color: red;">*</span></label>
-											<input type="text" id="ifcgName" name="ifcgName" th:value="${item?.ifcgName}" class="form-control" value="text" placeholder="한글, 영대소문자, 숫자" autocomplete="off">
-											<div class="invalid-feedback" id="ifcgNameFeedback">
-										</div>	
+											<label class="form-label" >코드<span style="color: red;">*</span></label>
+											<input type="text" class="form-control" readonly id="ifcgSeq" name="ifcgSeq" th:value="${item?.ifcgSeq}">
+										</div>
 									</div>
+								<div class="row gx-3">
 									<div class="col-lg-3 col-sm-6 col-12">
 										<div class="m-0">
-											<label for="ifcgUseNy" class="form-label">사용여부<span style="color: red;">*</span></label>
+											<label class="form-label">사용여부<span style="color: red;">*</span></label>
 											<select id="ifcgUseNy" name="ifcgUseNy" th:value="${item?.ifcgUseNy}" class="form-select" aria-label="Default select example">
-												<option value="">사용여부</option>
 												<option value="1" th:selected="${item?.ifcgUseNy == 1}">사용</option>
 												<option value="0" th:selected="${item?.ifcgUseNy == 0}">미사용</option>
 											</select>
-											<div class="invalid-feedback" id="ifcgUseNyFeedback"></div>
 										</div>
 									</div>
 									<div class="col-lg-3 col-sm-6 col-12">
 										<div class="m-0">
-										<label class="form-label" for="ifcgOrder">순서<span style="color: red;">*</span></label>
-										<input type="number" id="ifcgOrder" name="ifcgOrder" th:value="${item?.ifcgOrder}" value="text" class="form-control" placeholder="숫자를 입력하세요" autocomplete="off">
+											<label class="form-label">순서<span style="color: red;">*</span></label>
+											<input type="text" id="ifcgOrder" name="ifcgOrder" th:value="${item?.ifcgOrder}" class="form-control" value="text" placeholder="한글, 영대소문자, 숫자" autocomplete="off">
 										</div>
+									</div>
+									<div class="col-lg-3 col-sm-6 col-12">
+									<label class="form-label" for="ifcgName">코드 이름<span style="color: red;">*</span></label>
+										<input type="text" id="ifcgName" name="ifcgName" th:value="${item?.ifcgName}" class="form-control" value="text" placeholder="한글, 영대소문자, 숫자" autocomplete="off">
+										<div class="invalid-feedback" id="ifcgNameFeedback"></div>	
 									</div>
 								</div>
 									<div class="col-sm-6 col-mg-6 col-lg-6 col-12">
 										<div class="m-0">
 											<label class="form-label">설명</label>
-											<textarea class="form-control" rows="5" id="ifcgDesc" name="ifcgDesc" th:value="${item?.ifcgDesc}"></textarea>
+											<textarea class="form-control" rows="5" id="ifcgDesc" name="ifcgDesc" th:text="${item?.ifcgDesc}"></textarea>
 										</div>
 									</div>
+<!-- 									<div class="col-lg-3 col-sm-6 col-12"> -->
+<!-- 										<div class="m-0"> -->
+<!-- 											<label class="form-label">등록시간<span style="color: red;">*</span></label> -->
+<!-- 											<input disabled type="text" th:value="${#dates.format(item.regDateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control" value="text" placeholder="한글, 영대소문자, 숫자"> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-3 col-sm-6 col-12"> -->
+<!-- 									<label class="form-label">변경시간<span style="color: red;">*</span></label> -->
+<!-- 										<input disabled type="text" th:value="${#dates.format(item.modDateTime, 'yyyy-MM-dd HH:mm:ss')}" class="form-control"  placeholder="한글, 영대소문자, 숫자"> -->
+<!-- 									</div> -->
 								</div>
-							</br>
-							<!-- button start -->
+								</br> 	
+									
+								<!-- button start -->
 								<div class="container-button">										
 									<div class="d-flex gap-2 justify-content-end">
-										<a class="icon" href="/xdm/v1/infra/codegroup/codeGroupXdmList">
-											<button type="submit"  class="btn btn-outline-secondary">
-													<i class="bi bi-list-ul"></i>
-											</button>
-										</a>
-									</div>
-								<div class="d-flex gap-2 justify-content-end">
-									<div class="icon">
-										<button type="button" class="btn btn-outline-secondary" id="btnSubmit">
-												<i class="bi bi-server"></i>
+										<button type="button" class="btn btn-outline-secondary" onclick="location.href='/xdm/v1/infra/codegroup/codeGroupXdmList'">
+											<div class="icon">
+												<i class="bi bi-list-ul"></i>
+											</div>
 										</button>
+										<button type="button" id="btnDelete" class="btn btn-input1" >
+											<div class="icon1">
+												<i class="bi bi-x"></i>
+											</div>
+										</button>
+										<button type="button" id="btnUelete" class="btn btn-input1" >
+											<div class="icon1">
+												<i class="bi bi-trash"></i>
+											</div>
+										</button>
+										
+								<!-- button 기능 -->
+<!-- 								<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+<!-- 								  <div class="modal-dialog"> -->
+<!-- 								    <div class="modal-content"> -->
+<!-- 								      <div class="modal-header"> -->
+<!-- 								        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete</h1> -->
+<!-- 								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 								      </div> -->
+<!-- 								      <div class="modal-body"> -->
+<!-- 								        Delete Data! -->
+<!-- 								      </div> -->
+<!-- 								      <div class="modal-footer"> -->
+<!-- 								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+<!-- 								        <button type="button" class="btn btn-primary" id="btnDelete" name="ifcgDelNy" th:value="${item?.ifcgDelNy}">Delete</button> -->
+<!-- 								      </div> -->
+<!-- 								    </div> -->
+<!-- 								  </div> -->
+<!-- 								</div> -->
+										
+<!-- 								<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+<!-- 								  <div class="modal-dialog"> -->
+<!-- 								    <div class="modal-content"> -->
+<!-- 								      <div class="modal-header"> -->
+<!-- 								        <h1 class="modal-title fs-5" id="staticBackdropLabel2">Delete</h1> -->
+<!-- 								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 								      </div> -->
+<!-- 								      <div class="modal-body"> -->
+<!-- 								        Delete Data! -->
+<!-- 								      </div> -->
+<!-- 								      <div class="modal-footer"> -->
+<!-- 								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+<!-- 								        <button type="button" class="btn btn-primary" onclick="btnDelete">Delete</button> -->
+<!-- 								      </div> -->
+<!-- 								    </div> -->
+<!-- 								  </div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+									
+							<div class="d-flex gap-2 justify-content-end">
+								<button type="submit" class="btn ">
+									<div class="icon">
+										<i class="bi bi-server"></i>
 									</div>
-								</div>
+								</button>
 							</div>
-						</form> 
-					</div>
+						</div>
+					</div>							
 				</div>
-			</div>
+			</form> 
 		</div>
-	</section>
+	</div>
+</section>
 
 		<!-- Row end -->
 
@@ -571,7 +618,9 @@
 		<script src="/xdm/v1/js/modernizr.js"></script>
 		<script src="/xdm/v1/js/moment.js"></script>
 
-		<!-- ******* Vendor Js Files *********** -->
+		<!-- *************
+			************ Vendor Js Files *************
+		************* -->
 
 		<!-- Overlay Scroll JS -->
 		<script src="/xdm/v1/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
@@ -582,58 +631,27 @@
 		<script src="/xdm/v1/vendor/newsticker/custom-newsTicker.js"></script>
 
 		<!-- Main Js Required -->
-		<script src="/xdm/v1/js/main.js"></script> 
-
-<!-- 		<script src="/xdm/v1/js/includeXdmForm.js"></script> 		 -->
+		<script src="/xdm/v1/js/main.js"></script>
 		
 		<script>
-//	 	var abc = document.getElementById("ifcgName");
-//	 	alert(abc);
-//	 	alert(abc.value);
-//	 	alert(document.getElementById("ifcgName").value);
-		
-// -----------------------------------------------------------------
-		document.getElementById("btnSubmit").onclick = function (){
-// 		alert(document.getElementById("ifcgName").value);	 
-		
-	    var ifcgName = document.getElementById("ifcgName");
-	    var ifcgNameValue = document.getElementById("ifcgName").value.trim();
-		
-	    if (ifcgNameValue == "" || ifcgNameValue == null) {
-			alert("이름을 입력해 주세요");
-			ifcgName.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-	    var ifcgUseNy = document.getElementById("ifcgUseNy");
-	    var ifcgUseNyValue = document.getElementById("ifcgUseNy").value.trim();
-
-	    if (ifcgUseNyValue == "" || ifcgUseNyValue == null) {
-			alert("사용여부를 선택해 주세요");
-			ifcgUseNy.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-	    var ifcgOrder = document.getElementById("ifcgOrder");
-	    var ifcgOrderValue = document.getElementById("ifcgOrder").value.trim();
-
-	    if (ifcgOrderValue == "" || ifcgOrderValue == null) {
-			alert("순서를 입력해 주세요");
-			ifcgOrder.focus();
-			return false;
-	    } else {
-// 			by pass
-	    }
-	    
-		form.action = "/xdm/v1/infra/codegroup/codeGroupXdmInst";
-		form.submit();
-		
-	}
+		document.getElementById("btnDelete").onclick = function () {
+// 			alert("confirm");
+			let form = document.querySelector("form[name=form]");
+			form.action = "/xdm/v1/infra/codegroup/codeGroupXdmDelete";
+			form.submit();
+		}
 		</script>
+		
+		<script>
+		document.getElementById("btnUelete").onclick = function () {
+			alert("DelNy=1");
+			let form = document.querySelector("form[name=form]");
+			form.action = "/xdm/v1/infra/codegroup/codeGroupXdmUelete";
+			form.submit();
+		}
+		</script>
+
+<!-- 		<script src="/xdm/v1/js/includeXdmForm.js"></script>  -->
 		
 	</body>
 

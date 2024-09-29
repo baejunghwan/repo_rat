@@ -2781,34 +2781,10 @@ button:focus:not(:focus-visible) {
 }
 
 /************* 11.13 Button Success *************/
-/* 초록 */
-.btn-success {
-  color: #ffffff;
-  background: #119a2c;
-  border: 1px solid #119a2c;
-}
-/* 빨강 */
-.btn-success-1 {
-  color : #EB0000;
-  backgroud: #EB0000; 
-  border : 1px solid #EB0000;
-}
-/* 파랑 */
-.btn-success-2 {
-  color : #0064FF;
-  backgroud: #0064FF;
-  border : 1px solid #0064FF;
-}
-/* 흰색 */
-.btn-success-3 {
-  color : #F9FFFF;
-  backgroud: #F9FFFF;
-  border : 1px solid #F9FFFF;
-}
 .btn-success:hover {
   color: #ffffff !important;
-  background: #0a9126 !important;
-  border: 1px solid #0a9126 !important;
+  background: #0a9126;
+  border: 1px solid #0a9126;
 }
 .btn-check:focus + .btn-success, .btn-success:focus {
   color: #ffffff;
@@ -3577,14 +3553,9 @@ select:-webkit-autofill:focus {
   padding-right: 10px;
   padding-left: 10px;
 }
-/* .pagination {
-  align-content: center;
-} */
-.btn btn-outline-third {
-  color: red;
-}
-/* 내가 추가한 css */
+/* 내가 추가한 css, form에 적용. */
 .container {
   display: grid;
   grid-template-columns: (4, 1fr);
 }
+/* 하단 버튼 색상용도 css */

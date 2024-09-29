@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zoo.infra.member.MemberDao">
+
+	<resultMap type="com.zoo.infra.member.MemberDto" id="resultMapObj">
+	</resultMap>
+	
+	<sql id="selectCommon">
+		FROM member a 
+		LEFT JOIN product b on b.member_memberSeq = a.memberSeq
+		WHERE 1=1
+	<if test="shUseNy != null and !shUseNy.equals('')"> AND a.memberUseNy= #{shUseNy}</if>
+	<if test="shDelNy != null and !shDelNy.equals('')"> AND a.memberDelNy = #{shDelNy}</if>
+	<choose>
+		<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+	</choose>
+	<choose>
+		<when test="shOption == 1">AND a.memberSeq = #{shValue}</when>
+		<when test="shOption == 2">AND a.memberName LIKE CONCAT('%',#{shValue},'%')</when>
+	</choose>	
+	</sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.* FROM (
+		SELECT
+		a.memberSeq
+		,a.memberName
+		,a.memberUseNy
+		,a.memberOrder
+		,a.memberDesc
+		,a.memberDelNy
+		,a.memberGender
+		,a.regDateTime
+		,a.modDateTime
+		
+		,b.productName
+		,b.productSeq
+		
+		,(SELECT count(b.productSeq) FROM product b WHERE 1=1 AND b.member_memberSeq = a.memberSeq)
+		
+		AS xmemberSeqCount
+		
+		<include refid="selectCommon"/>
+		ORDER BY
+		a.memberSeq DESC
+			) aa
+		limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+		a.memberSeq
+		,a.memberName
+		,a.memberUseNy
+		,a.memberOrder
+		,a.memberDesc
+		,a.memberDelNy
+		,a.regDateTime
+		,a.modDateTime
+		,a.memberGender
+		FROM
+		member a
+		WHERE 1=1
+		AND a.memberSeq = #{memberSeq}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO member (
+		memberName
+		,memberUseNy
+		,memberOrder
+		,memberDesc
+		,memberDelNy
+		,regDateTime
+		,modDateTime
+		,memberGender
+		) VALUES (
+		#{memberName}
+		,#{memberUseNy}
+		,#{memberOrder}
+		,#{memberDesc}
+		,0
+		,now()
+		,now()
+		)
+		<selectKey resultType="String" keyProperty="memberSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+
+	<update id="update">
+		UPDATE member
+		SET
+		memberName = #{memberName}
+		,memberUseNy = #{memberUseNy}
+		,memberOrder = #{memberOrder}
+		WHERE 1=1
+		AND memberSeq
+		= #{memberSeq}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM member
+		WHERE 1=1
+		AND memberSeq =
+		#{memberSeq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE member
+		SET
+		memberDelNy = 1
+		WHERE 1=1
+		AND
+		memberSeq = #{memberSeq}
+	</update>
+
+</mapper> 

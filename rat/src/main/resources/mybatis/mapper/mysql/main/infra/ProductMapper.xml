@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zoo.infra.product.ProductDao">
+
+<resultMap type="com.zoo.infra.product.ProductDto" id="resultMapObj">
+	</resultMap>
+	
+	<sql id="selectCommon">
+		FROM product a 
+		LEFT JOIN member b on a.member_memberSeq = b.memberSeq
+		WHERE 1=1
+	<if test="shUseNy != null and !shUseNy.equals('')"> AND a.productUseNy= #{shUseNy}</if>
+	<if test="shDelNy != null and !shDelNy.equals('')"> AND a.productDelNy = #{shDelNy}</if>
+	<choose>
+		<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+	</choose>
+	<choose>
+		<when test="shOption == 1">AND a.productSeq = #{shValue}</when>
+		<when test="shOption == 2">AND a.productName LIKE CONCAT('%',#{shValue},'%')</when>
+	</choose>	
+	</sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon"/>
+	</select>
+
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.* FROM (
+		SELECT
+		a.productSeq
+		,a.productName
+		,a.productUseNy
+		,a.productOrder
+		,a.productDesc
+		,a.productDelNy
+		,a.productGender
+		,a.regDateTime
+		,a.modDateTime
+		
+		,b.memberName
+		,b.memberSeq
+		
+		,(SELECT count(b.memberSeq) FROM member b WHERE 1=1 AND a.member_memberSeq = b.memberSeq)
+		
+		AS xproductSeqCount
+		
+		<include refid="selectCommon"/>
+		ORDER BY
+		a.productSeq DESC
+			) aa
+		limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+		a.productSeq
+		,a.productName
+		,a.productUseNy
+		,a.productOrder
+		,a.productDesc
+		,a.productDelNy
+		,a.productGender
+		,a.regDateTime
+		,a.modDateTime
+		FROM
+		product a
+		WHERE 1=1
+		AND a.productSeq = #{productSeq}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO product (
+		productName
+		,productUseNy
+		,productOrder
+		,productDesc
+		,productDelNy
+		,productGender
+		,regDateTime
+		,modDateTime
+		) VALUES (
+		#{productName}
+		,#{productUseNy}
+		,#{productOrder}
+		,#{productDesc}
+		,0
+		,now()
+		,now()
+		)
+		<selectKey resultType="String" keyProperty="productSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+
+	<update id="update">
+		UPDATE product
+		SET
+		productName = #{productName}
+		,productUseNy = #{productUseNy}
+		,productOrder = #{productOrder}
+		WHERE 1=1
+		AND productSeq
+		= #{productSeq}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM product
+		WHERE 1=1
+		AND productSeq =
+		#{productSeq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE product
+		SET
+		productDelNy = 1
+		WHERE 1=1
+		AND
+		productSeq = #{productSeq}
+	</update>
+
+</mapper> 
