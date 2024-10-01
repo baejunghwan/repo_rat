@@ -1,15 +1,17 @@
 package com.zoo.infra.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zoo.infra.codegroup.CodeGroupDto;
-import com.zoo.infra.codegroup.CodeGroupVo;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
@@ -128,5 +130,23 @@ public class MemberController {
 //			return pathCommonXdm + "codeGroupXdmList";
 			return "/xdm/v1/infra/member/memberXdmList";
 	  	}
-		
+			
+//		ajax 
+		@ResponseBody
+		@RequestMapping(value = "/xdm/v1/infra/member/loginProc")
+		public Map<String, Object> loginProc(MemberDto memberdto) throws Exception {
+			
+			Map<String, Object> returnMap = new HashMap<>();
+			MemberDto rtMember = memberService.selectOne(memberdto);
+
+				if (rtMember != null) {
+					System.out.println("성공");
+					returnMap.put("rt", "success");
+				
+				} else {
+					System.out.println("실패");
+					returnMap.put("rt", "fail");
+				}
+				return returnMap;
+			}
 	}
