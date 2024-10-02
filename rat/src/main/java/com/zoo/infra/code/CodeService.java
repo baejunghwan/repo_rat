@@ -66,7 +66,7 @@ public class CodeService {
 		CodeDto.cachedCodeArrayList.clear();
 	}
 	
-	// cgSeq string이 들어오면 dto로 반환하겠다는 의미
+	// cgSeq string이 들어오면 dto로 반환하겠다는 의미 
 	public static List<CodeDto> selectListCachedCode(String ifcgSeq) throws Exception {
 		List<CodeDto> rt = new ArrayList<CodeDto>();
 		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {

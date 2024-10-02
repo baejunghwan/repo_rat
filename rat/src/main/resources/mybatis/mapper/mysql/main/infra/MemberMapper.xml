@@ -39,6 +39,9 @@
 		,a.memberGender
 		,a.regDateTime
 		,a.modDateTime
+		,a.memberId
+		,a.memberPw
+		,a.memberEmail
 		
 		,b.productName
 		,b.productSeq
@@ -65,10 +68,23 @@
 		,a.regDateTime
 		,a.modDateTime
 		,a.memberGender
+		,a.memberId
+		,a.memberPw
+		,a.memberEmail
 		FROM
 		member a
 		WHERE 1=1
 		AND a.memberSeq = #{memberSeq}
+	</select>
+	
+	<select id="selectOneLogin" resultMap="resultMapObj">
+		SELECT
+		a.memberId
+		,a.memberPw
+		FROM
+		member a
+		WHERE
+    	a.memberId = #{memberId} AND a.memberPw = #{memberPw}
 	</select>
 
 	<insert id="insert">
@@ -81,6 +97,9 @@
 		,regDateTime
 		,modDateTime
 		,memberGender
+		,memberId
+		,memberPw
+		,memberEmail
 		) VALUES (
 		#{memberName}
 		,#{memberUseNy}
@@ -89,6 +108,10 @@
 		,0
 		,now()
 		,now()
+		,#{memberGender}
+		,#{memberId}
+		,#{memberPw}
+		,#{memberEmail}
 		)
 		<selectKey resultType="String" keyProperty="memberSeq" order="AFTER">
 			SELECT last_insert_id()

@@ -16,6 +16,14 @@ public class MemberVo {
   private Date modDateTime; 
   private String memberGender;
   
+  //Login
+  private String memberId;
+  private String memberPw;
+  private String memberEmail;
+  private String memberTel;
+  
+  private String rtMember;
+  
   //search
   	private Integer shUseNy;
 	private Integer shDelNy;
@@ -88,9 +96,50 @@ public class MemberVo {
 	System.out.println("endPage : " + getEndPage());
 }
 // ----------------------------------
+	
 	public Integer getMemberSeq() {
 		return memberSeq;
 	}
+	public String getRtMember() {
+		return rtMember;
+	}
+
+	public void setRtMember(String rtMember) {
+		this.rtMember = rtMember;
+	}
+
+	public String getMemberTel() {
+		return memberTel;
+	}
+
+	public void setMemberTel(String memberTel) {
+		this.memberTel = memberTel;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public String getMemberPw() {
+		return memberPw;
+	}
+
+	public void setMemberPw(String memberPw) {
+		this.memberPw = memberPw;
+	}
+
+	public String getMemberEmail() {
+		return memberEmail;
+	}
+
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
+	}
+
 	public Integer getShUseNy() {
 		return shUseNy;
 	}

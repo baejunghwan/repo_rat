@@ -1,7 +1,5 @@
 package com.zoo.infra.codegroup;
 
-import java.util.Date;
-
 public class CodeGroupDto {
 
 	private String ifcgSeq;
@@ -10,8 +8,8 @@ public class CodeGroupDto {
 	private Integer ifcgOrder;
 	private String ifcgDesc;
 	private Integer ifcgDelNy;
-	private Date regDateTime;
-	private Date modDateTime;
+	private String regDateTime;
+	private String modDateTime;
 
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	// count
@@ -61,16 +59,16 @@ public class CodeGroupDto {
 	public void setIfcgDelNy(Integer ifcgDelNy) {
 		this.ifcgDelNy = ifcgDelNy;
 	}
-	public Date getRegDateTime() {
+	public String getRegDateTime() {
 		return regDateTime;
 	}
-	public void setRegDateTime(Date regDateTime) {
+	public void setRegDateTime(String regDateTime) {
 		this.regDateTime = regDateTime;
 	}
-	public Date getModDateTime() {
+	public String getModDateTime() {
 		return modDateTime;
 	}
-	public void setModDateTime(Date modDateTime) {
+	public void setModDateTime(String modDateTime) {
 		this.modDateTime = modDateTime;
 	}
 	public Integer getXifcgSeqCount() {

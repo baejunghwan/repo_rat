@@ -29,4 +29,6 @@ import com.zoo.infra.codegroup.CodeGroupVo;
 		//for cache
 		public List<MemberDto> selectListCachedCodeArrayList();
 
+		//login
+		public MemberDto selectOneLogin(MemberDto memberDto);
 }

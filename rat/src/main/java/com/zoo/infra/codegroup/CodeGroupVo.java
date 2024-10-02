@@ -1,7 +1,5 @@
 package com.zoo.infra.codegroup;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CodeGroupVo {
@@ -12,8 +10,8 @@ public class CodeGroupVo {
 	private Integer ifcgOrder;
 	private String ifcgDesc;
 	private Integer ifcgDelNy;
-	private Date regDateTime;
-	private Date modDateTime;
+	private String regDateTime;
+	private String modDateTime;
 	// count
 	private Integer xifcdSeqCount;
 
@@ -24,30 +22,31 @@ public class CodeGroupVo {
 	private Integer shOption;
 	private String shValue;
 	private Integer shOptionDate;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date shDateStart;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date shDateEnd;	
-	
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String shDateStart;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String shDateEnd;
+
 	// paging
 	public class Constants {
-	    public static final int ROW_NUM_TO_SHOW = 5; // 원하는 값으로 설정
-	    public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
+		public static final int ROW_NUM_TO_SHOW = 5; // 원하는 값으로 설정
+		public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
 	}
-	private int thisPage = 1;									// 현재 페이지
-	private int rowNumToShow = Constants.ROW_NUM_TO_SHOW;		// 화면에 보여줄 데이터 줄 갯수
+
+	private int thisPage = 1; // 현재 페이지
+	private int rowNumToShow = Constants.ROW_NUM_TO_SHOW; // 화면에 보여줄 데이터 줄 갯수
 //	Constatns. 이런식으로 Constatns 객체(클래스)를 만들어서 사용해도 된다.
-	private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW;		// 화면에 보여줄 페이징 번호 갯수
+	private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW; // 화면에 보여줄 페이징 번호 갯수
 
-	private int totalRows;										// 전체 데이터 갯수
-	private int totalPages;										// 전체 페이지 번호
-	private int startPage;										// 시작 페이지 번호
-	private int endPage;										// 마지막 페이지 번호
+	private int totalRows; // 전체 데이터 갯수
+	private int totalPages; // 전체 페이지 번호
+	private int startPage; // 시작 페이지 번호
+	private int endPage; // 마지막 페이지 번호
 
-	private int startRnumForMysql = 0;							// 쿼리 시작 row	
-	
+	private int startRnumForMysql = 0; // 쿼리 시작 row
+
 	public void setParamsPaging(int totalRows) {
-		//setThisPage(3);
+		// setThisPage(3);
 		setTotalRows(totalRows);
 
 		if (getTotalRows() == 0) {
@@ -63,27 +62,27 @@ public class CodeGroupVo {
 		if (getTotalPages() < getThisPage()) {
 			setThisPage(getTotalPages());
 		}
-		
+
 		setStartPage(((getThisPage() - 1) / getPageNumToShow()) * getPageNumToShow() + 1);
 
 		setEndPage(getStartPage() + getPageNumToShow() - 1);
 
 		if (getEndPage() > getTotalPages()) {
 			setEndPage(getTotalPages());
-		}	
-		
+		}
+
 		if (thisPage == 1) {
 			setStartRnumForMysql(0);
-		} else {	
-			setStartRnumForMysql((getRowNumToShow() * (getThisPage()-1)));
+		} else {
+			setStartRnumForMysql((getRowNumToShow() * (getThisPage() - 1)));
 		}
-		
+
 		System.err.println("setTotalRows(totalRows) 결과 : ");
 		System.out.println("rowNumToShow : " + getRowNumToShow());
 		System.out.println("pageNumToShow : " + getPageNumToShow());
 		System.out.println("totalRows : " + getTotalRows());
 		System.out.println("totalPages : " + getTotalPages());
-		System.out.println("startPage : "+ getStartPage());
+		System.out.println("startPage : " + getStartPage());
 		System.out.println("endPage : " + getEndPage());
 	}
 //	------
@@ -136,19 +135,19 @@ public class CodeGroupVo {
 		this.ifcgDelNy = ifcgDelNy;
 	}
 
-	public Date getRegDateTime() {
+	public String getRegDateTime() {
 		return regDateTime;
 	}
 
-	public void setRegDateTime(Date regDateTime) {
+	public void setRegDateTime(String regDateTime) {
 		this.regDateTime = regDateTime;
 	}
 
-	public Date getModDateTime() {
+	public String getModDateTime() {
 		return modDateTime;
 	}
 
-	public void setModDateTime(Date modDateTime) {
+	public void setModDateTime(String modDateTime) {
 		this.modDateTime = modDateTime;
 	}
 
@@ -200,19 +199,19 @@ public class CodeGroupVo {
 		this.shOptionDate = shOptionDate;
 	}
 
-	public Date getShDateStart() {
+	public String getShDateStart() {
 		return shDateStart;
 	}
 
-	public void setShDateStart(Date shDateStart) {
+	public void setShDateStart(String shDateStart) {
 		this.shDateStart = shDateStart;
 	}
 
-	public Date getShDateEnd() {
+	public String getShDateEnd() {
 		return shDateEnd;
 	}
 
-	public void setShDateEnd(Date shDateEnd) {
+	public void setShDateEnd(String shDateEnd) {
 		this.shDateEnd = shDateEnd;
 	}
 
@@ -279,4 +278,5 @@ public class CodeGroupVo {
 	public void setStartRnumForMysql(int startRnumForMysql) {
 		this.startRnumForMysql = startRnumForMysql;
 	}
+	
 }

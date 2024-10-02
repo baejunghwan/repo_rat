@@ -86,7 +86,6 @@ public class CodeVo {
 			System.out.println("endPage : " + getEndPage());
 		}
 //	------
-
 		public Integer getIfcdSeq() {
 			return ifcdSeq;
 		}

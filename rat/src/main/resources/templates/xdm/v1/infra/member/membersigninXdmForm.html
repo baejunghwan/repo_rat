@@ -20,49 +20,53 @@
 		<!-- Title -->
 		<title>Member Sign in</title>
 
-		<!-- *************
-			************ Common Css Files *************
-		************ -->
+		<!-- * Common Css Files * -->
 		<!-- Bootstrap css -->
 		<link rel="stylesheet" href="/xdm/v1/css/bootstrap.min.css" />
-
 		<!-- Bootstrap font icons css -->
 		<link rel="stylesheet" href="/xdm/v1/fonts/bootstrap/bootstrap-icons.css" />
-
 		<!-- Main css -->
 		<link rel="stylesheet" href="/xdm/v1/css/main.min.css" />
-
 		<!-- Login css -->
 		<link rel="stylesheet" href="/xdm/v1/css/login.css" />
-	</head>
+		
+		<style>
+/* 		validaton */
+		 .field-error {
+    border-color: #dc3545; /* 빨간색 테두리 */
+    color: #dc3545; /* 글자색도 빨간색으로 변경 (선택사항) */
+}
+        </style>
+        
+	</head>	
 
+	<!-- Login box start -->
 	<body class="login-container">
-		<!-- Login box start -->
 		<div class="container">
-			<form action="index.html">
+			<form id="form" name="form" method="post" action="/xdm/v1/infra/member/memberXdmForm"> 
 				<div class="login-box rounded-2 p-5">
 					<div class="login-form">
 						<a href="index.html" class="login-logo mb-3">
 							<img src="/xdm/v1/images/logo.svg" alt="Crowdnub Admin" />
 						</a>
-						<h5 class="fw-light mb-5">Sign in to access dashboard.</h5>
+						<h5 class="fw-light mb-5">Login</h5>
 						<div class="mb-3">
-							<label class="form-label">Your Email</label>
-							<input type="text" class="form-control" placeholder="Enter your email" />
+							<label class="form-label">아이디</label>
+							<input type="text" id="memberId" name="memberId" th:value="${item?.memberId}" class="form-control" placeholder="Enter your id" autocomplete="off" />
 						</div>
 						<div class="mb-3">
-							<label class="form-label">Your Password</label>
-							<input type="password" class="form-control" placeholder="Enter password" />
+							<label class="form-label">비밀번호</label>
+							<input type="password" id="memberPw" name="memberPw" th:value="${item?.memberPw}" class="form-control" placeholder="Enter password" />
 						</div>
 						<div class="d-flex align-items-center justify-content-between">
 							<div class="form-check m-0">
-								<input class="form-check-input" type="checkbox" value="" id="rememberPassword" />
+								<input class="form-check-input" type="checkbox" value="" id="rememberPassword"/>
 								<label class="form-check-label" for="rememberPassword">Remember</label>
 							</div>
 							<a href="forgot-password.html" class="text-blue text-decoration-underline">Lost password?</a>
 						</div>
 						<div class="d-grid py-3">
-							<button type="submit" class="btn btn-lg btn-primary">
+							<button type="button" class="btn btn-lg btn-primary" id="btnSubmit">
 								Login
 							</button>
 						</div>
@@ -84,7 +88,115 @@
 				</div>
 			</form>
 		</div>
-		<!-- Login box end -->
 	</body>
+	<!-- Login box end -->
 
+	<!-- * Required JavaScript Files * -->
+	<!-- Required jQuery first, then Bootstrap Bundle JS -->
+	<script src="/xdm/v1/js/jquery.min.js"></script>
+	<script src="/xdm/v1/js/bootstrap.bundle.min.js"></script>
+	<script src="/xdm/v1/js/modernizr.js"></script>
+	<script src="/xdm/v1/js/moment.js"></script>
+	<!-- *** Vendor Js Files *** -->
+
+	<!-- Overlay Scroll JS -->
+	<script src="/xdm/v1/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+	<script src="/xdm/v1/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+	<!-- News ticker -->
+	<script src="/xdm/v1/vendor/newsticker/newsTicker.min.js"></script>
+	<script src="/xdm/v1/vendor/newsticker/custom-newsTicker.js"></script>
+	
+	<!-- Main Js Required -->
+	<script src="/xdm/v1/js/main.js"></script>	
+		
+	<script>
+	document.getElementById("btnSubmit").onclick = function (){
+// 		alert(document.getElementById("ifcgName").value);	 
+		
+	    var memberId = document.getElementById("memberId");
+	    var memberIdValue = document.getElementById("memberId").value.trim();
+	    var memberIdRegExp = /^[A-Za-z0-9]{4,12}$/;
+		
+	    if (memberIdValue == "" || memberIdValue == null) {
+			alert("아이디를 입력해 주세요");
+			memberId.classList.add("field-error"); // 에러 클래스 추가
+			memberId.focus();
+			return false;
+			// 이 함수를 탈출한다는 의미 true, false 둘다 가능하지만 여기서는 부정적 의미이므로 false 사용
+	    } else {
+	    	memberId.classList.remove("field-error"); // 에러 클래스 제거
+// 			by pass
+	    }
+	    
+	    if(!memberIdRegExp.test(memberIdValue)){
+			alert("아이디는 4자 이상 12자 이하의 영대소문자, 숫자만 허용합니다");
+			memberId.classList.add("field-error"); // 에러 클래스 추가
+			memberId.focus();
+			return false;
+	    } else {
+	    	memberId.classList.remove("field-error"); // 에러 클래스 제거
+// 	    	by pass
+	    }
+	    
+	    var memberPw = document.getElementById("memberPw");
+	    var memberPwValue = document.getElementById("memberPw").value.trim();
+	    var memberPwRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,12}$/;
+
+	    if (memberPwValue == "" || memberPwValue == null) {
+			alert("비밀번호를 입력해주세요");
+			memberPw.classList.add("field-error"); // 에러 클래스 추가
+			memberPw.focus();
+			return false;
+	    } else {
+	    	memberPw.classList.add("field-error"); // 에러 클래스 추가
+// 			by pass
+	    }
+	    
+	    if(!memberPwRegExp.test(memberPwValue)){
+			alert("비밀번호는 영문, 숫자, 특수문자의 조합으로 이루어진 8자 이상 12자 이하만 허용합니다");
+			memberPw.classList.add("field-error"); // 에러 클래스 추가
+			memberPw.focus();
+			return false;
+	    } else {
+	    	memberPw.classList.remove("field-error"); // 에러 클래스 제거
+// 	    	by pass
+	    }
+	    
+// 		Jquery 형태로 작성된 ajax
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			/* ,dataType:"json" */
+			,url: "/xdm/v1/infra/member/membersigninProc"
+			// ajax 실행시킬 java 함수 주소
+			
+			/* ,data : $("#formLogin").serialize() */
+			,data : { "memberId" : $("#memberId").val(), "memberPw" : $("#memberPw").val(), "autoLogin" : $("#autoLogin").is(":checked")}
+			,success: function(response) {
+				if(response.rt == "success") {
+// 					if(response.changePwd == "true") {
+// 						location.href = "/xdm/v1/infra/member/expiredPwdUsrForm";
+// 					} else {
+// 						location.href = "/xdm/v1/infra/index/indexXdmView";
+// 					}
+				location.href = "/xdm/v1/infra/member/memberXdmForm";
+				// 함수 끝내고 넘어갈 페이지
+ 			
+				} else {
+// 			 		document.getElementById("modalAlertTitle").innerText = "확인";
+// 			 		document.getElementById("modalAlertBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
+// 			 		$("#modalAlert").modal("show");
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}   
+		});	    
+
+		form.action = "/xdm/v1/infra/member/membersigninProc";
+		form.submit();
+	}
+	</script>	
 </html>

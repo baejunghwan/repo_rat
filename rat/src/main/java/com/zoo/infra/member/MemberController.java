@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mysql.cj.Constants;
+
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -28,18 +30,14 @@ public class MemberController {
 //
 //			model.addAttribute("list", memberService.selectList(memberVo));
 ////			for (int i=0; i<10; i++) {
-////				
 ////				System.out.println("ifcgSeq : " + memberService.selectList(memberVo).get(i));
 ////			}
-//			
 //			return "/xdm/v1/infra/member/memberXdmList";	
 //		}
 
 		@RequestMapping(value = "/xdm/v1/infra/member/memberXdmForm")
 		public String memberXdmForm() {
-			
 			return "/xdm/v1/infra/member/memberXdmForm";
-			
 		}
 
 		@RequestMapping(value = "/xdm/v1/infra/member/memberXdmInst")
@@ -95,12 +93,6 @@ public class MemberController {
 			return "redirect:/xdm/v1/infra/member/memberXdmList";
 		}
 		
-		@RequestMapping(value = "/xdm/v1/infra/member/membersigninXdmForm")
-		public String membersigninXdmForm() {
-			
-			return "/xdm/v1/infra/member/membersigninXdmForm";
-		}
-		
 		@RequestMapping(value = "/xdm/v1/infra/member/memberXdmList")
 		public String memberXdmList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception{
 			
@@ -115,10 +107,8 @@ public class MemberController {
 			
 			model.addAttribute("list", memberService.selectList(vo));
 //			for (int i=0; i<10; i++) {
-//			
 //			System.out.println("ifcgSeq : " + codeGroupService.selectList(vo).get(i));
 //		}
-			
 			
 			vo.setParamsPaging(memberService.selectOneCount(vo));
 			
@@ -130,23 +120,51 @@ public class MemberController {
 //			return pathCommonXdm + "codeGroupXdmList";
 			return "/xdm/v1/infra/member/memberXdmList";
 	  	}
+		
+		//login
+		@RequestMapping(value = "/xdm/v1/infra/member/membersigninXdmForm")
+		public String membersigninXdmForm() {
 			
-//		ajax 
+			return "/xdm/v1/infra/member/membersigninXdmForm";
+		}
+		
+		//ajax 
 		@ResponseBody
-		@RequestMapping(value = "/xdm/v1/infra/member/loginProc")
-		public Map<String, Object> loginProc(MemberDto memberdto) throws Exception {
+		@RequestMapping(value = "/xdm/v1/infra/member/membersigninProc")
+		public Map<String, Object> membersigninProc(MemberDto memberdto, HttpSession httpSession) throws Exception {
 			
 			Map<String, Object> returnMap = new HashMap<>();
-			MemberDto rtMember = memberService.selectOne(memberdto);
-
+			MemberDto rtMember = memberService.selectOneLogin(memberdto);
+			
 				if (rtMember != null) {
 					System.out.println("성공");
+					
+//					httpSession.setMaxInactiveInterval(60 * Constants.SESSION_MINUTE_XDM); // 60second * 30 = 30minute
+					httpSession.setMaxInactiveInterval(60 * 3000); // 60second * 30 = 30minute
+					httpSession.setAttribute("sessSeqXdm", rtMember.getMemberSeq());
+					httpSession.setAttribute("sessIdXdm", rtMember.getMemberId());
+					httpSession.setAttribute("sessNameXdm", rtMember.getMemberName());
 					returnMap.put("rt", "success");
-				
+					
 				} else {
 					System.out.println("실패");
 					returnMap.put("rt", "fail");
 				}
+				System.out.println("sessSeqXdm: " + httpSession.getAttribute("sessSeqXdm"));
+				System.out.println("sessIdXdm: " + httpSession.getAttribute("sessIdXdm"));
+				System.out.println("sessNameXdm: " + httpSession.getAttribute("sessNameXdm"));				
+				
 				return returnMap;
 			}
+		
+		//logout
+		@ResponseBody
+		@RequestMapping(value = "/xdm/v1/infra/member/signoutXdmProc")
+		public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
+			Map<String, Object> returnMap = new HashMap<String, Object>();
+			httpSession.invalidate();
+			returnMap.put("rt", "success");
+			return returnMap;
+		}
+		
 	}
