@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zoo.infra.codegroup.CodeGroupDto;
-import com.zoo.infra.codegroup.CodeGroupVo;
+import com.zoo.infra.codegroup.CodeGroupService;
 
 @Controller
 public class CodeController {
@@ -17,10 +17,16 @@ public class CodeController {
 	@Autowired
 	CodeService codeService;
 
+	@Autowired
+	private CodeGroupService codeGroupService;
+
 	@RequestMapping(value = "/xdm/v1/infra/code/codeXdmForm")
-	public String codeXdmForm(Model model,CodeVo codeVo) {
+	public String codeXdmForm(Model model, CodeVo codeVo) {
 		List<CodeDto> ifcdSeq = codeService.selectList(codeVo);
-		model.addAttribute("list", ifcdSeq);
+		model.addAttribute("list", ifcdSeq); // list를 model에 추가
+
+		List<CodeGroupDto> codeGroups = codeGroupService.getAllCodeGroups(); // 코드 그룹 가져오기
+		model.addAttribute("codeGroups", codeGroups); // 코드 그룹을 모델에 추가
 		return "/xdm/v1/infra/code/codeXdmForm";
 	}
 
@@ -88,27 +94,68 @@ public class CodeController {
 //			model.addAttribute("item", dto); 
 //			return "/xdm/v1/infra/code/codeXdmMfom";		
 //}
-	
-	@RequestMapping(value = "/xdm/v1/infra/code/codeXdmList")
-	public String codeXdmList(@ModelAttribute("vo") CodeVo codeVo, Model model) throws Exception{
-		List<CodeDto> ifcdSeq = codeService.selectList(codeVo);
-		for (CodeDto codeDto : ifcdSeq) {
-			System.out.println("CodeDto codeDto : " + codeDto.getModDateTime());
-		}
 
-		model.addAttribute("list", codeService.selectList(codeVo));
-//		for (int i=0; i<10; i++) {
-//			System.out.println("ifcdSeq : " + codeService.selectList(codeVo).get(i));
+	@RequestMapping(value = "/xdm/v1/infra/code/codeXdmList")
+	public String codeXdmList(@ModelAttribute("vo") CodeVo codeVo, Model model) throws Exception {
+//		System.out.println("Initial values: thisPage = " + codeVo.getThisPage() + ", rowNumToShow = "
+//				+ codeVo.getRowNumToShow() + ", pageNumToShow = " + codeVo.getPageNumToShow());
+//
+//		// 페이지네이션을 위한 파라미터 설정
+//		codeVo.setStartRnumForMysql((codeVo.getThisPage() - 1) * codeVo.getRowNumToShow());
+//
+//		// 리스트 조회
+//		List<CodeDto> ifcdSeq = codeService.selectList(codeVo);
+//		for (CodeDto codeDto : ifcdSeq) {
+//			System.out.println("CodeDto codeDto : " + codeDto.getModDateTime());
 //		}
-		
-		codeVo.setParamsPaging(codeService.selectOneCount(codeVo));
-		
-		if (codeVo.getTotalRows() > 0) {
-//			List<CodeGroupDao> list = codeGroupService.selectList(vo));
-			model.addAttribute("list", codeService.selectList(codeVo));
-		}
-		
-		return "/xdm/v1/infra/code/codeXdmList";	
-		
+//
+//		model.addAttribute("list", codeService.selectList(codeVo));
+////		for (int i=0; i<10; i++) {
+////			System.out.println("ifcdSeq : " + codeService.selectList(codeVo).get(i));
+////		}
+//
+//		// totalRows를 조회하여 확인
+//		int totalRows = codeService.selectOneCount(codeVo);
+//		System.out.println("Total rows from database: " + totalRows);
+//
+//		codeVo.setParamsPaging(codeService.selectOneCount(codeVo));
+//
+//		if (codeVo.getTotalRows() > 0) {
+////			List<CodeGroupDao> list = codeGroupService.selectList(vo));
+//			model.addAttribute("list", codeService.selectList(codeVo));
+//		}
+
+		//
+		System.out.println("Initial values: thisPage = " + codeVo.getThisPage() + ", rowNumToShow = "
+				+ codeVo.getRowNumToShow() + ", pageNumToShow = " + codeVo.getPageNumToShow());
+
+// 페이지네이션을 위한 파라미터 설정
+		codeVo.setStartRnumForMysql((codeVo.getThisPage() - 1) * codeVo.getRowNumToShow());
+
+// 리스트 조회
+		List<CodeDto> ifcgSeq = codeService.selectList(codeVo);
+		model.addAttribute("list", ifcgSeq);
+
+// 조회한 리스트 크기 확인
+		System.out.println("Fetched list size: " + ifcgSeq.size());
+
+// totalRows를 조회하여 확인
+		int totalRows = codeService.selectOneCount(codeVo);
+		System.out.println("Total rows from database: " + totalRows);
+
+// 페이지네이션 세부사항 설정
+		codeVo.setParamsPaging(totalRows);
+
+		// 페이지네이션 상태 확인
+		System.out.println("After pagination setup: ");
+		System.out.println("rowNumToShow: " + codeVo.getRowNumToShow());
+		System.out.println("pageNumToShow: " + codeVo.getPageNumToShow());
+		System.out.println("totalRows: " + codeVo.getTotalRows());
+		System.out.println("totalPages: " + codeVo.getTotalPages());
+		System.out.println("startPage: " + codeVo.getStartPage());
+		System.out.println("endPage: " + codeVo.getEndPage());
+
+		return "/xdm/v1/infra/code/codeXdmList";
 	}
+
 }

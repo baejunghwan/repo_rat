@@ -36,7 +36,6 @@
 		,a.productOrder
 		,a.productDesc
 		,a.productDelNy
-		,a.productGender
 		,a.regDateTime
 		,a.modDateTime
 		
@@ -62,7 +61,6 @@
 		,a.productOrder
 		,a.productDesc
 		,a.productDelNy
-		,a.productGender
 		,a.regDateTime
 		,a.modDateTime
 		FROM
@@ -78,7 +76,6 @@
 		,productOrder
 		,productDesc
 		,productDelNy
-		,productGender
 		,regDateTime
 		,modDateTime
 		) VALUES (

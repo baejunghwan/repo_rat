@@ -20,56 +20,35 @@ public class CodeDto {
 	private Date modDateTime;
 	private Integer infrcodegroup_ifcgSeq;
 
+	// 포맷된 날짜 문자열 (등록 일시)
+	private String formattedRegDateTime;
+	// 포맷된 날짜 문자열 (수정 일시)
+	private String formattedModDateTime;
+
 	// count
 	private Integer xifcdSeqCount;
 
-	// search 관련된건 vo
+	// search 관련된건 VO
 	private String ifcgSeq;
 	private String ifcgName;
-	
+
 	// search
 	private Integer shDelNy;
 	private Integer shUseNy;
 	private Integer shOption;
 	private String shValue;
 
-//	for cache
+	// for cache
 	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
+
 	// ----------------------
+
+	public static List<CodeDto> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+
 	public String getIfcdSeq() {
 		return ifcdSeq;
-	}
-
-	public Integer getShDelNy() {
-		return shDelNy;
-	}
-
-	public void setShDelNy(Integer shDelNy) {
-		this.shDelNy = shDelNy;
-	}
-
-	public Integer getShUseNy() {
-		return shUseNy;
-	}
-
-	public void setShUseNy(Integer shUseNy) {
-		this.shUseNy = shUseNy;
-	}
-
-	public Integer getShOption() {
-		return shOption;
-	}
-
-	public void setShOption(Integer shOption) {
-		this.shOption = shOption;
-	}
-
-	public String getShValue() {
-		return shValue;
-	}
-
-	public void setShValue(String shValue) {
-		this.shValue = shValue;
 	}
 
 	public void setIfcdSeq(String ifcdSeq) {
@@ -140,20 +119,28 @@ public class CodeDto {
 		this.infrcodegroup_ifcgSeq = infrcodegroup_ifcgSeq;
 	}
 
+	public String getFormattedRegDateTime() {
+		return formattedRegDateTime;
+	}
+
+	public void setFormattedRegDateTime(String formattedRegDateTime) {
+		this.formattedRegDateTime = formattedRegDateTime;
+	}
+
+	public String getFormattedModDateTime() {
+		return formattedModDateTime;
+	}
+
+	public void setFormattedModDateTime(String formattedModDateTime) {
+		this.formattedModDateTime = formattedModDateTime;
+	}
+
 	public Integer getXifcdSeqCount() {
 		return xifcdSeqCount;
 	}
 
 	public void setXifcdSeqCount(Integer xifcdSeqCount) {
 		this.xifcdSeqCount = xifcdSeqCount;
-	}
-
-	public String getIfcgName() {
-		return ifcgName;
-	}
-
-	public void setIfcgName(String ifcgName) {
-		this.ifcgName = ifcgName;
 	}
 
 	public String getIfcgSeq() {
@@ -164,12 +151,48 @@ public class CodeDto {
 		this.ifcgSeq = ifcgSeq;
 	}
 
-	public static List<CodeDto> getCachedCodeArrayList() {
-		return cachedCodeArrayList;
+	public String getIfcgName() {
+		return ifcgName;
+	}
+
+	public void setIfcgName(String ifcgName) {
+		this.ifcgName = ifcgName;
+	}
+
+	public Integer getShDelNy() {
+		return shDelNy;
+	}
+
+	public void setShDelNy(Integer shDelNy) {
+		this.shDelNy = shDelNy;
+	}
+
+	public Integer getShUseNy() {
+		return shUseNy;
+	}
+
+	public void setShUseNy(Integer shUseNy) {
+		this.shUseNy = shUseNy;
+	}
+
+	public Integer getShOption() {
+		return shOption;
+	}
+
+	public void setShOption(Integer shOption) {
+		this.shOption = shOption;
+	}
+
+	public String getShValue() {
+		return shValue;
+	}
+
+	public void setShValue(String shValue) {
+		this.shValue = shValue;
 	}
 
 	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
 		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
 	}
-	
+
 }

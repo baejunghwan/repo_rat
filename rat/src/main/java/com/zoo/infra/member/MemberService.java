@@ -44,4 +44,6 @@ public class MemberService {
 		return memberDao.selectOneLogin(memberDto);
 	}
 	
+	//gender
+	
 }

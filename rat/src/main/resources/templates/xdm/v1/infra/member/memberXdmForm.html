@@ -157,7 +157,6 @@
 							<div class="header-profile-actions">
 								<a href="profile.html">Profile</a> <a
 									href="account-settings.html">Settings</a>
-								<!-- 	<a href="/xdm/v1/infra/member/membersigninXdmForm">Logout</a> -->
 								<button id="Logout-button" class="btn">Logout</button>
 							</div>
 						</div>
@@ -552,25 +551,25 @@
 
 <script>
 	document.getElementById("Logout-button").onclick = function() {
-// 		alert("작동확인");
+		// 		alert("작동확인");
 		$.ajax({
 			async : true,
 			cache : false,
-			type : "post"
-			/* ,dataType:"json" */
-			// 		,url: "/xdm/v1/infra/member/signoutXdmProc"
-			,
-			url : "/xdm/v1/infra/member/signoutXdmProc"
+			type : "post",
+			url : "/xdm/v1/infra/member/membersignoutXdmProc"
 			// ajax 실행시킬 java 함수 주소
-			/* ,data : $("#formLogin").serialize() */
-			// 		,data : { "memberId" : $("#memberId").val(), "memberPw" : $("#memberPw").val()}
 			,
+			data : $("#formLogin").serialize(),
+			data : {
+				"memberId" : $("#memberId").val(),
+				"memberPw" : $("#memberPw").val()
+			},
 			success : function(response) {
 				if (response.rt == "success") {
 					location.href = "/xdm/v1/infra/member/membersigninXdmForm";
 					// 함수 끝내고 넘어갈 페이지
 				} else {
-					// by pass
+					alert("로그아웃 실패: " + response.message); // 실패 메시지 출력
 				}
 			},
 			error : function(jqXHR, textStatus, errorThrown) {

@@ -1,125 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<!-- dto 내용 -->
+<!-- MyBatis 매퍼 정의 -->
 <mapper namespace="com.zoo.infra.codegroup.CodeGroupDao">
 
-	<!-- dao 내용 -->
-	<resultMap type="com.zoo.infra.codegroup.CodeGroupDto" id="resultMapObj">
+	<!-- 결과 맵: DTO와 SQL 결과를 매핑 -->
+	<resultMap type="com.zoo.infra.codegroup.CodeGroupDto"
+		id="resultMapObj">
 	</resultMap>
-	
+
+	<!-- 공통 SQL 조건을 정의하는 SQL 블록 -->
 	<sql id="selectCommon">
 		FROM infrCodeGroup a
-		LEFT JOIN infrCode b on b.infrcodegroup_ifcgSeq = a.ifcgSeq
+		LEFT JOIN infrCode b ON b.infrcodegroup_ifcgSeq = a.ifcgSeq
 		WHERE 1=1
-	<if test="shUseNy != null and !shUseNy.equals('')"> AND a.ifcgUseNy= #{shUseNy}</if>
-	<if test="shDelNy != null and !shDelNy.equals('')"> AND a.ifcgDelNy = #{shDelNy}</if>
-	<choose>
-		<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-		<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-	</choose>
-	<choose>
-		<when test="shOption == 1">AND a.ifcgSeq = #{shValue}</when>
-		<when test="shOption == 2">AND a.ifcgName LIKE CONCAT('%',#{shValue},'%')</when>
-<!-- 		<when test="shOption == 3">AND a.ifcgNameEng LIKE CONCAT('%',#{shValue},'%')</when> -->
-	</choose>	
+		<if test="shUseNy != null and !shUseNy.equals('')">
+			AND a.ifcgUseNy = #{shUseNy}
+		</if>
+		<if test="shDelNy != null and !shDelNy.equals('')">
+			AND a.ifcgDelNy = #{shDelNy}
+		</if>
+		<choose>
+			<when test="shOptionDate == 1">
+				AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}
+			</when>
+			<when test="shOptionDate == 2">
+				AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}
+			</when>
+		</choose>
+		<choose>
+			<when test="shOption == 1">
+				AND a.ifcgSeq = #{shValue}
+			</when>
+			<when test="shOption == 2">
+				AND a.ifcgName LIKE CONCAT('%', #{shValue}, '%')
+			</when>
+			<!-- 필요한 경우 다른 조건 추가 가능 -->
+		</choose>
 	</sql>
-	
+
+	<!-- 전체 레코드 수를 조회하는 쿼리 -->
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
-		<include refid="selectCommon"/>
+		<include refid="selectCommon" />
 	</select>
 
+	<!-- 코드 그룹 리스트를 조회하는 쿼리 -->
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.* FROM (
 		SELECT
-		a.ifcgSeq
-		,a.ifcgName
-		,a.ifcgUseNy
-		,a.ifcgOrder
-		,a.ifcgDesc
-		,a.ifcgDelNy
-		,a.regDateTime
-		,a.modDateTime
-		
-		,b.ifcdName
-		,b.ifcdSeq
-		
-		,(SELECT count(b.ifcdSeq) FROM infrCode b WHERE 1=1 AND b.infrcodegroup_ifcgSeq = a.ifcgSeq)
-		
-		AS xifcgSeqCount
-		
-		<include refid="selectCommon"/>
-		ORDER BY
-		a.ifcgSeq DESC
-			) aa
-		limit #{rowNumToShow} offset #{startRnumForMysql}
+		a.ifcgSeq,
+		a.ifcgName,
+		a.ifcgUseNy,
+		a.ifcgOrder,
+		a.ifcgDesc,
+		a.ifcgDelNy,
+		a.regDateTime,
+		a.modDateTime,
+		b.ifcdName,
+		b.ifcdSeq,
+		(SELECT COUNT(b.ifcdSeq) FROM infrCode b WHERE 1=1 AND
+		b.infrcodegroup_ifcgSeq = a.ifcgSeq) AS xifcgSeqCount
+		<include refid="selectCommon" />
+		ORDER BY a.ifcgSeq DESC
+		) aa
+		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
 	</select>
 
+	<!-- 특정 코드 그룹을 조회하는 쿼리 -->
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
-		a.ifcgSeq
-		,a.ifcgName
-		,a.ifcgUseNy
-		,a.ifcgOrder
-		,a.ifcgDesc
-		,a.ifcgDelNy
-		,a.regDateTime
-		,a.modDateTime
+		a.ifcgSeq,
+		a.ifcgName,
+		a.ifcgUseNy,
+		a.ifcgOrder,
+		a.ifcgDesc,
+		a.ifcgDelNy,
+		a.regDateTime,
+		a.modDateTime
 		FROM
 		infrCodeGroup a
 		WHERE 1=1
 		AND a.ifcgSeq = #{ifcgSeq}
 	</select>
 
+	<!-- 코드 그룹을 등록하는 쿼리 -->
 	<insert id="insert">
-		INSERT INTO infrcodegroup (
-		ifcgName
-		,ifcgUseNy
-		,ifcgOrder
-		,ifcgDesc
-		,ifcgDelNy
-		,regDateTime
-		,modDateTime
+		INSERT INTO infrCodeGroup (
+		ifcgName,
+		ifcgUseNy,
+		ifcgOrder,
+		ifcgDesc,
+		ifcgDelNy,
+		regDateTime,
+		modDateTime
 		) VALUES (
-		#{ifcgName}
-		,#{ifcgUseNy}
-		,#{ifcgOrder} 	
-		,#{ifcgDesc}
-		,0
-		,now()
-		,now()
+		#{ifcgName},
+		#{ifcgUseNy},
+		#{ifcgOrder},
+		#{ifcgDesc},
+		0, <!-- 기본값으로 삭제되지 않음 -->
+		NOW(), <!-- 현재 시간으로 등록 일시 설정 -->
+		NOW()
 		)
-		<selectKey resultType="String" keyProperty="ifcgSeq" order="AFTER">
-			SELECT last_insert_id()
+		<selectKey resultType="String" keyProperty="ifcgSeq"
+			order="AFTER">
+			SELECT LAST_INSERT_ID() <!-- 방금 삽입한 레코드의 ID 가져오기 -->
 		</selectKey>
 	</insert>
 
+	<!-- 코드 그룹 정보를 업데이트하는 쿼리 -->
 	<update id="update">
 		UPDATE infrCodeGroup
 		SET
-		ifcgName = #{ifcgName}
-		,ifcgUseNy = #{ifcgUseNy}
-		,ifcgOrder = #{ifcgOrder}
+		ifcgName = #{ifcgName},
+		ifcgUseNy = #{ifcgUseNy},
+		ifcgOrder = #{ifcgOrder}
 		WHERE 1=1
-		AND ifcgSeq
-		= #{ifcgSeq}
+		AND ifcgSeq = #{ifcgSeq}
 	</update>
 
+	<!-- 코드 그룹을 삭제하는 쿼리 -->
 	<delete id="delete">
 		DELETE FROM infrCodeGroup
 		WHERE 1=1
-		AND ifcgSeq =
-		#{ifcgSeq}
+		AND ifcgSeq = #{ifcgSeq}
 	</delete>
 
+	<!-- 코드 그룹을 소프트 삭제하는 쿼리 -->
 	<update id="uelete">
 		UPDATE infrCodeGroup
 		SET
 		ifcgDelNy = 1
 		WHERE 1=1
-		AND
-		ifcgSeq = #{ifcgSeq}
+		AND ifcgSeq = #{ifcgSeq}
 	</update>
-	
-</mapper> 
+
+	<!-- 모든 코드 그룹을 조회하는 쿼리 -->
+	<select id="getAllCodeGroups"
+		resultType="com.zoo.infra.codegroup.CodeGroupDto">
+		SELECT * FROM infrCodeGroup
+	</select>
+
+</mapper>

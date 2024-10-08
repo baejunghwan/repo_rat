@@ -7,38 +7,66 @@ import java.util.List;
 import com.zoo.infra.codegroup.CodeGroupDto;
 
 public class MemberDto {
-		
-  private Integer memberSeq;
-  private String memberName;
-  private Integer memberUseNy;
-  private Integer memberOrder;
-  private String memberDesc; 
-  private Integer memberDelNy; 
-  private Date regDateTime; 
-  private Date modDateTime; 
-  private Integer memberGender;
-  
-  // Login
-  private String memberId;
-  private String memberPw;
-  private String memberEmail;
-  private String memberTel;
-  
-  private String rtMember;
-  
-  //count
-  private Integer memberSeqCount;
-  
-  //for cache
-  public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
-  // ----------------------------
-	
-	public static void setCachedCodeArrayList(List<MemberDto> cachedCodeArrayList) {
-		MemberDto.cachedCodeArrayList = cachedCodeArrayList;
-	}
+
+	private Integer memberSeq;
+	private String memberName;
+	private Integer memberUseNy;
+	private Integer memberOrder;
+	private String memberDesc;
+	private Integer memberDelNy;
+	private Date regDateTime;
+	private Date modDateTime;
+	private Integer memberGender;
+
+	// 포맷된 날짜 문자열 (등록 일시)
+	private String formattedRegDateTime;
+	// 포맷된 날짜 문자열 (수정 일시)
+	private String formattedModDateTime;
+
+	// Login
+	private String memberId;
+	private String memberPw;
+	private String memberEmail;
+	private String memberTel;
+
+	private String rtMember;
+
+	// gender
+	private String gender;
+
+	// count
+	private Integer memberSeqCount;
+
+	// for cache
+	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
+	// ----------------------------
 
 	public Integer getMemberSeq() {
 		return memberSeq;
+	}
+
+	public String getFormattedRegDateTime() {
+		return formattedRegDateTime;
+	}
+
+	public void setFormattedRegDateTime(String formattedRegDateTime) {
+		this.formattedRegDateTime = formattedRegDateTime;
+	}
+
+	public String getFormattedModDateTime() {
+		return formattedModDateTime;
+	}
+
+	public void setFormattedModDateTime(String formattedModDateTime) {
+		this.formattedModDateTime = formattedModDateTime;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public void setMemberSeq(Integer memberSeq) {
@@ -159,6 +187,10 @@ public class MemberDto {
 
 	public static List<MemberDto> getCachedCodeArrayList() {
 		return cachedCodeArrayList;
+	}
+
+	public static void setCachedCodeArrayList(List<MemberDto> cachedCodeArrayList) {
+		MemberDto.cachedCodeArrayList = cachedCodeArrayList;
 	}
 
 }

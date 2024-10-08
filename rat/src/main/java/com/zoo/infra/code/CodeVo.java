@@ -1,7 +1,5 @@
 package com.zoo.infra.code;
 
-import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CodeVo {
@@ -12,271 +10,280 @@ public class CodeVo {
 	private Integer ifcdOrder;
 	private String ifcdDesc;
 	private Integer ifcdDelNy;
-	private Date regDateTime;
-	private Date modDateTime;
+	private String regDateTime;
+	private String modDateTime;
+
 	// count
 	private Integer xifcdSeqCount;
-	
+
 	// search
 	private Integer shUseNy;
 	private Integer shDelNy;
-
 	private Integer shOption;
 	private String shValue;
 	private Integer shOptionDate;
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date shDateStart;
+	private String shDateStart;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date shDateEnd;	
+	private String shDateEnd;
 
 	// paging
-		public class Constants {
-		    public static final int ROW_NUM_TO_SHOW = 5; // 원하는 값으로 설정
-		    public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
+	private int thisPage = 1; // 현재 페이지
+	private int rowNumToShow = Constants.ROW_NUM_TO_SHOW; // 화면에 보여줄 데이터 줄 갯수
+	private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW; // 화면에 보여줄 페이징 번호 갯수
+
+	private int totalRows; // 전체 데이터 갯수
+	private int totalPages; // 전체 페이지 번호
+	private int startPage; // 시작 페이지 번호
+	private int endPage; // 마지막 페이지 번호
+	private int startRnumForMysql = 0; // 쿼리 시작 row
+
+	// 상단 paging 유효성 검사
+	public void validate() {
+		if (thisPage < 1) {
+			thisPage = 1; // 기본값 설정
 		}
-		private int thisPage = 1;									// 현재 페이지
-		private int rowNumToShow = Constants.ROW_NUM_TO_SHOW;		// 화면에 보여줄 데이터 줄 갯수
-		private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW;		// 화면에 보여줄 페이징 번호 갯수
-
-		private int totalRows;										// 전체 데이터 갯수
-		private int totalPages;										// 전체 페이지 번호
-		private int startPage;										// 시작 페이지 번호
-		private int endPage;										// 마지막 페이지 번호
-
-		private int startRnumForMysql = 0;							// 쿼리 시작 row	
-		
-		public void setParamsPaging(int totalRows) {
-			//setThisPage(3);
-			setTotalRows(totalRows);
-
-			if (getTotalRows() == 0) {
-				setTotalPages(1);
-			} else {
-				setTotalPages(getTotalRows() / getRowNumToShow());
-			}
-
-			if (getTotalRows() % getRowNumToShow() > 0) {
-				setTotalPages(getTotalPages() + 1);
-			}
-
-			if (getTotalPages() < getThisPage()) {
-				setThisPage(getTotalPages());
-			}
-			
-			setStartPage(((getThisPage() - 1) / getPageNumToShow()) * getPageNumToShow() + 1);
-
-			setEndPage(getStartPage() + getPageNumToShow() - 1);
-
-			if (getEndPage() > getTotalPages()) {
-				setEndPage(getTotalPages());
-			}	
-			
-			if (thisPage == 1) {
-				setStartRnumForMysql(0);
-			} else {	
-				setStartRnumForMysql((getRowNumToShow() * (getThisPage()-1)));
-			}
-			
-			System.err.println("setTotalRows(totalRows) 결과 : ");
-			System.out.println("rowNumToShow : " + getRowNumToShow());
-			System.out.println("pageNumToShow : " + getPageNumToShow());
-			System.out.println("totalRows : " + getTotalRows());
-			System.out.println("totalPages : " + getTotalPages());
-			System.out.println("startPage : "+ getStartPage());
-			System.out.println("endPage : " + getEndPage());
+		if (rowNumToShow <= 0) {
+			rowNumToShow = Constants.ROW_NUM_TO_SHOW; // 기본값 설정
 		}
-//	------
-		public Integer getIfcdSeq() {
-			return ifcdSeq;
+	}
+
+	public void setParamsPaging(int totalRows) {
+		setTotalRows(totalRows);
+
+		if (getTotalRows() == 0) {
+			setTotalPages(1);
+		} else {
+			setTotalPages(getTotalRows() / getRowNumToShow());
 		}
 
-		public void setIfcdSeq(Integer ifcdSeq) {
-			this.ifcdSeq = ifcdSeq;
+		if (getTotalRows() % getRowNumToShow() > 0) {
+			setTotalPages(getTotalPages() + 1);
 		}
 
-		public String getIfcdName() {
-			return ifcdName;
+		if (getTotalPages() < getThisPage()) {
+			setThisPage(getTotalPages());
 		}
 
-		public void setIfcdName(String ifcdName) {
-			this.ifcdName = ifcdName;
+		setStartPage(((getThisPage() - 1) / getPageNumToShow()) * getPageNumToShow() + 1);
+
+		setEndPage(getStartPage() + getPageNumToShow() - 1);
+
+		if (getEndPage() > getTotalPages()) {
+			setEndPage(getTotalPages());
 		}
 
-		public Integer getIfcdUseNy() {
-			return ifcdUseNy;
+		if (thisPage == 1) {
+			setStartRnumForMysql(0);
+		} else {
+			setStartRnumForMysql((getRowNumToShow() * (getThisPage() - 1)));
 		}
 
-		public void setIfcdUseNy(Integer ifcdUseNy) {
-			this.ifcdUseNy = ifcdUseNy;
-		}
+		System.err.println("setTotalRows(totalRows) 결과 : ");
+		System.out.println("rowNumToShow : " + getRowNumToShow());
+		System.out.println("pageNumToShow : " + getPageNumToShow());
+		System.out.println("totalRows : " + getTotalRows());
+		System.out.println("totalPages : " + getTotalPages());
+		System.out.println("startPage : " + getStartPage());
+		System.out.println("endPage : " + getEndPage());
+	}
 
-		public Integer getIfcdOrder() {
-			return ifcdOrder;
-		}
+//	------------------------------------------------------------
 
-		public void setIfcdOrder(Integer ifcdOrder) {
-			this.ifcdOrder = ifcdOrder;
-		}
+	public Integer getIfcdSeq() {
+		return ifcdSeq;
+	}
 
-		public String getIfcdDesc() {
-			return ifcdDesc;
-		}
+	public String getRegDateTime() {
+		return regDateTime;
+	}
 
-		public void setIfcdDesc(String ifcdDesc) {
-			this.ifcdDesc = ifcdDesc;
-		}
+	public void setRegDateTime(String regDateTime) {
+		this.regDateTime = regDateTime;
+	}
 
-		public Integer getIfcdDelNy() {
-			return ifcdDelNy;
-		}
+	public String getModDateTime() {
+		return modDateTime;
+	}
 
-		public void setIfcdDelNy(Integer ifcdDelNy) {
-			this.ifcdDelNy = ifcdDelNy;
-		}
+	public void setModDateTime(String modDateTime) {
+		this.modDateTime = modDateTime;
+	}
 
-		public Date getRegDateTime() {
-			return regDateTime;
-		}
+	public void setIfcdSeq(Integer ifcdSeq) {
+		this.ifcdSeq = ifcdSeq;
+	}
 
-		public void setRegDateTime(Date regDateTime) {
-			this.regDateTime = regDateTime;
-		}
+	public String getIfcdName() {
+		return ifcdName;
+	}
 
-		public Date getModDateTime() {
-			return modDateTime;
-		}
+	public void setIfcdName(String ifcdName) {
+		this.ifcdName = ifcdName;
+	}
 
-		public void setModDateTime(Date modDateTime) {
-			this.modDateTime = modDateTime;
-		}
+	public Integer getIfcdUseNy() {
+		return ifcdUseNy;
+	}
 
-		public Integer getXifcdSeqCount() {
-			return xifcdSeqCount;
-		}
+	public void setIfcdUseNy(Integer ifcdUseNy) {
+		this.ifcdUseNy = ifcdUseNy;
+	}
 
-		public void setXifcdSeqCount(Integer xifcdSeqCount) {
-			this.xifcdSeqCount = xifcdSeqCount;
-		}
+	public Integer getIfcdOrder() {
+		return ifcdOrder;
+	}
 
-		public Integer getShUseNy() {
-			return shUseNy;
-		}
+	public void setIfcdOrder(Integer ifcdOrder) {
+		this.ifcdOrder = ifcdOrder;
+	}
 
-		public void setShUseNy(Integer shUseNy) {
-			this.shUseNy = shUseNy;
-		}
+	public String getIfcdDesc() {
+		return ifcdDesc;
+	}
 
-		public Integer getShDelNy() {
-			return shDelNy;
-		}
+	public void setIfcdDesc(String ifcdDesc) {
+		this.ifcdDesc = ifcdDesc;
+	}
 
-		public void setShDelNy(Integer shDelNy) {
-			this.shDelNy = shDelNy;
-		}
+	public Integer getIfcdDelNy() {
+		return ifcdDelNy;
+	}
 
-		public Integer getShOption() {
-			return shOption;
-		}
+	public void setIfcdDelNy(Integer ifcdDelNy) {
+		this.ifcdDelNy = ifcdDelNy;
+	}
 
-		public void setShOption(Integer shOption) {
-			this.shOption = shOption;
-		}
+	public Integer getXifcdSeqCount() {
+		return xifcdSeqCount;
+	}
 
-		public String getShValue() {
-			return shValue;
-		}
+	public void setXifcdSeqCount(Integer xifcdSeqCount) {
+		this.xifcdSeqCount = xifcdSeqCount;
+	}
 
-		public void setShValue(String shValue) {
-			this.shValue = shValue;
-		}
+	public Integer getShUseNy() {
+		return shUseNy;
+	}
 
-		public Integer getShOptionDate() {
-			return shOptionDate;
-		}
+	public void setShUseNy(Integer shUseNy) {
+		this.shUseNy = shUseNy;
+	}
 
-		public void setShOptionDate(Integer shOptionDate) {
-			this.shOptionDate = shOptionDate;
-		}
+	public Integer getShDelNy() {
+		return shDelNy;
+	}
 
-		public Date getShDateStart() {
-			return shDateStart;
-		}
+	public void setShDelNy(Integer shDelNy) {
+		this.shDelNy = shDelNy;
+	}
 
-		public void setShDateStart(Date shDateStart) {
-			this.shDateStart = shDateStart;
-		}
+	public Integer getShOption() {
+		return shOption;
+	}
 
-		public Date getShDateEnd() {
-			return shDateEnd;
-		}
+	public void setShOption(Integer shOption) {
+		this.shOption = shOption;
+	}
 
-		public void setShDateEnd(Date shDateEnd) {
-			this.shDateEnd = shDateEnd;
-		}
+	public String getShValue() {
+		return shValue;
+	}
 
-		public int getThisPage() {
-			return thisPage;
-		}
+	public void setShValue(String shValue) {
+		this.shValue = shValue;
+	}
 
-		public void setThisPage(int thisPage) {
-			this.thisPage = thisPage;
-		}
+	public Integer getShOptionDate() {
+		return shOptionDate;
+	}
 
-		public int getRowNumToShow() {
-			return rowNumToShow;
-		}
+	public void setShOptionDate(Integer shOptionDate) {
+		this.shOptionDate = shOptionDate;
+	}
 
-		public void setRowNumToShow(int rowNumToShow) {
-			this.rowNumToShow = rowNumToShow;
-		}
+	public String getShDateStart() {
+		return shDateStart;
+	}
 
-		public int getPageNumToShow() {
-			return pageNumToShow;
-		}
+	public void setShDateStart(String shDateStart) {
+		this.shDateStart = shDateStart;
+	}
 
-		public void setPageNumToShow(int pageNumToShow) {
-			this.pageNumToShow = pageNumToShow;
-		}
+	public String getShDateEnd() {
+		return shDateEnd;
+	}
 
-		public int getTotalRows() {
-			return totalRows;
-		}
+	public void setShDateEnd(String shDateEnd) {
+		this.shDateEnd = shDateEnd;
+	}
 
-		public void setTotalRows(int totalRows) {
-			this.totalRows = totalRows;
-		}
+	public int getThisPage() {
+		return thisPage;
+	}
 
-		public int getTotalPages() {
-			return totalPages;
-		}
+	public void setThisPage(int thisPage) {
+		this.thisPage = thisPage;
+	}
 
-		public void setTotalPages(int totalPages) {
-			this.totalPages = totalPages;
-		}
+	public int getRowNumToShow() {
+		return rowNumToShow;
+	}
 
-		public int getStartPage() {
-			return startPage;
-		}
+	public void setRowNumToShow(int rowNumToShow) {
+		this.rowNumToShow = rowNumToShow;
+	}
 
-		public void setStartPage(int startPage) {
-			this.startPage = startPage;
-		}
+	public int getPageNumToShow() {
+		return pageNumToShow;
+	}
 
-		public int getEndPage() {
-			return endPage;
-		}
+	public void setPageNumToShow(int pageNumToShow) {
+		this.pageNumToShow = pageNumToShow;
+	}
 
-		public void setEndPage(int endPage) {
-			this.endPage = endPage;
-		}
+	public int getTotalRows() {
+		return totalRows;
+	}
 
-		public int getStartRnumForMysql() {
-			return startRnumForMysql;
-		}
+	public void setTotalRows(int totalRows) {
+		this.totalRows = totalRows;
+	}
 
-		public void setStartRnumForMysql(int startRnumForMysql) {
-			this.startRnumForMysql = startRnumForMysql;
-		}
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public int getStartRnumForMysql() {
+		return startRnumForMysql;
+	}
+
+	public void setStartRnumForMysql(int startRnumForMysql) {
+		this.startRnumForMysql = startRnumForMysql;
+	}
+
+}
 
 //	public String getShDateStart() {
 //		return shDateStart;
@@ -294,4 +301,8 @@ public class CodeVo {
 //		this.shDateEnd = shDateEnd + " 23:59:59";
 //	}
 
+// Constants 클래스를 내부 클래스에서 외부 클래스로 분리
+class Constants {
+	public static final int ROW_NUM_TO_SHOW = 5; // 원하는 값으로 설정
+	public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
 }

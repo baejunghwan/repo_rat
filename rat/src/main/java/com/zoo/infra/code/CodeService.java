@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zoo.infra.codegroup.CodeGroupDto;
 import com.zoo.infra.codegroup.CodeGroupVo;
 
 import jakarta.annotation.PostConstruct;
@@ -15,6 +16,13 @@ public class CodeService {
 	@Autowired
 	public CodeDao codeDao;
 
+//	public List<CodeDto> selectList(CodeVo codeVo) {
+//		int totalRows = codeDao.selectOneCount(codeVo); // 총 데이터 개수 조회
+//		codeVo.setParamsPaging(totalRows); // 페이징 정보 설정
+//	    List<CodeDto> codeList = codeDao.selectList(codeVo); // 데이터 리스트 조회
+//	    return codeList; // 결과 반환
+//	}
+	
 	public List<CodeDto> selectList(CodeVo codeVo) {
 		return codeDao.selectList(codeVo);
 	}
@@ -33,6 +41,7 @@ public class CodeService {
 //		CodeDto dto = codeDao.selectOne(codeDto);
 //		return dto;
 //	}
+
 	public int update(CodeDto codeDto) {
 		return codeDao.update(codeDto);
 	}
@@ -44,32 +53,32 @@ public class CodeService {
 	public int uelete(CodeDto codeDto) {
 		return codeDao.uelete(codeDto);
 	}
-	
-	//paging
-		public int selectOneCount(CodeVo vo) { 
-	    	return codeDao.selectOneCount(vo); 
-	    }
-	
-	//for cache
-	//서버올라갈떄 특정함수를 cache 에 올리고 싶다
-    @PostConstruct
+
+	// paging
+	public int selectOneCount(CodeVo vo) {
+		return codeDao.selectOneCount(vo);
+	}
+
+	// for cache
+	// 서버올라갈떄 특정함수를 cache 에 올리고 싶다
+	@PostConstruct
 	public void selectListCachedCodeArrayList() throws Exception {
 		List<CodeDto> codeListFromDb = (ArrayList<CodeDto>) codeDao.selectListCachedCodeArrayList();
 //		codeListFromDb = (ArrayList<Code>) dao.selectListCachedCodeArrayList();
-		CodeDto.cachedCodeArrayList.clear(); 
+		CodeDto.cachedCodeArrayList.clear();
 		CodeDto.cachedCodeArrayList.addAll(codeListFromDb);
 		System.out.println("cachedCodeArrayList: " + CodeDto.cachedCodeArrayList.size() + " chached !");
 	}
-    
-    //추가로 for cahce 목적으로 사용할 함수들 추가함
-    public static void clear() throws Exception {
+
+	// 추가로 for cahce 목적으로 사용할 함수들 추가함
+	public static void clear() throws Exception {
 		CodeDto.cachedCodeArrayList.clear();
 	}
-	
-	// cgSeq string이 들어오면 dto로 반환하겠다는 의미 
+
+	// cgSeq string이 들어오면 dto로 반환하겠다는 의미
 	public static List<CodeDto> selectListCachedCode(String ifcgSeq) throws Exception {
 		List<CodeDto> rt = new ArrayList<CodeDto>();
-		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
+		for (CodeDto codeRow : CodeDto.cachedCodeArrayList) {
 			if (codeRow.getIfcgSeq().equals(ifcgSeq)) {
 				rt.add(codeRow);
 			} else {
@@ -78,10 +87,10 @@ public class CodeService {
 		}
 		return rt;
 	}
-	
+
 	public static String selectOneCachedCode(int memberGender) throws Exception {
 		String rt = "";
-		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
+		for (CodeDto codeRow : CodeDto.cachedCodeArrayList) {
 			if (codeRow.getIfcgSeq().equals(Integer.toString(memberGender))) {
 				rt = codeRow.getIfcdName();
 			} else {
@@ -91,4 +100,5 @@ public class CodeService {
 		System.out.println("rt: " + rt);
 		return rt;
 	}
+
 }

@@ -27,11 +27,11 @@ public interface CodeDao {
 	public int delete(CodeDto codeDto);
 
 	public int uelete(CodeDto codeDto);
-	
-	//paging
-	public int selectOneCount(CodeVo codevo);
-	
-	//for cache
-		public List<CodeDto> selectListCachedCodeArrayList();
+
+	// paging
+	public int selectOneCount(CodeVo vo);
+
+	// for cache
+	public List<CodeDto> selectListCachedCodeArrayList();
 
 }

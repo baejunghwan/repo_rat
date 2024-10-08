@@ -48,7 +48,8 @@
 	href="/xdm/v1/vendor/datatables/dataTables.bs5-custom.css" />
 
 <!-- by developer -->
-<link rel="stylesheet" href="/xdm/v1/css/datetimepicker/jquery.datetimepicker.min.css">
+<link rel="stylesheet"
+	href="/xdm/v1/css/datetimepicker/jquery.datetimepicker.min.css">
 
 <!-- 내가 작성한 CSS -->
 <style>
@@ -130,8 +131,8 @@
 						<div class="dropdown-menu dropdown-menu-end shadow-lg">
 							<div class="dropdown-item">
 								<div class="d-flex py-2 border-bottom">
-									<img src="/xdm/v1/images/user.png" class="img-3x me-3 rounded-3"
-										alt="Admin Dashboards" />
+									<img src="/xdm/v1/images/user.png"
+										class="img-3x me-3 rounded-3" alt="Admin Dashboards" />
 									<div class="m-0">
 										<h6 class="mb-1 fw-semibold">Sophie Michiels</h6>
 										<p class="mb-1">Membership has been ended.</p>
@@ -349,11 +350,14 @@
 				</div>
 				<!-- Sidebar menu ends -->
 			</nav>
-			
+
 			<!-- Sidebar wrapper end -->
-			<form id="formList" name="formList" method="post" action="/xdm/v1/infra/codegroup/codeGroupXdmList" autocomplete="off">
-				<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
-				<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+			<!-- 메인 영역 -->
+			<form id="formList" name="formList" method="post"
+				action="/xdm/v1/infra/codegroup/codeGroupXdmList" autocomplete="off">
+				<input type="hidden" name="thisPage" th:value="${vo.thisPage}"
+					default="1" /> <input type="hidden" id="rowNumToShow"
+					name="rowNumToShow" th:value="${vo.rowNumToShow}" />
 				<!-- Content wrapper scroll start -->
 				<div class="content-wrapper">
 					<div class="content-wrapper-scroll">
@@ -377,7 +381,8 @@
 								</select>
 							</div>
 							<div>
-								<select id="shOptionDate" name="shOptionDate" class="form-select">
+								<select id="shOptionDate" name="shOptionDate"
+									class="form-select">
 									<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
 									<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
 									<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
@@ -385,33 +390,41 @@
 							</div>
 							<div>
 								<input type="text" id="shDateStart" name="shDateStart"
-									placeholder="시작일" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" class="form-control" autocomplete="off">
+									placeholder="시작일"
+									th:value="${vo.shDateStart != null && vo.shDateStart.length() > 0 ? #strings.substring(vo.shDateStart, 0, 10) : ''}"
+									class="form-control" autocomplete="off">
 							</div>
 							<div>
 								<input type="text" id="shDateEnd" name="shDateEnd"
-									placeholder="종료일" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" class="form-control" autocomplete="off">
+									placeholder="종료일"
+									th:value="${vo.shDateEnd != null && vo.shDateEnd.length() > 0 ? #strings.substring(vo.shDateEnd, 0, 10) : ''}"
+									class="form-control" autocomplete="off">
 							</div>
 							<br>
 							<div>
 								<select id="shOption" name="shOption" class="form-select"
-									aria-label="Default select example">
+									aria-label="Default select example">s
 									<option value="" th:selected="${vo.shOption == null}" hidden>검색구분</option>
 									<option value="1" th:selected="${vo.shOption == 1}">일련번호</option>
-									<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+									<option value="2" th:selected="${vo.shOption == 2}">코드그룹
+										이름</option>
 								</select>
 							</div>
 							<div>
-								<input type="text" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" class="form-control"
-									placeholder="검색어" autocomplete="off">
+								<input type="text" id="shValue" name="shValue"
+									th:value="${vo.shValue}" onkeyup="enterkey()"
+									class="form-control" placeholder="검색어" autocomplete="off">
 								<div class="invalid-feedback" id="shValueFeedback"></div>
 							</div>
 							<div class="col">
-							<button type="submit" id="btnSearch" name="btnSearch" class="btn btn-outline-secondary btn-sm btn_custom">
+								<button type="submit" id="btnSearch" name="btnSearch"
+									class="btn btn-outline-secondary btn-sm btn_custom">
 									<i class="bi bi-search"></i>
-							</button>	
-							<button type="submit" id="btnReset" name="btnReset" class="btn btn-outline-secondary btn-sm btn_custom">
+								</button>
+								<button type="submit" id="btnReset" name="btnReset"
+									class="btn btn-outline-secondary btn-sm btn_custom">
 									<i class="bi bi-arrow-clockwise"></i>
-							</button>
+								</button>
 							</div>
 						</div>
 						<!-- Main header ends -->
@@ -424,99 +437,126 @@
 							<div class="col-sm-12 col-12">
 								<!-- Card start -->
 								<div class="card">
-								    <div class="card-header d-flex justify-content-between align-items-center">
-								        <div class="card-title" style="margin-top: 4px;">
-								            <span class="align-middle" th:text="'Total: ' + ${vo.totalRows}"></span>
-								        </div>
-									        <div class="col-3 col-md-2 col-xl-2 text-end">
-									            <select class="form-select form-select-sm" id="changeRowNum" name="changeRowNum">
-									                <option value="5" th:selected="${vo.rowNumToShow eq 5}">5</option>
-									                <option value="10" th:selected="${vo.rowNumToShow eq 10}">10</option>
-									                <option value="50" th:selected="${vo.rowNumToShow eq 50}">50</option>
-									            </select>
-									        </div>
-									    </div>
-								    
-											<div class="card-body">
-												<div class="table-responsive">	
-													<table class="table custom-table">
-														<thead>
-															<tr>
-																<th>
-																	<div class="form-check">
-																		<input class="form-check-input" type="checkbox"
-																			id="flexCheckChecked" checked>
-																	</div>
-																</th>
-																<th>그룹 번호</th>
-																<th>코드그룹 이름</th>
-																<th>코드 번호</th>
-																<th>코드 이름</th>
-																<th>해당그룹 사용중 코드수</th>
-																<th>순서</th>
-																<th>사용여부</th>
-																<th>삭제여부</th>
-																<th>등록시간</th>
-																<th>변경시간</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr th:if="${#lists.isEmpty(list)}">
-																<td colspan="10">
-																	<p>There are no data!</p>
-																</td>
-															</tr>
-															<tr th:if="${!#lists.isEmpty(list)}"
-																th:each="list : ${list}">
-																<td>
-																	<div class="form-check">
-																		<input class="form-check-input" type="checkbox"
-																			id="flexCheckChecked" checked>
-																	</div>
-																</td>
-																<!-- # = 순번처리  -->
-<!-- 																<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td> -->
-															    <td th:text="${list.ifcgSeq}"></td>
-																<td class="ifcgSeq align-middle fw-semi-bold"><a
-																	th:href="@{/xdm/v1/infra/codegroup/codeGroupXdmMfom(ifcgSeq=${list.ifcgSeq})}"
-																	th:text="${list?.ifcgName}"></a></td>	
-																	
-																<td th:text="${list.ifcdSeq}"></td>
-																<td th:text="${list.ifcdSeq == list.ifcgSeq ? list.ifcdName : ''}"></td>
-																
-																<td th:text="${list.xifcgSeqCount}"></td>
-																<td th:text="${list?.ifcgOrder}"></td>
-																<td th:if="${list.ifcgUseNy eq 0}"
-																	class="ifcgUseNy align-middle">N</td>
-																<td th:unless="${list.ifcgUseNy eq 0}"
-																	class="ifcgUseNy align-middle">Y</td>
-																<td th:if="${list.ifcgDelNy eq 0}"
-																	class="ifcgDelNy align-middle">N</td>
-																<td th:unless="${list.ifcgDelNy eq 0}"
-																	class="ifcgDelNy align-middle">Y</td>
-																<td
-																	th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-																	class="regDateTime align-middle"></td>
-																<td
-																	th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-																	class="modDateTime align-middle"></td>
-															</tr>
-														</tbody>
-													</table>
-											
-										<!-- pagination -->
+									<div
+										class="card-header d-flex justify-content-between align-items-center">
+										<div class="card-title" style="margin-top: 4px;">
+											<span class="align-middle"
+												th:text="'Total: ' + ${vo.totalRows}"></span>
+										</div>
+
+										<!-- 										<form id="formList" name="formList" method="post" -->
+										<!-- 											action="/xdm/v1/infra/codegroup/codeGroupXdmList" -->
+										<!-- 											autocomplete="off"> -->
+										<div class="col-3 col-md-2 col-xl-2 text-end">
+											<input type="hidden" id="rowNumToShow" name="rowNumToShow"
+												value="5">
+											<!-- 나머지 폼 요소들 -->
+											<select class="form-select form-select-sm" id="changeRowNum"
+												onchange="updateRowNum()">
+												<option value="5" th:selected="${vo.rowNumToShow == 5}">5</option>
+												<option value="10" th:selected="${vo.rowNumToShow == 10}">10</option>
+												<option value="20" th:selected="${vo.rowNumToShow == 20}">20</option>
+											</select>
+										</div>
+									</div>
+									<!-- 			</form> -->
+
+									<div class="card-body">
+										<div class="table-responsive">
+											<table class="table custom-table">
+												<thead>
+													<tr>
+														<th>
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox"
+																	id="flexCheckChecked" checked>
+															</div>
+														</th>
+														<th>그룹 번호</th>
+														<th>코드그룹 이름</th>
+														<th>코드 번호</th>
+														<th>코드 이름</th>
+														<th>해당그룹 사용중 코드수</th>
+														<th>순서</th>
+														<th>사용여부</th>
+														<th>삭제여부</th>
+														<th>등록시간</th>
+														<th>변경시간</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:if="${#lists.isEmpty(list)}">
+														<td colspan="10">
+															<p>There are no data!</p>
+														</td>
+													</tr>
+													<tr th:if="${!#lists.isEmpty(list)}"
+														th:each="list : ${list}">
+														<td>
+															<div class="form-check">
+																<input class="form-check-input" type="checkbox"
+																	id="flexCheckChecked" checked>
+															</div>
+														</td>
+														<!-- # = 순번처리  -->
+														<!--<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td> -->
+														<td th:text="${list.ifcgSeq}"></td>
+														<td class="ifcgSeq align-middle fw-semi-bold"><a
+															th:href="@{/xdm/v1/infra/codegroup/codeGroupXdmMfom(ifcgSeq=${list.ifcgSeq})}"
+															th:text="${list?.ifcgName}"></a></td>
+
+														<td th:text="${list.ifcdSeq}"></td>
+														<td
+															th:text="${list.ifcdSeq == list.ifcgSeq ? list.ifcdName : ''}"></td>
+
+														<td th:text="${list.xifcgSeqCount}"></td>
+														<td th:text="${list?.ifcgOrder}"></td>
+														<td th:if="${list.ifcgUseNy eq 0}"
+															class="ifcgUseNy align-middle">N</td>
+														<td th:unless="${list.ifcgUseNy eq 0}"
+															class="ifcgUseNy align-middle">Y</td>
+														<td th:if="${list.ifcgDelNy eq 0}"
+															class="ifcgDelNy align-middle">N</td>
+														<td th:unless="${list.ifcgDelNy eq 0}"
+															class="ifcgDelNy align-middle">Y</td>
+														<td
+															th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"
+															class="regDateTime align-middle"></td>
+														<td
+															th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"
+															class="modDateTime align-middle"></td>
+													</tr>
+												</tbody>
+											</table>
+
+											<!-- pagination -->
 											<div class="container-fluid px-0 mt-2 mb-2">
 												<div class="row">
 													<div class="col">
 														<ul class="pagination justify-content-center mb-0">
-															<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;"><a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|"><i class="bi bi-arrow-left"></i></a></li>
-														<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;"><a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a></li>
-														<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;"><a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|"><i class="bi bi-arrow-right"></i></a></li>
+															<li th:if="${vo.startPage gt vo.pageNumToShow}"
+																class="page-item" style="cursor: pointer;"><a
+																class="page-link"
+																href="javascript:goList(${vo.startPage - 1})"
+																th:attr="onclick=|goList('${vo.startPage - 1}')|"><i
+																	class="bi bi-arrow-left"></i></a></li>
+															<li
+																th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}"
+																th:classappend="${num eq vo.thisPage} ? active : ''"
+																class="page-item" style="cursor: pointer;"><a
+																class="page-link" th:attr="onclick=|goList('${num}')|"
+																th:text="${num}"> <!-- ${i.index} -->
+															</a></li>
+															<li th:if="${vo.endPage ne vo.totalPages}"
+																class="page-item" style="cursor: pointer;"><a
+																class="page-link"
+																th:attr="onclick=|goList('${vo.endPage + 1}')|"><i
+																	class="bi bi-arrow-right"></i></a></li>
 														</ul>
 													</div>
 												</div>
 											</div>
-											
+
 											<div class=btn12>
 												<button type="button" class="btn btn-input1"
 													data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -630,47 +670,84 @@
 		<script src="/xdm/v1/js/main.js"></script>
 
 		<!-- 	by developer -->
-<!-- 		<script src="/xdm/v1/jquery/jquery-3.7.1.min.js"></script> -->
+		<script src="/xdm/v1/jquery/jquery-3.7.1.min.js"></script>
+
+		<!-- datetimepicker 스크립트 -->
+		<script
+			src="/xdm/v1/js/datetimepicker/jquery.datetimepicker.full.min.js"></script>
+
+		<!-- Main Js Required -->
+		<script src="/xdm/v1/js/main.js"></script>
 
 		<!-- script -->
 		<script type="text/javascript">
-			window.addEventListener('load', function() { // 화면이 로드 될 때 함수 안에 내용을 실행
-
-				$("#shDateStart, #shDateEnd").datetimepicker('ko'){ // "시작일, 종료일"
-					timepicker : false, // 시간은 보여주지 말고 
-					format : 'Y-m-d' // 형식은 이렇게 보여줌 
+			// 페이지가 로드되었을 때 실행되는 이벤트 리스너
+			window.addEventListener('load', function() {
+				// 날짜 선택기 초기화
+				$("#shDateStart, #shDateEnd").datetimepicker({
+					timepicker : false, // 시간 선택 비활성화
+					format : 'Y-m-d', // 날짜 형식 설정
+					lang : 'ko' // 한국어로 설정
 				});
 			});
 		</script>
-		<script src="/xdm/v1/js/datetimepicker/jquery.datetimepicker.full.min.js"></script>
-		
-<!-- 		paging -->
-		<script>		
-// 		goList = function (thisPage) {
-// 	    document.querySelector("input[name=thisPage]").value = thisPage;
 
-// 	    form.action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-// 	    document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-// 	    form.submit();
-// 		}
-	    </script>		
+		<!-- 상단 paging -->
+		<script>
+			// 행 개수를 업데이트하는 함수
+			function updateRowNum() {
+				console.log("updateRowNum 호출됨"); // 호출 로그
+				const selectedValue = document.getElementById("changeRowNum").value; // 선택된 값 가져오기
+				console.log("선택된 항목 수:", selectedValue); // 선택된 항목 수 로그
 
-		<script>	 
-	    goList = function (thisPage) {
-	    document.querySelector("input[name=thisPage]").value = thisPage;
-	    document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-	    document.querySelector("form[name=formList]").submit();
-		}
-        </script> 
-        
-        <script>
-        document.getElementById("changeRowNum").onchange = function () {
-    	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-    	    form.action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
-    	    form.submit();
-    	}
-        // document는 그냥 화면에 보여준다는 의미, .getElementById는 js에 원래 내장되어있는 함수
-        </script>
-        
-	</body>				
-</html>	
+				// 선택한 값을 rowNumToShow에 설정
+				document.getElementById("rowNumToShow").value = selectedValue;
+
+				// 폼을 제출하여 데이터를 갱신
+				const form = document.getElementById("formList"); // form 요소 가져오기
+				if (form) {
+					form.submit(); // form이 정의되면 제출
+				} else {
+					console.error("formList가 정의되지 않았습니다."); // 오류 로그
+				}
+			}
+
+			// Enter 키 입력 시 검색 버튼 클릭
+			function enterkey(event) {
+				if (event.keyCode === 13) { // Enter 키 확인
+					document.getElementById("btnSearch").click(); // 검색 버튼 클릭
+				}
+			}
+
+			// 중복된 updateRowNum 함수 정의
+			function updateRowNum1() {
+				const rowNumToShow = document.getElementById('changeRowNum').value; // 선택된 값 가져오기
+				document.getElementById('rowNumToShow').value = rowNumToShow; // rowNumToShow에 설정
+				document.forms['formList'].submit(); // 폼 제출
+			}
+		</script>
+
+		<!-- paging -->
+		<script>
+			// 페이지 이동 함수
+			goList = function(thisPage) {
+				document.querySelector("input[name=thisPage]").value = thisPage; // 현재 페이지 설정
+
+				// 폼의 action 경로 설정
+				form.action = "/xdm/v1/infra/codegroup/codeGroupXdmList";
+				document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList"; // action 경로 설정
+				form.submit(); // 폼 제출
+			}
+		</script>
+
+		<script>
+			// 중복된 goList 함수 정의
+			goList = function(thisPage) {
+				document.querySelector("input[name=thisPage]").value = thisPage; // 현재 페이지 설정
+				document.querySelector("form[name=formList]").action = "/xdm/v1/infra/codegroup/codeGroupXdmList"; // action 경로 설정
+				document.querySelector("form[name=formList]").submit(); // 폼 제출
+			}
+			// document는 화면에 요소를 선택하는 의미, .getElementById는 JavaScript 내장 함수
+		</script>
+</body>
+</html>
