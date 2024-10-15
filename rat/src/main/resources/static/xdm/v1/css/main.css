@@ -3106,11 +3106,11 @@ button:focus:not(:focus-visible) {
   font-weight: 600;
 }
 
-.form-control {
-  border: 1px solid #c8d0da;
-  color: #232629;
-  background-color: #ffffff;
-}
+/* .form-control { */
+/*   border: 1px solid #c8d0da; */
+/*   color: #232629; */
+/*   background-color: #ffffff; */
+/* } */
 .form-control:hover {
   border: 1px solid #5d6a7c;
 }
@@ -3162,18 +3162,18 @@ textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: 1px solid #119a2c;
-  -webkit-text-fill-color: #232629;
-  box-shadow: 0 0 0px 100px rgba(0, 0, 0, 0.8) inset;
-}
+/* select:-webkit-autofill:focus { */
+/*   border: 1px solid #119a2c; */
+/*   -webkit-text-fill-color: #232629; */
+/*   box-shadow: 0 0 0px 100px rgba(0, 0, 0, 0.8) inset; */
+/* } */
 
 /******** 11.21 File Upload ********/
-.form-control::-webkit-file-upload-button {
-  background: #ffffff;
-  margin: -1rem 1rem -1rem -0.75rem;
-  color: #17181c;
-}
+/* .form-control::-webkit-file-upload-button { */
+/*   background: #ffffff; */
+/*   margin: -1rem 1rem -1rem -0.75rem; */
+/*   color: #17181c; */
+/* } */
 
 /******** 11.22 Checkbox and Radio ********/
 .form-check {

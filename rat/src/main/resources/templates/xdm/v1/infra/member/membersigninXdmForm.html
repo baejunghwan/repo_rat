@@ -22,7 +22,7 @@
 <link rel="shortcut icon" href="/xdm/v1/images/favicon.svg" />
 
 <!-- Title -->
-<title>Sign in</title>
+<title>Signin</title>
 
 <!-- * Common Css Files * -->
 <!-- Bootstrap css -->
@@ -36,85 +36,108 @@
 <link rel="stylesheet" href="/xdm/v1/css/login.css" />
 
 <style>
-/* 		validaton */
+/* validaton */
 .field-error {
-	border-color: #dc3545; /* 빨간색 테두리 */
-	color: #dc3545; /* 글자색도 빨간색으로 변경 (선택사항) */
+	border-color: #dc3545;
+	color: #dc3545;
 }
 </style>
 
 </head>
-
 <!-- Login box start -->
 <body class="login-container">
 	<div class="container">
 		<form id="form" name="form" method="post"
-			action="/xdm/v1/infra/member/memberXdmForm">
+			action="/xdm/v1/infra/member/membersigninXdmform">
 			<div class="login-box rounded-2 p-5">
 				<div class="login-form">
-					<a href="index.html" class="login-logo mb-3"> <img
-						src="/xdm/v1/images/logo.svg" alt="Crowdnub Admin" />
+					<a href="/xdm/v1/infra/member/membersigninXdmForm"
+						class="login-logo mb-3"> <img src="/xdm/v1/images/logo.svg"
+						alt="Crowdnub Admin" />
 					</a>
-					<h5 class="fw-light mb-5">Login</h5>
+					<h5 class="fw-light mb-5">로그인</h5>
 					<div class="mb-3">
 						<label class="form-label">아이디</label> <input type="text"
-							id="memberId" name="memberId" th:value="${item?.memberId}"
-							class="form-control" placeholder="Enter your id"
-							autocomplete="off" />
+							id="memberId" name="memberId" class="form-control"
+							placeholder="아이디" value="asd123" autocomplete="off" />
 					</div>
+					<!-- 포트폴리오 자동로그인 위해서 빼놓음, th:value="${item?.memberPw}" -->
 					<div class="mb-3">
 						<label class="form-label">비밀번호</label> <input type="password"
-							id="memberPw" name="memberPw" th:value="${item?.memberPw}"
-							class="form-control" placeholder="Enter password" />
+							id="memberPw" name="memberPw" class="form-control"
+							placeholder="비밀번호" value="asd123!!"
+							autocomplete="current-password" />
 					</div>
+
 					<div class="d-flex align-items-center justify-content-between">
 						<div class="form-check m-0">
 							<input class="form-check-input" type="checkbox" value=""
 								id="rememberPassword" /> <label class="form-check-label"
-								for="rememberPassword">Remember</label>
+								for="rememberPassword">자동 로그인</label>
 						</div>
-						<a href="forgot-password.html"
-							class="text-blue text-decoration-underline">Lost password?</a>
+						<a href="" class="text-blue text-decoration-underline">비밀번호 찾기</a>
 					</div>
 					<div class="d-grid py-3">
 						<button type="button" class="btn btn-lg btn-primary"
-							id="btnSubmit">Login</button>
+							id="btnSubmit">로그인</button>
 					</div>
 					<div class="text-center py-3">or login with</div>
 					<div class="d-flex gap-2 justify-content-center">
-						<button type="submit" class="btn btn-outline-light">
+						<!-- 보안상 일단 button으로 바꿔놓음  -->
+						<button type="button" class="btn btn-outline-light">
 							<img src="/xdm/v1/images/google.svg" class="login-icon"
 								alt="Login with Google" />
 						</button>
-						<button type="submit" class="btn btn-outline-light">
+						<!-- 보안상 일단 button으로 바꿔놓음  -->
+						<button type="button" class="btn btn-outline-light">
 							<img src="/xdm/v1/images/facebook.svg" class="login-icon"
 								alt="Login with Facebook" />
 						</button>
 					</div>
 					<div class="text-center pt-3">
-						<span>Not registered?</span> <a href="signup.html"
-							class="text-blue text-decoration-underline ms-2"> Create an
-							account</a>
+						<span>계정이 없나요?</span> <a
+							href="/xdm/v1/infra/member/membersignupXdmForm"
+							class="text-blue text-decoration-underline ms-2">계정 만들기</a>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 	<!-- Login box end -->
+
+	<div class="modal fade" id="modalAlert" data-bs-backdrop="true"
+		data-bs-keyboard="true" tabindex="-1"
+		aria-labelledby="modalAlertLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="modalAlertTitle">알림</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modalAlertBody">?</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <!-- * Required JavaScript Files * -->
 <!-- Required jQuery first, then Bootstrap Bundle JS -->
 <script src="/xdm/v1/js/jquery.min.js"></script>
 <script src="/xdm/v1/js/bootstrap.bundle.min.js"></script>
+
 <script src="/xdm/v1/js/modernizr.js"></script>
 <script src="/xdm/v1/js/moment.js"></script>
 <!-- *** Vendor Js Files *** -->
 
 <!-- Overlay Scroll JS -->
-<script
-	src="/xdm/v1/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
-<script src="/xdm/v1/vendor/overlay-scroll/custom-scrollbar.js"></script>
+<!-- <script -->
+<!-- 	src="/xdm/v1/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script> -->
+<!-- <script src="/xdm/v1/vendor/overlay-scroll/custom-scrollbar.js"></script> -->
 
 <!-- News ticker -->
 <script src="/xdm/v1/vendor/newsticker/newsTicker.min.js"></script>
@@ -124,111 +147,189 @@
 <script src="/xdm/v1/js/main.js"></script>
 
 <script>
+	// 정규표현식 영역
 	document.getElementById("btnSubmit").onclick = function() {
-		// 		alert(document.getElementById("ifcgName").value);	 
+		// 		alert(document.getElementById("ifcgName").value);
+		// 로그인 유효성 검사
+		validateAndSubmit(); // 추가한 영역 시작
+	}
 
+	document.getElementById("memberId")
+			.addEventListener(
+					"keypress",
+					function(event) {
+						if (event.key === "Enter") {
+							event.preventDefault();
+							if (validateInput("memberId")
+									&& validateInput("memberPw")) {
+								validateAndSubmit();
+							}
+						}
+					});
+
+	document.getElementById("memberPw").addEventListener("keypress",
+			function(event) {
+				if (event.key === "Enter") {
+					event.preventDefault();
+					if (validateInput("memberId") // 추가한 부분
+							&& validateInput("memberPw")) {
+						validateAndSubmit();
+					}
+				}
+			});
+
+	// 	// 유효성 검사 함수
+	function validateInput(inputId) {
+		var input = document.getElementById(inputId);
+		var value = input.value.trim();
+		var isValid = true;
+
+		if (inputId === "memberId") {
+			var memberIdRegExp = /^[A-Za-z0-9]{4,12}$/;
+			if (!value) {
+				input.classList.add("field-error");
+				isValid = false;
+			} else if (!memberIdRegExp.test(value)) {
+				input.classList.add("field-error");
+				isValid = false;
+			} else {
+				input.classList.remove("field-error");
+			}
+		} else if (inputId === "memberPw") {
+			var memberPwRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,12}$/;
+			if (!value) {
+				input.classList.add("field-error");
+				isValid = false;
+			} else if (!memberPwRegExp.test(value)) {
+				input.classList.add("field-error");
+				isValid = false;
+			} else {
+				input.classList.remove("field-error");
+			}
+		}
+		return isValid;
+	}
+
+	function validateAndSubmit() {
+		if (validateInput("memberId") && validateInput("memberPw")) {
+			$.ajax({
+				async : true,
+				cache : false,
+				type : "post",
+				url : "/xdm/v1/infra/member/membersigninProc",
+				data : {
+					"memberId" : $("#memberId").val(),
+					"memberPw" : $("#memberPw").val(),
+					"autoLogin" : $("#rememberPassword").is(":checked")
+				},
+				success : function(response) {
+					if (response.rt == "success") {
+						location.href = "/xdm/v1/infra/member/memberXdmForm";
+					} else {
+						$("#modalAlertTitle").text("다시 확인해주세요");
+						$("#modalAlertBody").text(
+								"ID / 비밀번호를 잘못 입력하셨거나 등록되지 않은 계정입니다.");
+						$("#modalAlert").modal("show");
+					}
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+					console.error("AJAX 요청 오류:", textStatus, errorThrown);
+				}
+			});
+		}
+	}
+
+	// 두 입력 필드에 대해 focusout 이벤트 추가
+	document.getElementById("memberId").addEventListener("focusout",
+			function() {
+				validateInput("memberId");
+			});
+
+	document.getElementById("memberPw").addEventListener("focusout",
+			function() {
+				validateInput("memberPw");
+			});
+
+	function validateAndSubmit() { // 추가한 영역 끝
 		var memberId = document.getElementById("memberId");
-		var memberIdValue = document.getElementById("memberId").value.trim();
+		var memberIdValue = memberId.value.trim();
 		var memberIdRegExp = /^[A-Za-z0-9]{4,12}$/;
 
-		if (memberIdValue == "" || memberIdValue == null) {
-			alert("아이디를 입력해 주세요");
+		// 		if (memberIdValue == "" || memberIdValue == null) {
+		if (!memberIdValue) {
+			// alert("아이디를 입력해 주세요");
 			memberId.classList.add("field-error"); // 에러 클래스 추가
 			memberId.focus();
 			return false;
 			// 이 함수를 탈출한다는 의미 true, false 둘다 가능하지만 여기서는 부정적 의미이므로 false 사용
 		} else {
 			memberId.classList.remove("field-error"); // 에러 클래스 제거
-			// 			by pass
 		}
 
 		if (!memberIdRegExp.test(memberIdValue)) {
-			alert("아이디는 4자 이상 12자 이하의 영대소문자, 숫자만 허용합니다");
+			// alert("아이디는 4자 이상 12자 이하의 영대소문자, 숫자만 허용합니다");
 			memberId.classList.add("field-error"); // 에러 클래스 추가
 			memberId.focus();
 			return false;
 		} else {
 			memberId.classList.remove("field-error"); // 에러 클래스 제거
-			// 	    	by pass
 		}
 
 		var memberPw = document.getElementById("memberPw");
-		var memberPwValue = document.getElementById("memberPw").value.trim();
+		var memberPwValue = memberPw.value.trim();
 		var memberPwRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,12}$/;
 
-		if (memberPwValue == "" || memberPwValue == null) {
-			alert("비밀번호를 입력해주세요");
-			memberPw.classList.add("field-error"); // 에러 클래스 추가
-			memberPw.focus();
-			return false;
-		} else {
-			memberPw.classList.add("field-error"); // 에러 클래스 추가
-			// 			by pass
-		}
-
-		if (!memberPwRegExp.test(memberPwValue)) {
-			alert("비밀번호는 영문, 숫자, 특수문자의 조합으로 이루어진 8자 이상 12자 이하만 허용합니다");
+		if (!memberPwValue) {
+			// 		if (memberPwValue == "" || memberPwValue == null) {
+			// 			alert("비밀번호를 입력해주세요");
 			memberPw.classList.add("field-error"); // 에러 클래스 추가
 			memberPw.focus();
 			return false;
 		} else {
 			memberPw.classList.remove("field-error"); // 에러 클래스 제거
-			// 	    	by pass
 		}
 
-		//-------------------------------------------------------------------
+		if (!memberPwRegExp.test(memberPwValue)) {
+			// 			alert("비밀번호는 영문, 숫자, 특수문자의 조합으로 이루어진 8자 이상 12자 이하만 허용합니다");
+			memberPw.classList.add("field-error"); // 에러 클래스 추가
+			memberPw.focus();
+			return false;
+		} else {
+			memberPw.classList.remove("field-error"); // 에러 클래스 제거
+		}
+		// session - interceptor 영역
 		// jQuery 형태로 작성된 AJAX 요청
 		$.ajax({
 			async : true, // 비동기 요청으로 설정
 			cache : false, // 캐시 사용 안 함
 			type : "post", // HTTP 요청 방식: POST
-			// dataType: "json", // 응답 데이터 형식 (주석 처리됨)
-
 			url : "/xdm/v1/infra/member/membersigninProc", // 요청을 보낼 URL
-
-			// 데이터 전송 형식 설정 (주석 처리된 코드)
-			// data: $("#formLogin").serialize(), // 폼 데이터를 직렬화하여 전송
 			data : {
 				"memberId" : $("#memberId").val(), // 입력된 회원 ID
 				"memberPw" : $("#memberPw").val(), // 입력된 비밀번호
-				"autoLogin" : $("#autoLogin").is(":checked")
+				"autoLogin" : $("#rememberPassword").is(":checked")
 			// 자동 로그인 체크 여부
 			},
-
-			// 요청이 성공적으로 완료된 경우 실행되는 콜백 함수
 			success : function(response) {
-				// 서버로부터 받은 응답의 rt 값이 "success"일 때
-				if (response.rt == "success") {
-					// 아래 코드는 주석 처리됨
-					// if(response.changePwd == "true") {
-					//     location.href = "/xdm/v1/infra/member/expiredPwdUsrForm"; // 비밀번호 변경 페이지로 이동
-					// } else {
-					//     location.href = "/xdm/v1/infra/index/indexXdmView"; // 메인 페이지로 이동
-					// }
-
+				if (response.rt === "success") {
+					console.log("로그인 성공");
 					// 성공 시 회원 페이지로 이동
 					location.href = "/xdm/v1/infra/member/memberXdmForm";
 				} else {
-					// 실패 시 사용자에게 메시지를 보여주기 위한 주석 처리된 코드
-					// document.getElementById("modalAlertTitle").innerText = "확인";
-					// document.getElementById("modalAlertBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
-					// $("#modalAlert").modal("show"); // 모달 창 표시
+					// 로그인 실패 시 모달 표시
+					$("#modalAlertTitle").text("다시 확인해주세요");
+					$("#modalAlertBody").text(
+							"ID / 비밀번호를 잘못 입력하셨거나 등록되지 않은 계정입니다.");
+					$("#modalAlert").modal("show"); // 모달 창 표시
 				}
 			},
-
-			// 요청이 실패했을 때 실행되는 콜백 함수
 			error : function(jqXHR, textStatus, errorThrown) {
-				// 에러 메시지 알림
 				console.error("AJAX 요청 오류:", textStatus, errorThrown); // 오류 정보 출력
-				alert("ajaxUpdate " + jqXHR.textStatus + " : "
-						+ jqXHR.errorThrown);
 			}
 		});
-
-		// 폼의 action 속성을 설정 (서버로 요청을 보낼 URL)
-		form.action = "/xdm/v1/infra/member/membersigninXdmForm";
-		// 폼을 제출하여 서버로 요청
-		form.submit();
+		// 폼 제출 방지
+		return false; // AJAX 요청 후에 위치해야 합니다.
 	}
 </script>
+
 </html>

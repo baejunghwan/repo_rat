@@ -1,242 +1,308 @@
 package com.zoo.infra.product;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ProductVo {
 
-	 private Integer productSeq;
-	 private String productName;
-	 private Integer productUseNy;
-	 private String productOrder;
-	 private String productDesc;
-	 private Integer productDelNy;
-	 private Date regDateTime;
-	 private Date modDateTime;
-	 private Integer member_memberSeq;
-	 
-	 //search
-	 private Integer shUseNy;
-	 private Integer shDelNy;
+	private Integer productSeq;
+	private String productName;
+	private Integer productUseNy;
+	private String productOrder;
+	private String productDesc;
+	private Integer productDelNy;
+	private Date regDateTime;
+	private Date modDateTime;
+	private Integer member_memberSeq;
 
-		private Integer shOption;
-		private String shValue;
-		private Integer shOptionDate;
-		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		private Date shDateStart;
-		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		private Date shDateEnd;	
-		
-		// paging
-		public class Constants {
-		    public static final int ROW_NUM_TO_SHOW = 10; // 원하는 값으로 설정
-		    public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
-		}
-		//
-		
-		private int thisPage = 1;									// 현재 페이지
-		private int rowNumToShow = Constants.ROW_NUM_TO_SHOW;		// 화면에 보여줄 데이터 줄 갯수
+	// 새로 추가한 칼럼들
+	private String productImg;
+	private String productTitle;
+	private String productReview;
+	private Integer productPrice;
+	private Integer productPriceDcRate;
+	private BigDecimal productRating;
+	private String productReply;
+
+	// search
+	private Integer shUseNy;
+	private Integer shDelNy;
+
+	private Integer shOption;
+	private String shValue;
+	private Integer shOptionDate;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date shDateStart;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date shDateEnd;
+
+	// paging
+	public class Constants {
+		public static final int ROW_NUM_TO_SHOW = 10; // 원하는 값으로 설정
+		public static final int PAGE_NUM_TO_SHOW = 5; // 원하는 값으로 설정
+	}
+	//
+
+	private int thisPage = 1; // 현재 페이지
+	private int rowNumToShow = Constants.ROW_NUM_TO_SHOW; // 화면에 보여줄 데이터 줄 갯수
 //		Constatns. 이런식으로 Constatns 객체(클래스)를 만들어서 사용해도 된다.
-		private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW;		// 화면에 보여줄 페이징 번호 갯수
+	private int pageNumToShow = Constants.PAGE_NUM_TO_SHOW; // 화면에 보여줄 페이징 번호 갯수
 
-		private int totalRows;										// 전체 데이터 갯수
-		private int totalPages;										// 전체 페이지 번호
-		private int startPage;										// 시작 페이지 번호
-		private int endPage;										// 마지막 페이지 번호
+	private int totalRows; // 전체 데이터 갯수
+	private int totalPages; // 전체 페이지 번호
+	private int startPage; // 시작 페이지 번호
+	private int endPage; // 마지막 페이지 번호
 
-		private int startRnumForMysql = 0;							// 쿼리 시작 row	
-	 //--------------------------------------------------------------
+	private int startRnumForMysql = 0; // 쿼리 시작 row
+	// --------------------------------------------------------------
 
-		public Integer getProductSeq() {
-			return productSeq;
-		}
+	public Integer getProductSeq() {
+		return productSeq;
+	}
 
-		public void setProductSeq(Integer productSeq) {
-			this.productSeq = productSeq;
-		}
+	public String getProductImg() {
+		return productImg;
+	}
 
-		public String getProductName() {
-			return productName;
-		}
+	public void setProductImg(String productImg) {
+		this.productImg = productImg;
+	}
 
-		public void setProductName(String productName) {
-			this.productName = productName;
-		}
+	public String getProductTitle() {
+		return productTitle;
+	}
 
-		public Integer getProductUseNy() {
-			return productUseNy;
-		}
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
+	}
 
-		public void setProductUseNy(Integer productUseNy) {
-			this.productUseNy = productUseNy;
-		}
+	public String getProductReview() {
+		return productReview;
+	}
 
-		public String getProductOrder() {
-			return productOrder;
-		}
+	public void setProductReview(String productReview) {
+		this.productReview = productReview;
+	}
 
-		public void setProductOrder(String productOrder) {
-			this.productOrder = productOrder;
-		}
+	public Integer getProductPrice() {
+		return productPrice;
+	}
 
-		public String getProductDesc() {
-			return productDesc;
-		}
+	public void setProductPrice(Integer productPrice) {
+		this.productPrice = productPrice;
+	}
 
-		public void setProductDesc(String productDesc) {
-			this.productDesc = productDesc;
-		}
+	public Integer getProductPriceDcRate() {
+		return productPriceDcRate;
+	}
 
-		public Integer getProductDelNy() {
-			return productDelNy;
-		}
+	public void setProductPriceDcRate(Integer productPriceDcRate) {
+		this.productPriceDcRate = productPriceDcRate;
+	}
 
-		public void setProductDelNy(Integer productDelNy) {
-			this.productDelNy = productDelNy;
-		}
+	public BigDecimal getProductRating() {
+		return productRating;
+	}
 
-		public Date getRegDateTime() {
-			return regDateTime;
-		}
+	public void setProductRating(BigDecimal productRating) {
+		this.productRating = productRating;
+	}
 
-		public void setRegDateTime(Date regDateTime) {
-			this.regDateTime = regDateTime;
-		}
+	public String getProductReply() {
+		return productReply;
+	}
 
-		public Date getModDateTime() {
-			return modDateTime;
-		}
+	public void setProductReply(String productReply) {
+		this.productReply = productReply;
+	}
 
-		public void setModDateTime(Date modDateTime) {
-			this.modDateTime = modDateTime;
-		}
+	public void setProductSeq(Integer productSeq) {
+		this.productSeq = productSeq;
+	}
 
-		public Integer getMember_memberSeq() {
-			return member_memberSeq;
-		}
+	public String getProductName() {
+		return productName;
+	}
 
-		public void setMember_memberSeq(Integer member_memberSeq) {
-			this.member_memberSeq = member_memberSeq;
-		}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
-		public Integer getShUseNy() {
-			return shUseNy;
-		}
+	public Integer getProductUseNy() {
+		return productUseNy;
+	}
 
-		public void setShUseNy(Integer shUseNy) {
-			this.shUseNy = shUseNy;
-		}
+	public void setProductUseNy(Integer productUseNy) {
+		this.productUseNy = productUseNy;
+	}
 
-		public Integer getShDelNy() {
-			return shDelNy;
-		}
+	public String getProductOrder() {
+		return productOrder;
+	}
 
-		public void setShDelNy(Integer shDelNy) {
-			this.shDelNy = shDelNy;
-		}
+	public void setProductOrder(String productOrder) {
+		this.productOrder = productOrder;
+	}
 
-		public Integer getShOption() {
-			return shOption;
-		}
+	public String getProductDesc() {
+		return productDesc;
+	}
 
-		public void setShOption(Integer shOption) {
-			this.shOption = shOption;
-		}
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
+	}
 
-		public String getShValue() {
-			return shValue;
-		}
+	public Integer getProductDelNy() {
+		return productDelNy;
+	}
 
-		public void setShValue(String shValue) {
-			this.shValue = shValue;
-		}
+	public void setProductDelNy(Integer productDelNy) {
+		this.productDelNy = productDelNy;
+	}
 
-		public Integer getShOptionDate() {
-			return shOptionDate;
-		}
+	public Date getRegDateTime() {
+		return regDateTime;
+	}
 
-		public void setShOptionDate(Integer shOptionDate) {
-			this.shOptionDate = shOptionDate;
-		}
+	public void setRegDateTime(Date regDateTime) {
+		this.regDateTime = regDateTime;
+	}
 
-		public Date getShDateStart() {
-			return shDateStart;
-		}
+	public Date getModDateTime() {
+		return modDateTime;
+	}
 
-		public void setShDateStart(Date shDateStart) {
-			this.shDateStart = shDateStart;
-		}
+	public void setModDateTime(Date modDateTime) {
+		this.modDateTime = modDateTime;
+	}
 
-		public Date getShDateEnd() {
-			return shDateEnd;
-		}
+	public Integer getMember_memberSeq() {
+		return member_memberSeq;
+	}
 
-		public void setShDateEnd(Date shDateEnd) {
-			this.shDateEnd = shDateEnd;
-		}
+	public void setMember_memberSeq(Integer member_memberSeq) {
+		this.member_memberSeq = member_memberSeq;
+	}
 
-		public int getThisPage() {
-			return thisPage;
-		}
+	public Integer getShUseNy() {
+		return shUseNy;
+	}
 
-		public void setThisPage(int thisPage) {
-			this.thisPage = thisPage;
-		}
+	public void setShUseNy(Integer shUseNy) {
+		this.shUseNy = shUseNy;
+	}
 
-		public int getRowNumToShow() {
-			return rowNumToShow;
-		}
+	public Integer getShDelNy() {
+		return shDelNy;
+	}
 
-		public void setRowNumToShow(int rowNumToShow) {
-			this.rowNumToShow = rowNumToShow;
-		}
+	public void setShDelNy(Integer shDelNy) {
+		this.shDelNy = shDelNy;
+	}
 
-		public int getPageNumToShow() {
-			return pageNumToShow;
-		}
+	public Integer getShOption() {
+		return shOption;
+	}
 
-		public void setPageNumToShow(int pageNumToShow) {
-			this.pageNumToShow = pageNumToShow;
-		}
+	public void setShOption(Integer shOption) {
+		this.shOption = shOption;
+	}
 
-		public int getTotalRows() {
-			return totalRows;
-		}
+	public String getShValue() {
+		return shValue;
+	}
 
-		public void setTotalRows(int totalRows) {
-			this.totalRows = totalRows;
-		}
+	public void setShValue(String shValue) {
+		this.shValue = shValue;
+	}
 
-		public int getTotalPages() {
-			return totalPages;
-		}
+	public Integer getShOptionDate() {
+		return shOptionDate;
+	}
 
-		public void setTotalPages(int totalPages) {
-			this.totalPages = totalPages;
-		}
+	public void setShOptionDate(Integer shOptionDate) {
+		this.shOptionDate = shOptionDate;
+	}
 
-		public int getStartPage() {
-			return startPage;
-		}
+	public Date getShDateStart() {
+		return shDateStart;
+	}
 
-		public void setStartPage(int startPage) {
-			this.startPage = startPage;
-		}
+	public void setShDateStart(Date shDateStart) {
+		this.shDateStart = shDateStart;
+	}
 
-		public int getEndPage() {
-			return endPage;
-		}
+	public Date getShDateEnd() {
+		return shDateEnd;
+	}
 
-		public void setEndPage(int endPage) {
-			this.endPage = endPage;
-		}
+	public void setShDateEnd(Date shDateEnd) {
+		this.shDateEnd = shDateEnd;
+	}
 
-		public int getStartRnumForMysql() {
-			return startRnumForMysql;
-		}
+	public int getThisPage() {
+		return thisPage;
+	}
 
-		public void setStartRnumForMysql(int startRnumForMysql) {
-			this.startRnumForMysql = startRnumForMysql;
-		}
+	public void setThisPage(int thisPage) {
+		this.thisPage = thisPage;
+	}
+
+	public int getRowNumToShow() {
+		return rowNumToShow;
+	}
+
+	public void setRowNumToShow(int rowNumToShow) {
+		this.rowNumToShow = rowNumToShow;
+	}
+
+	public int getPageNumToShow() {
+		return pageNumToShow;
+	}
+
+	public void setPageNumToShow(int pageNumToShow) {
+		this.pageNumToShow = pageNumToShow;
+	}
+
+	public int getTotalRows() {
+		return totalRows;
+	}
+
+	public void setTotalRows(int totalRows) {
+		this.totalRows = totalRows;
+	}
+
+	public int getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public int getStartRnumForMysql() {
+		return startRnumForMysql;
+	}
+
+	public void setStartRnumForMysql(int startRnumForMysql) {
+		this.startRnumForMysql = startRnumForMysql;
+	}
 }

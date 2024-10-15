@@ -39,6 +39,7 @@
 		,a.regDateTime
 		,a.modDateTime
 		
+		
 		,b.memberName
 		,b.memberSeq
 		

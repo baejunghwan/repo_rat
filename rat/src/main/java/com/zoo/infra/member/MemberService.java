@@ -33,17 +33,14 @@ public class MemberService {
 	public int uelete(MemberDto memberDto) {
 		return memberDao.uelete(memberDto);
 	}
-	
-	//paging
-	public int selectOneCount(MemberVo vo) { 
-    	return memberDao.selectOneCount(vo); 
-    }
-	
-	//login
+
+	// paging
+	public int selectOneCount(MemberVo vo) {
+		return memberDao.selectOneCount(vo);
+	}
+
+	// login
 	public MemberDto selectOneLogin(MemberDto memberDto) {
 		return memberDao.selectOneLogin(memberDto);
 	}
-	
-	//gender
-	
 }

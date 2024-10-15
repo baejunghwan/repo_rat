@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-
 	@Autowired
 	public UserDao userDao;
 
@@ -15,13 +14,13 @@ public class UserService {
 		return userDao.selectList(userVo);
 	}
 
+	public UserDto selectOne(UserDto userDto) {
+		return userDao.selectOne(userDto);
+	}
+
 	public int insert(UserDto userDto) {
 		return userDao.insert(userDto);
 //		mybatics가 정수형태로 값을 보내서 int 사용함
-	}
-
-	public UserDto selectOne(UserDto userDto) {
-		return userDao.selectOne(userDto);
 	}
 
 	public int update(UserDto userDto) {
@@ -40,5 +39,9 @@ public class UserService {
 	public int selectOneCount(UserVo vo) {
 		return userDao.selectOneCount(vo);
 	}
-	
+
+	// login
+	public UserDto selectOneLogin(UserDto userDto) {
+		return userDao.selectOneLogin(userDto);
+	}
 }

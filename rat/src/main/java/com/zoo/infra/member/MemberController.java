@@ -91,33 +91,98 @@ public class MemberController {
 	}
 
 	// AJAX 로그인 처리
-	@ResponseBody
-	@RequestMapping(value = "/xdm/v1/infra/member/membersigninProc")
+	@ResponseBody // 이 메서드의 반환값이 HTTP 응답 본문으로 직접 사용됨을 나타냄
+	@RequestMapping(value = "/xdm/v1/infra/member/membersigninProc") // 이 URL로 요청이 들어오면 해당 메서드 호출
 	public Map<String, Object> membersigninProc(MemberDto memberdto, HttpSession httpSession) throws Exception {
-		Map<String, Object> returnMap = new HashMap<>(); // 결과를 담을 맵
-		MemberDto rtMember = memberService.selectOneLogin(memberdto); // 로그인 정보 조회
+		Map<String, Object> returnMap = new HashMap<String, Object>(); // 결과를 담을 맵 생성
 
-		if (rtMember != null) {
-			System.out.println("성공"); // 로그인 성공 출력
-			httpSession.setMaxInactiveInterval(60 * 3000); // 세션 만료 시간 설정
+		// 로그인 요청 로그 추가
+		System.out.println("로그인 요청 - ID: " + memberdto.getMemberId() + ", PW: " + memberdto.getMemberPw());
+
+		// 로그인 정보를 조회하여 MemberDto 객체로 반환
+		MemberDto rtMember = memberService.selectOneLogin(memberdto); // 로그인 정보 조회
+		System.out.println("로그인 정보 조회 결과: " + rtMember);
+
+		if (rtMember != null) { // 로그인 성공 시
+			System.out.println("rtMember ID: " + rtMember.getMemberId()); // 로그인 성공 메시지 출력
+			httpSession.setMaxInactiveInterval(60 * 30); // 세션 만료 시간 설정 (60초 * 30분)
 			httpSession.setAttribute("sessSeqXdm", rtMember.getMemberSeq()); // 세션에 회원 시퀀스 저장
 			httpSession.setAttribute("sessIdXdm", rtMember.getMemberId()); // 세션에 회원 ID 저장
 			httpSession.setAttribute("sessNameXdm", rtMember.getMemberName()); // 세션에 회원 이름 저장
-			returnMap.put("rt", "success"); // 결과에 성공 추가
-		} else {
-			System.out.println("실패"); // 로그인 실패 출력
-			returnMap.put("rt", "fail"); // 결과에 실패 추가
-		}
-		return returnMap; // 결과 반환
-	}
 
-	// 로그아웃 처리
+			System.out.println("세션에 저장할 ID: " + rtMember.getMemberId());
+			System.out.println("세션의 sessIdXdm: " + httpSession.getAttribute("sessIdXdm")); // 세션에 저장된 ID 출력
+
+			returnMap.put("rt", "success"); // 결과 맵에 "success" 추가
+		} else { // 로그인 실패 시
+			System.out.println("로그인 실패: " + memberdto.getMemberId()); // 실패 메시지 및 입력한 ID 출력
+			returnMap.put("rt", "fail"); // 결과 맵에 "fail" 추가
+		}
+		return returnMap; // 결과 맵 반환
+	}
+	// ------------------------------------------------
+//	*slack구문
+//	@ResponseBody // HTTP 응답 본문을 JSON 형식으로 반환함을 나타냄
+//	@RequestMapping(value = "/xdm/v1/member/membersigninXdmProc") // 이 메서드는 "signinXdmProc" URL 요청을 처리함
+//	public Map<String, Object> membersigninXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+//		Map<String, Object> returnMap = new HashMap<String, Object>(); // 결과를 담을 맵 생성
+//
+//		MemberDto rtMember = service.selectOneId(dto); // 주어진 dto를 기반으로 회원 정보를 조회
+//
+//		if (rtMember != null) { // 조회된 회원 정보가 존재할 경우
+//			// 비밀번호 암호화 로직이 주석 처리됨
+//			MemberDto rtMember2 = service.selectOneLogin(dto); // 로그인 정보 확인
+//
+//			if (rtMember2 != null) { // 로그인 성공 시
+//				if (dto.getAutoLogin() == true) { // 자동 로그인 요청이 있을 경우
+//					// 쿠키 생성
+//					UtilCookie.createCookie(Constants.COOKIE_SEQ_NAME_XDM, // 쿠키 이름
+//							rtMember2.getIfmmSeq(), // 쿠키 값 (회원 시퀀스)
+//							Constants.COOKIE_DOMAIN_XDM, // 쿠키 도메인
+//							Constants.COOKIE_PATH_XDM, // 쿠키 경로
+//							Constants.COOKIE_MAXAGE_XDM); // 쿠키 최대 수명
+//				} else {
+//					// 자동 로그인 요청이 없으면 아무 작업도 수행하지 않음
+//				}
+//
+//				httpSession.setMaxInactiveInterval(60 * Constants.SESSION_MINUTE_XDM); // 세션 최대 비활성 시간 설정 (30분)
+//				httpSession.setAttribute("sessSeqXdm", rtMember2.getIfmmSeq()); // 세션에 회원 시퀀스 저장
+//				httpSession.setAttribute("sessIdXdm", rtMember2.getIfmmId()); // 세션에 회원 ID 저장
+//				httpSession.setAttribute("sessNameXdm", rtMember2.getIfmmName()); // 세션에 회원 이름 저장
+//
+//				rtMember2.setIfmmSocialLoginCd(103); // 소셜 로그인 코드 설정
+//				rtMember2.setIflgResultNy(1); // 로그인 성공 플래그 설정
+//				service.insertLogLogin(rtMember2); // 로그인 기록 삽입
+//
+//				returnMap.put("rt", "success"); // 결과 맵에 성공 추가
+//			} else {
+//				dto.setIfmmSocialLoginCd(103); // 소셜 로그인 코드 설정
+//				dto.setIfmmSeq(rtMember.getIfmmSeq()); // 기존 회원 시퀀스 설정
+//				dto.setIflgResultNy(0); // 로그인 실패 플래그 설정
+//				service.insertLogLogin(dto); // 로그인 기록 삽입
+//
+//				returnMap.put("rt", "fail"); // 결과 맵에 실패 추가
+//			}
+//		} else {
+//			dto.setIfmmSocialLoginCd(103); // 소셜 로그인 코드 설정
+//			dto.setIflgResultNy(0); // 로그인 실패 플래그 설정
+//			service.insertLogLogin(dto); // 로그인 기록 삽입
+//
+//			returnMap.put("rt", "fail"); // 결과 맵에 실패 추가
+//		}
+//		return returnMap; // 결과 맵 반환
+//	}
+
+	// ------------------------------------------------
+	// 로그아웃 처리 : 세션 무효화 (역할)
 	@ResponseBody
-	@RequestMapping(value = "/xdm/v1/infra/member/signoutXdmProc")
-	public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
+	@RequestMapping(value = "/xdm/v1/infra/member/membersignoutXdmProc")
+	public Map<String, Object> membersignoutXdmProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<>(); // 결과를 담을 맵
 		httpSession.invalidate(); // 세션 무효화
+		System.out.println("Member Session 무효화 성공"); // 콘솔에 로그 출력
 		returnMap.put("rt", "success"); // 결과에 성공 추가
+		returnMap.put("redirectUrl", "/xdm/v1/infra/member/membersigninXdmForm");
 		return returnMap; // 결과 반환
 	}
 
@@ -127,6 +192,7 @@ public class MemberController {
 		return "/xdm/v1/infra/member/membersignupXdmForm"; // 회원가입 페이지 반환
 	}
 
+	// USR 경로
 	// index 요청
 	@RequestMapping(value = "/xdm/v1/infra/member/memberIndex")
 	public String memberIndex() {

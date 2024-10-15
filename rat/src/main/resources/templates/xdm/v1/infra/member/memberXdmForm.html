@@ -144,12 +144,11 @@
 				<div class="header-profile d-flex align-items-center">
 					<div class="dropdown">
 						<a href="#" id="userSettings" class="user-settings"
-							data-toggle="dropdown" aria-haspopup="true"> <!-- <h6 class="mt-2 text-black">[[${session.sessNameXdm}]]</h6> -->
-							<!-- <h6 class="mt-2 text-black" th:text="${session.sessIdXdm}"></h6> -->
+							data-toggle="dropdown" aria-haspopup="true"> <!--<h6 class="user-name d-none d-md-block">[[${session.sessNameXdm}]]</h6> -->
 							<h6 class="user-name d-none d-md-block"
-								th:text="${session.sessIdXdm}"></h6> <!-- 							<span class="user-name d-none d-md-block" >Michelle White</span>  -->
-							<span class="avatar"> <img src="/xdm/v1/images/user2.png"
-								alt="Admin Templates" /> <span class="status online"></span>
+								th:text="${session.sessIdXdm}"></h6> <span class="avatar">
+								<img src="/xdm/v1/images/user2.png" alt="Admin Templates" /> <span
+								class="status online"></span>
 						</span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end"
@@ -306,40 +305,43 @@
 				<!-- Content wrapper scroll start -->
 				<div class="content-wrapper-scroll">
 
-					<!-- Main header starts -->
-					<!-- <div class="main-header d-flex align-items-center justify-content-between position-relative">
-						<div class="d-flex align-items-center justify-content-center">
-							<div class="page-icon">
-								<i class="bi bi-columns-gap"></i>
-							</div>
-							<div class="page-title d-none d-md-block">
-								<h5>공간입니다</h5>
-							</div>
-						</div> -->
-					<!-- Live updates start -->
-					<!-- <ul class="updates d-flex align-items-end flex-column overflow-hidden" id="updates">
-							<li>
-								<a href="javascript:void(0)">
-									<i class="bi bi-envelope-paper text-red font-1x me-2"></i>
-									<span>속보1</span>
-								</a>
-							</li>
-							<li>
-								<a href="javascript:void(0)">
-									<i class="bi bi-bar-chart text-blue font-1x me-2"></i>
-									<span>속보2</span>
-								</a>
-							</li>
-							<li>
-								<a href="javascript:void(0)">
-									<i class="bi bi-folder-check text-yellow font-1x me-2"></i>
-									<span>속보3</span>
-								</a>
-							</li>
-						</ul> -->
-					<!-- Live updates end -->
-					<!-- </div> -->
-					<!-- Main header ends -->
+					<!-- 					Main header starts -->
+					<!-- 					<div -->
+					<!-- 						class="main-header d-flex align-items-center justify-content-between position-relative"> -->
+					<!-- 						<div class="d-flex align-items-center justify-content-center"> -->
+					<!-- 							<div class="page-icon"> -->
+					<!-- 								<i class="bi bi-columns-gap"></i> -->
+					<!-- 							</div> -->
+					<!-- 							<div class="page-title d-none d-md-block"> -->
+					<!-- 								<h5>공간입니다</h5> -->
+					<!-- 							</div> -->
+					<!-- 						</div> -->
+					<!-- 						Live updates start -->
+					<!-- 						<ul -->
+					<!-- 							class="updates d-flex align-items-end flex-column overflow-hidden" -->
+					<!-- 							id="updates"> -->
+					<!-- 														<li> -->
+					<!-- 								<a href="javascript:void(0)"> -->
+					<!-- 									<i class="bi bi-envelope-paper text-red font-1x me-2"></i> -->
+					<!-- 									<span>속보1</span> -->
+					<!-- 								</a> -->
+					<!-- 							</li> -->
+					<!-- 							<li> -->
+					<!-- 								<a href="javascript:void(0)"> -->
+					<!-- 									<i class="bi bi-bar-chart text-blue font-1x me-2"></i> -->
+					<!-- 									<span>속보2</span> -->
+					<!-- 								</a> -->
+					<!-- 							</li> -->
+					<!-- 							<li> -->
+					<!-- 								<a href="javascript:void(0)"> -->
+					<!-- 									<i class="bi bi-folder-check text-yellow font-1x me-2"></i> -->
+					<!-- 									<span>속보3</span> -->
+					<!-- 								</a> -->
+					<!-- 							</li> -->
+					<!-- 						</ul>  -->
+					<!-- 						Live updates end -->
+					<!-- 					</div> -->
+					<!-- 					Main header ends -->
 
 					<div class="content-wrapper">
 						<div>
@@ -458,8 +460,8 @@
 														<div class="col-sm-3 col-mg-3 col-lg-3 col-12">
 															<div class="m-0">
 																<label class="form-label" for="memberPw">비밀번호 확인<span
-																	style="color: red;">*</span></label> <input type="password"
-																	id="memberPw" name="memberPw"
+																	style="color: red;">*</span>
+																</label> <input type="password" id="memberPw" name="memberPw"
 																	th:value="${item?.memberPw}" class="form-control"
 																	placeholder="입력한 비밀번호 재확인">
 															</div>
@@ -525,9 +527,7 @@
 <!-- </div> -->
 <!-- Page wrapper end -->
 
-<!-- *************
-			************ Required JavaScript Files *************
-		************* -->
+<!-- ** Required JavaScript Files ** -->
 <!-- Required jQuery first, then Bootstrap Bundle JS -->
 <script src="/xdm/v1/js/jquery.min.js"></script>
 <script src="/xdm/v1/js/bootstrap.bundle.min.js"></script>
@@ -544,42 +544,36 @@
 <!-- News ticker -->
 <script src="/xdm/v1/vendor/newsticker/newsTicker.min.js"></script>
 <script src="/xdm/v1/vendor/newsticker/custom-newsTicker.js"></script>
-<script src="/xdm/v1/js/includeXdmForm.js"></script>
+<!-- <script src="/xdm/v1/js/includeXdmForm.js"></script> -->
 
 <!-- Main Js Required -->
 <script src="/xdm/v1/js/main.js"></script>
 
 <script>
 	document.getElementById("Logout-button").onclick = function() {
-		// 		alert("작동확인");
+		// AJAX 요청을 통해 로그아웃 처리
 		$.ajax({
-			async : true,
-			cache : false,
-			type : "post",
-			url : "/xdm/v1/infra/member/membersignoutXdmProc"
-			// ajax 실행시킬 java 함수 주소
-			,
-			data : $("#formLogin").serialize(),
-			data : {
-				"memberId" : $("#memberId").val(),
-				"memberPw" : $("#memberPw").val()
-			},
+			async : true, // 비동기 요청 설정
+			cache : false, // 캐시 사용 안 함
+			type : "POST", // POST 방식으로 요청
+			url : "/xdm/v1/infra/member/membersignoutXdmProc", // 로그아웃 처리할 서버 URL
 			success : function(response) {
-				if (response.rt == "success") {
-					location.href = "/xdm/v1/infra/member/membersigninXdmForm";
-					// 함수 끝내고 넘어갈 페이지
+				// AJAX 요청이 성공적으로 완료된 경우 호출되는 함수
+				if (response.rt === "success") {
+					// 로그아웃 성공 시 로그인 페이지로 리다이렉트
+					location.href = response.redirectUrl; // 서버에서 반환된 URL로 리다이렉트
 				} else {
-					alert("로그아웃 실패: " + response.message); // 실패 메시지 출력
+					// 로그아웃 실패 시 알림 창에 메시지 출력
+					alert("로그아웃 실패: " + response.message);
 				}
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
-				alert("ajaxUpdate " + jqXHR.textStatus + " : "
-						+ jqXHR.errorThrown);
+				console
+						.error("AJAX Error: " + textStatus + " - "
+								+ errorThrown);
 			}
 		});
-	}
-
-	form.action = "/xdm/v1/infra/member/signoutXdmProc";
-	// 	form.submit();
+	};
 </script>
+
 </html>

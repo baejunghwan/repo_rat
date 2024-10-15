@@ -2676,11 +2676,11 @@ button:focus:not(:focus-visible) {
     border-radius:5px;
     font-size:1rem
 }
-.form-control {
-    border:1px solid #c8d0da;
-    color:#232629;
-    background-color:#fff
-}
+/* .form-control { */
+/*     border:1px solid #c8d0da; */
+/*     color:#232629; */
+/*     background-color:#fff */
+/* } */
 .form-control:hover {
     border:1px solid #5d6a7c
 }
@@ -2688,7 +2688,7 @@ button:focus:not(:focus-visible) {
     border-color:#276dd9;
     box-shadow:none;
     outline:0 !important;
-    outline-color:#276dd9 !important
+    outline-color:#276dd9 
 }
 .form-control:disabled {
     opacity:.7
@@ -2704,16 +2704,16 @@ button:focus:not(:focus-visible) {
 .form-control[type=file]:not(:disabled):not([readonly]) {
     font-size:1rem
 }
-input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,textarea:-webkit-autofill,textarea:-webkit-autofill:hover,textarea:-webkit-autofill:focus,select:-webkit-autofill,select:-webkit-autofill:hover,select:-webkit-autofill:focus {
-    border:1px solid #119a2c;
-    -webkit-text-fill-color:#232629;
-    box-shadow:0 0 0px 100px rgba(0,0,0,.8) inset
-}
-.form-control::-webkit-file-upload-button {
-    background:#fff;
-    margin:-1rem 1rem -1rem -0.75rem;
-    color:#17181c
-}
+/* input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,textarea:-webkit-autofill,textarea:-webkit-autofill:hover,textarea:-webkit-autofill:focus,select:-webkit-autofill,select:-webkit-autofill:hover,select:-webkit-autofill:focus { */
+/*     border:1px solid #1b86f2; */
+/*     -webkit-text-fill-color:#b8dbff; */
+/*     box-shadow:0 0 0px 100px #b8dbff inset */
+/* } */
+/* .form-control::-webkit-file-upload-button { */
+/*     background:#fff; */
+/*     margin:-1rem 1rem -1rem -0.75rem; */
+/*     color:#17181c */
+/* } */
 .form-check {
     margin:0 0 .75rem 0;
     min-height:2rem
