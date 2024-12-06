@@ -1,56 +1,203 @@
 package com.zoo.infra.codegroup;
 
-// 필요한 라이브러리 임포트
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CodeGroupDto {
 
-	// 코드 그룹의 고유 식별자
 	private String ifcgSeq;
-	// 코드 그룹의 이름
 	private String ifcgName;
-	// 코드 그룹 사용 여부 (1: 사용, 0: 미사용)
 	private Integer ifcgUseNy;
-	// 코드 그룹의 정렬 순서
 	private Integer ifcgOrder;
-	// 코드 그룹 설명
 	private String ifcgDesc;
-	// 코드 그룹 삭제 여부 (1: 삭제됨, 0: 정상)
 	private Integer ifcgDelNy;
-	// 등록 일시
 	private Date regDateTime;
-	// 수정 일시
 	private Date modDateTime;
 
-	// 포맷된 날짜 문자열 (등록 일시)
 	private String formattedRegDateTime;
-	// 포맷된 날짜 문자열 (수정 일시)
 	private String formattedModDateTime;
 
-	// 코드 그룹의 항목 수 카운트
 	private Integer xifcgSeqCount;
 
-	// 관련 코드의 고유 식별자
 	private String ifcdSeq;
-	// 관련 코드의 이름
 	private String ifcdName;
 
-	// 검색 필드
-	private Integer shDelNy; // 삭제 여부로 필터링
-	private Integer shUseNy; // 사용 여부로 필터링
-	private Integer shOption; // 검색 옵션
-	private String shValue; // 검색 값
-
+	private Integer shDelNy; 
+	private Integer shUseNy; 
+	private Integer shOption; 
+	private String shValue; 
+	
+	//AWS
+	private MultipartFile uploadFile;
+	private MultipartFile[] uploadFiles;
+	
+	private String seq;
+	private Integer type;
+	private Integer defaultNy;
+	private Integer sort;
+	private String path;
+	private String originalName;
+	private String uuidName;
+	private String ext;
+	private Integer size;
+	private Integer delNy;
+	private Integer pseq;
+	private String regIp;
+	private Integer regSeq;
+	private Integer regDeviceCd;
+	private Date regDateTimeSvr;
+	private String tableName;
 	// -----------------------------------------------------
-
-	// 등록 일시를 문자열로 설정 (변환 후 Date 객체로 저장)
 	public void setRegDateTime(String regDateTime) {
 		this.regDateTime = convertStringToDate(regDateTime);
 	}
 
-	// 각 필드에 대한 getter 및 setter 메서드
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
+	public String getSeq() {
+		return seq;
+	}
+
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getDefaultNy() {
+		return defaultNy;
+	}
+
+	public void setDefaultNy(Integer defaultNy) {
+		this.defaultNy = defaultNy;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getOriginalName() {
+		return originalName;
+	}
+
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
+
+	public String getUuidName() {
+		return uuidName;
+	}
+
+	public void setUuidName(String uuidName) {
+		this.uuidName = uuidName;
+	}
+
+	public String getExt() {
+		return ext;
+	}
+
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public Integer getDelNy() {
+		return delNy;
+	}
+
+	public void setDelNy(Integer delNy) {
+		this.delNy = delNy;
+	}
+
+	public Integer getPseq() {
+		return pseq;
+	}
+
+	public void setPseq(Integer pseq) {
+		this.pseq = pseq;
+	}
+
+	public String getRegIp() {
+		return regIp;
+	}
+
+	public void setRegIp(String regIp) {
+		this.regIp = regIp;
+	}
+
+	public Integer getRegSeq() {
+		return regSeq;
+	}
+
+	public void setRegSeq(Integer regSeq) {
+		this.regSeq = regSeq;
+	}
+
+	public Integer getRegDeviceCd() {
+		return regDeviceCd;
+	}
+
+	public void setRegDeviceCd(Integer regDeviceCd) {
+		this.regDeviceCd = regDeviceCd;
+	}
+
+	public Date getRegDateTimeSvr() {
+		return regDateTimeSvr;
+	}
+
+	public void setRegDateTimeSvr(Date regDateTimeSvr) {
+		this.regDateTimeSvr = regDateTimeSvr;
+	}
+
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+
+	public MultipartFile[] getUploadFiles() {
+		return uploadFiles;
+	}
+
+	public void setUploadFiles(MultipartFile[] uploadFiles) {
+		this.uploadFiles = uploadFiles;
+	}
 
 	public String getIfcgSeq() {
 		return ifcgSeq;
@@ -188,22 +335,20 @@ public class CodeGroupDto {
 		this.shValue = shValue;
 	}
 
-	// 수정 일시를 문자열로 설정 (변환 후 Date 객체로 저장)
 	public void setModDateTime(String modDateTime) {
 		this.modDateTime = convertStringToDate(modDateTime);
 	}
 
-	// 문자열을 Date 객체로 변환하는 메서드
 	private Date convertStringToDate(String dateString) {
 		if (dateString == null || dateString.isEmpty()) {
-			return null; // null 또는 빈 문자열 처리
+			return null; 
 		}
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			return formatter.parse(dateString); // 문자열을 Date 객체로 변환
+			return formatter.parse(dateString);
 		} catch (ParseException e) {
-			e.printStackTrace(); // 변환 중 에러 발생 시 스택 트레이스 출력
-			return null; // 변환 실패 시 null 반환
+			e.printStackTrace();
+			return null; 
 		}
 	}
 }

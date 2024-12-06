@@ -13,23 +13,20 @@ public class MemberService {
 	public List<MemberDto> selectList(MemberVo memberVo) {
 		return memberDao.selectList(memberVo);
 	}
-
 	public MemberDto selectOne(MemberDto memberDto) {
 		return memberDao.selectOne(memberDto);
 	}
 
+	//CRUD
 	public int insert(MemberDto memberDto) {
 		return memberDao.insert(memberDto);
 	}
-
 	public int update(MemberDto memberDto) {
 		return memberDao.update(memberDto);
 	}
-
 	public int delete(MemberDto memberDto) {
 		return memberDao.delete(memberDto);
 	}
-
 	public int uelete(MemberDto memberDto) {
 		return memberDao.uelete(memberDto);
 	}
@@ -43,4 +40,5 @@ public class MemberService {
 	public MemberDto selectOneLogin(MemberDto memberDto) {
 		return memberDao.selectOneLogin(memberDto);
 	}
+	
 }

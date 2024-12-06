@@ -49,11 +49,12 @@
 		,a.userPw
 		,a.userEmail
 
-		,b.productName
-		,b.productSeq
+		,b.pdName
+		,b.pdSeq
+		,b.pdMedia
+		,b.pdTerm	
 
-		,(SELECT
-		count(b.productSeq) FROM product b WHERE 1=1 AND b.user_userSeq =
+		,(SELECT count(b.pdSeq) FROM product b WHERE 1=1 AND b.user_userSeq =
 		a.userSeq)
 
 		AS xuserSeqCount
@@ -62,7 +63,7 @@
 		ORDER BY
 		a.userSeq DESC
 		) aa
-		limit #{rowNumToShow} offset
+		LIMIT #{rowNumToShow} offset
 		#{startRnumForMysql}
 	</select>
 
@@ -93,7 +94,8 @@
 		FROM
 		user a
 		WHERE
-		a.userId = #{userId} AND a.userPw = #{userPw}
+		a.userId = #{userId} 
+		AND a.userPw = #{userPw}
 	</select>
 
 	<insert id="insert">
@@ -131,10 +133,10 @@
 	<update id="update">
 		UPDATE user
 		SET
-		userName = #{userName}
-		,userUseNy =
-		#{userUseNy}
-		,userOrder = #{userOrder}
+		userName = #{userName},
+		userUseNy = #{userUseNy},
+		userOrder = #{userOrder},
+		userPw = #{userPw}
 		WHERE 1=1
 		AND userSeq
 		= #{userSeq}
@@ -157,5 +159,10 @@
 		=
 		#{userSeq}
 	</update>
+
+	<!-- ProductDto 사용을 위한 쿼리 추가 -->
+	<!-- <select id="getUserProducts" parameterType="int" resultType="ProductDto"> -->
+	<!-- SELECT * FROM product WHERE user_userSeq = #{userSeq} -->
+	<!-- </select> -->
 
 </mapper> 

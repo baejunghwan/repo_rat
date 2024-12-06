@@ -9,10 +9,10 @@
 		id="resultMapObj">
 	</resultMap>
 
-	<!-- 공통 SQL 조건을 정의하는 SQL 블록 -->
 	<sql id="selectCommon">
 		FROM infrCodeGroup a
-		LEFT JOIN infrCode b ON b.infrcodegroup_ifcgSeq = a.ifcgSeq
+		LEFT JOIN infrCode b 
+		ON b.infrcodegroup_ifcgSeq = a.ifcgSeq
 		WHERE 1=1
 		<if test="shUseNy != null and !shUseNy.equals('')">
 			AND a.ifcgUseNy = #{shUseNy}
@@ -22,10 +22,12 @@
 		</if>
 		<choose>
 			<when test="shOptionDate == 1">
-				AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}
+				AND a.regDateTime BETWEEN #{shDateStart} AND
+				#{shDateEnd}
 			</when>
 			<when test="shOptionDate == 2">
-				AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}
+				AND a.modDateTime BETWEEN #{shDateStart} AND
+				#{shDateEnd}
 			</when>
 		</choose>
 		<choose>
@@ -39,13 +41,11 @@
 		</choose>
 	</sql>
 
-	<!-- 전체 레코드 수를 조회하는 쿼리 -->
 	<select id="selectOneCount" resultType="Integer">
 		SELECT COUNT(*)
 		<include refid="selectCommon" />
 	</select>
 
-	<!-- 코드 그룹 리스트를 조회하는 쿼리 -->
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT aa.* FROM (
 		SELECT
@@ -64,10 +64,10 @@
 		<include refid="selectCommon" />
 		ORDER BY a.ifcgSeq DESC
 		) aa
-		LIMIT #{rowNumToShow} OFFSET #{startRnumForMysql}
+		LIMIT #{rowNumToShow} OFFSET
+		#{startRnumForMysql}
 	</select>
 
-	<!-- 특정 코드 그룹을 조회하는 쿼리 -->
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT
 		a.ifcgSeq,
@@ -84,7 +84,7 @@
 		AND a.ifcgSeq = #{ifcgSeq}
 	</select>
 
-	<!-- 코드 그룹을 등록하는 쿼리 -->
+	<!-- CRUD 시작 -->
 	<insert id="insert">
 		INSERT INTO infrCodeGroup (
 		ifcgName,
@@ -99,8 +99,8 @@
 		#{ifcgUseNy},
 		#{ifcgOrder},
 		#{ifcgDesc},
-		0, <!-- 기본값으로 삭제되지 않음 -->
-		NOW(), <!-- 현재 시간으로 등록 일시 설정 -->
+		0, 
+		NOW(), 
 		NOW()
 		)
 		<selectKey resultType="String" keyProperty="ifcgSeq"
@@ -109,7 +109,6 @@
 		</selectKey>
 	</insert>
 
-	<!-- 코드 그룹 정보를 업데이트하는 쿼리 -->
 	<update id="update">
 		UPDATE infrCodeGroup
 		SET
@@ -117,14 +116,15 @@
 		ifcgUseNy = #{ifcgUseNy},
 		ifcgOrder = #{ifcgOrder}
 		WHERE 1=1
-		AND ifcgSeq = #{ifcgSeq}
+		AND ifcgSeq
+		= #{ifcgSeq}
 	</update>
 
-	<!-- 코드 그룹을 삭제하는 쿼리 -->
 	<delete id="delete">
 		DELETE FROM infrCodeGroup
 		WHERE 1=1
-		AND ifcgSeq = #{ifcgSeq}
+		AND ifcgSeq =
+		#{ifcgSeq}
 	</delete>
 
 	<!-- 코드 그룹을 소프트 삭제하는 쿼리 -->
@@ -133,7 +133,8 @@
 		SET
 		ifcgDelNy = 1
 		WHERE 1=1
-		AND ifcgSeq = #{ifcgSeq}
+		AND
+		ifcgSeq = #{ifcgSeq}
 	</update>
 
 	<!-- 모든 코드 그룹을 조회하는 쿼리 -->

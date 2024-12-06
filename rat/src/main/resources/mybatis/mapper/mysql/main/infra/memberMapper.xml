@@ -47,10 +47,10 @@
 		,a.memberPw
 		,a.memberEmail
 
-		,b.productName
-		,b.productSeq
+		,b.pdName
+		,b.pdSeq
 
-		,(SELECT count(b.productSeq) FROM product b WHERE 1=1 AND b.member_memberSeq =
+		,(SELECT count(b.pdSeq) FROM product b WHERE 1=1 AND b.member_memberSeq =
 		a.memberSeq)
 
 		AS xmemberSeqCount
@@ -91,7 +91,7 @@
 		WHERE
 		a.memberId = #{memberId} AND a.memberPw = #{memberPw}
 	</select>
-
+	
 	<insert id="insert">
 		INSERT INTO member (
 		memberName
@@ -105,6 +105,7 @@
 		,memberId
 		,memberPw
 		,memberEmail
+		,memberType
 		) VALUES (
 		#{memberName}
 		,#{memberUseNy}
@@ -117,6 +118,7 @@
 		,#{memberId}
 		,#{memberPw}
 		,#{memberEmail}
+		,#{memberType}
 		)
 		<selectKey resultType="String" keyProperty="memberSeq"
 			order="AFTER">

@@ -10,4 +10,7 @@ public class Constants {
 	// 페이징 관련 상수
 	public static final int ROW_NUM_TO_SHOW = 5; // 한 페이지에 보여줄 행 수
 	public static final int PAGE_NUM_TO_SHOW = 5; // 보여줄 페이지 수
+	
+	//AWS
+	public static final String DATETIME_FORMAT_BASIC = "yyyy-MM-dd HH:mm:ss";
 }

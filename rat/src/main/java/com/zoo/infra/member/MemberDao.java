@@ -13,14 +13,12 @@ public interface MemberDao {
 
 	public MemberDto selectOne(MemberDto memberDto);
 
+	//CRUD
 	public int insert(MemberDto memberDto);
-
 	public int update(MemberDto memberDto);
-
 	public int delete(MemberDto memberDto);
-
 	public int uelete(MemberDto memberDto);
-
+	
 	// paging
 	public int selectOneCount(MemberVo vo);
 

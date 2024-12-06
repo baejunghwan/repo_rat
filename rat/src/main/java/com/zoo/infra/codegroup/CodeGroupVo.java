@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 // 코드 그룹 검색 및 페이징 정보를 담는 VO 클래스
 public class CodeGroupVo {
 
-	private Integer ifcgSeq; // 코드 그룹 시퀀스
+	private String ifcgSeq; // 코드 그룹 시퀀스
 	private String ifcgName; // 코드 그룹 이름
 	private Integer ifcgUseNy; // 사용 여부 (Y/N)
 	private Integer ifcgOrder; // 정렬 순서
@@ -82,7 +82,6 @@ public class CodeGroupVo {
 			setStartRnumForMysql((getRowNumToShow() * (getThisPage() - 1))); // 시작 row 계산
 		}
 
-		// 디버깅 출력
 		System.err.println("setTotalRows(totalRows) 결과 : ");
 		System.out.println("rowNumToShow : " + getRowNumToShow());
 		System.out.println("pageNumToShow : " + getPageNumToShow());
@@ -96,16 +95,16 @@ public class CodeGroupVo {
 	// 각 필드에 대한 접근 메서드를 정의
 	// -----------------------------------------
 
-	public Integer getIfcgSeq() {
+	public String getIfcgName() {
+		return ifcgName;
+	}
+
+	public String getIfcgSeq() {
 		return ifcgSeq;
 	}
 
-	public void setIfcgSeq(Integer ifcgSeq) {
+	public void setIfcgSeq(String ifcgSeq) {
 		this.ifcgSeq = ifcgSeq;
-	}
-
-	public String getIfcgName() {
-		return ifcgName;
 	}
 
 	public void setIfcgName(String ifcgName) {

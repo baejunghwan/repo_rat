@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zoo.infra.product.ProductDao">
+	<resultMap type="com.zoo.infra.product.ProductDto"
+		id="resultMapObj">
+	</resultMap>
+
+	<sql id="selectCommon">
+		FROM product a
+		LEFT JOIN member b on a.member_memberSeq = b.memberSeq
+	 	LEFT JOIN pdReview c on a.pdSeq = c.member_memberSeq
+		WHERE 1=1
+		<if test="shUseNy != null and !shUseNy.equals('')"> AND a.pdUseNy= #{shUseNy}</if>
+		<if test="shDelNy != null and !shDelNy.equals('')"> AND a.pdDelNy = #{shDelNy}</if>
+		<choose>
+			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND
+				#{shDateEnd}
+			</when>
+			<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND
+				#{shDateEnd}
+			</when>
+		</choose>
+	</sql>
+
+	<select id="selectOneCount" resultType="Integer">
+		SELECT COUNT(*)
+		<include refid="selectCommon" />
+	</select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT aa.* FROM (
+		SELECT
+		a.pdSeq
+		,a.pdName
+		,a.pdUseNy
+		,a.pdOrder
+		,a.pdDesc
+		,a.pdDelNy
+		,a.pdPrice
+		,a.pdPriceDcRate
+		,a.pdfavorite
+		,a.pdMedia
+		,a.pdTerm
+		,a.pdReview
+		,a.regDateTime
+		,a.modDateTime
+		,b.memberSeq
+		,b.memberName
+		,(SELECT COUNT(b.memberSeq) FROM member b WHERE 1=1 
+		AND a.member_memberSeq = b.memberSeq)
+		AS xproductSeqCount
+		<include refid="selectCommon" />
+		ORDER BY
+		a.pdSeq DESC
+		) aa
+		limit #{rowNumToShow} offset
+		#{startRnumForMysql}
+	</select>
+
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+		a.pdName
+		,a.pdUseNy
+		,a.pdOrder
+		,a.pdDesc
+		,a.pdDelNy
+		,a.pdPrice
+		,a.pdPriceDcRate
+		,a.pdFavorite
+		,a.pdMedia
+		,a.pdTerm
+		,a.pdReview
+		,a.pdRating
+		,a.regDateTime
+		,a.modDateTime
+		,a.member_memberSeq
+		FROM
+		product a
+		WHERE 1=1
+		AND a.pdSeq = #{pdSeq}
+	</select>	
+	
+	<!-- pdReveiw - member -->
+	<select id="selectListReview" resultMap="resultMapObj">
+		SELECT *
+		FROM
+		pdReview a
+		LEFT JOIN member c
+		ON a.member_memberSeq = c.memberSeq
+		where a.product_pdSeq = #{pdSeq}
+	</select>	
+	
+	<!-- pdReveiw - member -->
+	<select id="selectListReviewCount" resultType="Integer"> 
+		SELECT COUNT(*)
+		FROM pdReview a
+		LEFT JOIN product b
+		ON a.product_pdSeq = b.pdSeq
+		LEFT JOIN member c
+		ON a.member_memberSeq = c.memberSeq
+		where a.product_pdSeq = #{pdSeq}
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO product (
+		pdName
+		,pdUseNy
+		,pdOrder
+		,pdDesc
+		,pdDelNy
+		,pdPrice
+		,pdPriceDcRate
+		,pdFavorite
+		,pdMedia
+		,pdTerm
+		,pdReview
+		,pdRating
+		,regDateTime
+		,modDateTime
+		,member_memberSeq
+		) VALUES (
+		#{pdName}
+		,#{pdUseNy}
+		,#{pdOrder}
+		,#{pdDesc}
+		,#{pdDelNy}
+		,#{pdPrice}
+		,#{pdPriceDcRate}
+		,#{pdFavorite}
+		,#{pdMedia}
+		,#{pdTerm}
+		,#{pdReview}
+		,#{pdRating}
+		,now()
+		,now()
+		,#{memberMemberSeq}
+		)
+		<selectKey resultType="String" keyProperty="productSeq"
+			order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+
+	<update id="update">
+		UPDATE product
+		SET
+		pdName = #{pdName}
+		,pdUseNy =
+		#{pdUseNy}
+		,pdOrder = #{pdOrder}
+		WHERE 1=1
+		AND pdSeq
+		= #{pdSeq}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM product
+		WHERE 1=1
+		AND pdSeq =
+		#{pdSeq}
+	</delete>
+
+	<update id="uelete">
+		UPDATE product
+		SET
+		pdDelNy = 1
+		WHERE 1=1
+		AND
+		pdSeq =
+		#{pdSeq}
+	</update>
+
+	<!-- 다른 테이블 쿼리 -->
+	<!-- <select id="selectMediaByProductSeq" -->
+	<!-- resultType="ProductMediaDto"> -->
+	<!-- SELECT * FROM product_media WHERE product_pdSeq = -->
+	<!-- #{productPdSeq} -->
+	<!-- </select> -->
+
+	<!-- <select id="selectTermByProductSeq" resultType="ProductTermDto"> -->
+	<!-- SELECT * FROM -->
+	<!-- product_term WHERE product_pdSeq = #{productPdSeq} -->
+	<!-- </select> -->
+
+	<!-- <insert id="insertMedia"> -->
+	<!-- INSERT INTO product_media (pdmdStatus, pdmdDetail, -->
+	<!-- product_pdSeq) -->
+	<!-- VALUES (#{pdmdStatus}, #{pdmdDetail}, #{productPdSeq}) -->
+	<!-- </insert> -->
+
+	<!-- <update id="updateMedia"> -->
+	<!-- UPDATE product_media -->
+	<!-- SET pdmdStatus = #{pdmdStatus}, -->
+	<!-- pdmdDetail = #{pdmdDetail} -->
+	<!-- WHERE pdmdSeq = #{pdmdSeq} -->
+	<!-- </update> -->
+
+	<!-- <delete id="deleteMedia"> -->
+	<!-- DELETE FROM product_media WHERE pdmdSeq = #{pdmdSeq} -->
+	<!-- </delete> -->
+
+	<!-- <insert id="insertTerm"> -->
+	<!-- INSERT INTO product_term (pdtName, product_pdSeq) -->
+	<!-- VALUES (#{pdtName}, #{productPdSeq}) -->
+	<!-- </insert> -->
+
+	<!-- <update id="updateTerm"> -->
+	<!-- UPDATE product_term -->
+	<!-- SET pdtName = #{pdtName} -->
+	<!-- WHERE -->
+	<!-- pdtSeq = #{pdtSeq} -->
+	<!-- </update> -->
+
+	<!-- <delete id="deleteTerm"> -->
+	<!-- DELETE FROM product_term WHERE pdtSeq = #{pdtSeq} -->
+	<!-- </delete> -->
+
+</mapper> 

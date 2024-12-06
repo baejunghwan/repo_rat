@@ -1,6 +1,10 @@
 package com.zoo.infra.user;
 
 import java.util.Date;
+import java.util.List;
+
+import com.zoo.infra.code.CodeDto;
+import com.zoo.infra.product.ProductDto;
 
 public class UserDto {
 
@@ -20,10 +24,34 @@ public class UserDto {
 	private String userTel;
 
 	private String rtUser;
+	
+	private Integer xuserSeqCount;
+	
+	// 다른 필드
+	// Product 관련 필드
+	private List<ProductDto> productList;
+	private List<CodeDto> codeList;
+	
 	// ------------------------------
-
+	
 	public String getUserSeq() {
 		return userSeq;
+	}
+
+	public Integer getXuserSeqCount() {
+		return xuserSeqCount;
+	}
+
+	public void setXuserSeqCount(Integer xuserSeqCount) {
+		this.xuserSeqCount = xuserSeqCount;
+	}
+
+	public List<CodeDto> getCodeList() {
+		return codeList;
+	}
+
+	public void setCodeList(List<CodeDto> codeList) {
+		this.codeList = codeList;
 	}
 
 	public void setUserSeq(String userSeq) {
@@ -125,5 +153,13 @@ public class UserDto {
 	public void setRtUser(String rtUser) {
 		this.rtUser = rtUser;
 	}
-	
+
+	public List<ProductDto> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<ProductDto> productList) {
+		this.productList = productList;
+	}
+
 }

@@ -67,13 +67,13 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label">비밀번호</label> <input type="password"
-							id="memberPw" name="memberPw" th:value="${item?.memberPw}"
-							class="form-control" placeholder="비밀번호를 입력해주세요" />
+							id="memberPw" name="memberPw" class="form-control"
+							placeholder="비밀번호를 입력해주세요" />
 					</div>
-					<div class="mb-3">
-						<label class="form-label">비밀번호 확인</label> <input type="password"
-							class="form-control" placeholder="비밀번호를 다시 입력해주세요" />
-					</div>
+					<!-- 					<div class="mb-3"> -->
+					<!-- 						<label class="form-label">비밀번호 확인</label> <input type="password" -->
+					<!-- 							class="form-control" placeholder="비밀번호를 다시 입력해주세요" /> -->
+					<!-- 					</div> -->
 					<div class="mb-3">
 						<label for="sample4_postcode" class="form-label">우편번호</label>
 						<div class="input-group">
@@ -115,7 +115,7 @@
 						<button type="button" class="btn btn-lg btn-primary"
 							id="btnSubmit">회원가입</button>
 					</div>
-					<div class="text-center py-3">or Signup with</div>
+					<div class="text-center py-3">or SignUp with</div>
 					<div class="d-flex gap-2 justify-content-center">
 						<button type="submit" class="btn btn-outline-light">
 							<img src="/xdm/v1/images/google.svg" class="login-icon"
@@ -160,30 +160,29 @@
 
 <script>
 	document.getElementById("btnSubmit").onclick = function() {
-		// 		alert(document.getElementById("ifcgName").value);	 
+				alert(document.getElementById("ifcgName").value);	 
 
 		var memberId = document.getElementById("memberId");
 		var memberIdValue = document.getElementById("memberId").value.trim();
 		var memberIdRegExp = /^[A-Za-z0-9]{4,12}$/;
 
 		if (memberIdValue == "" || memberIdValue == null) {
-// 			alert("아이디를 입력해 주세요");
-			memberId.classList.add("field-error"); // 에러 클래스 추가
+						alert("아이디를 입력해 주세요");
+			memberId.classList.add("field-error"); 
 			memberId.focus();
 			return false;
-			// 이 함수를 탈출한다는 의미 true, false 둘다 가능하지만 여기서는 부정적 의미이므로 false 사용
 		} else {
-			memberId.classList.remove("field-error"); // 에러 클래스 제거
+			memberId.classList.remove("field-error"); 
 			// 			by pass
 		}
 
 		if (!memberIdRegExp.test(memberIdValue)) {
-// 			alert("아이디는 4자 이상 12자 이하의 영대소문자, 숫자만 허용합니다");
-			memberId.classList.add("field-error"); // 에러 클래스 추가
+						alert("아이디는 4자 이상 12자 이하의 영대소문자, 숫자만 허용합니다");
+			memberId.classList.add("field-error"); 
 			memberId.focus();
 			return false;
 		} else {
-			memberId.classList.remove("field-error"); // 에러 클래스 제거
+			memberId.classList.remove("field-error"); 
 			// 	    	by pass
 		}
 
@@ -192,30 +191,29 @@
 		var memberPwRegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]{8,12}$/;
 
 		if (memberPwValue == "" || memberPwValue == null) {
-// 			alert("비밀번호를 입력해주세요");
-			memberPw.classList.add("field-error"); // 에러 클래스 추가
+						alert("비밀번호를 입력해주세요");
+			memberPw.classList.add("field-error"); 
 			memberPw.focus();
 			return false;
 		} else {
-			memberPw.classList.add("field-error"); // 에러 클래스 추가
+			memberPw.classList.add("field-error"); 
 			// 			by pass
 		}
 
 		if (!memberPwRegExp.test(memberPwValue)) {
 			alert("비밀번호는 영문, 숫자, 특수문자의 조합으로 이루어진 8자 이상 12자 이하만 허용합니다");
-			memberPw.classList.add("field-error"); // 에러 클래스 추가
+			memberPw.classList.add("field-error");
 			memberPw.focus();
 			return false;
 		} else {
-			memberPw.classList.remove("field-error"); // 에러 클래스 제거
+			memberPw.classList.remove("field-error"); 
 			// 	    	by pass
 		}
-
 		// -----------------------------------------------------------------
 		// 비밀번호 확인 로직: 제출 버튼 클릭 시 확인
 		var memberPwConfirm = document
 				.querySelector('input[placeholder="비밀번호를 다시 입력해주세요"]');
-		var memberPwConfirmValue = memberPwConfirm.value.trim();
+				var memberPwConfirmValue = memberPwConfirm.value.trim();
 
 		if (memberPwConfirmValue === "") {
 			alert("비밀번호를 다시 입력해 주세요.");
@@ -268,56 +266,45 @@
 		}
 		//-------------------------------------------------------------------
 		// jQuery 형태로 작성된 AJAX 요청
-		$.ajax({
-			async : true, // 비동기 요청으로 설정
-			cache : false, // 캐시 사용 안 함
-			type : "post", // HTTP 요청 방식: POST
-			// dataType: "json", // 응답 데이터 형식 (주석 처리됨)
+					$.ajax({
+					async : true, // 비동기 요청으로 설정
+					cache : false, // 캐시 사용 안 함
+					type : "post", // HTTP 요청 방식: POST
+					dataType: "json",
 
-			url : "/xdm/v1/infra/member/membersignupProc", // 요청을 보낼 URL
+					url : "/xdm/v1/infra/member/membersignupProc", 
 
-			// 데이터 전송 형식 설정 (주석 처리된 코드)
-			// data: $("#formLogin").serialize(), // 폼 데이터를 직렬화하여 전송
-			data : {
-				"memberId" : $("#memberId").val(), // 입력된 회원 ID
-				"memberPw" : $("#memberPw").val(), // 입력된 비밀번호
-				"autoLogin" : $("#autoLogin").is(":checked")
-			// 자동 로그인 체크 여부
-			},
+					data: $("#formLogin").serialize(), 
+					data : {
+						"memberId" : $("#memberId").val(), 
+						"memberPw" : $("#memberPw").val(), 
+						"autoLogin" : $("#autoLogin").is(":checked")
+					},
 
-			// 요청이 성공적으로 완료된 경우 실행되는 콜백 함수
-			success : function(response) {
-				// 서버로부터 받은 응답의 rt 값이 "success"일 때
-				if (response.rt == "success") {
-					// 아래 코드는 주석 처리됨
-					// if(response.changePwd == "true") {
-					//     location.href = "/xdm/v1/infra/member/expiredPwdUsrForm"; // 비밀번호 변경 페이지로 이동
-					// } else {
-					//     location.href = "/xdm/v1/infra/index/indexXdmView"; // 메인 페이지로 이동
-					// }
+					success : function(response) {
+						if (response.rt == "success") {
+							if (response.changePwd == "true") {
+								location.href = "/xdm/v1/infra/member/membersigninXdmForm";
+							} else {
+								location.href = "/xdm/v1/infra/member/membersignupXdmForm";
+							}
 
-					// 성공 시 회원 페이지로 이동
-					location.href = "/xdm/v1/infra/member/memberXdmForm";
-				} else {
-					// 실패 시 사용자에게 메시지를 보여주기 위한 주석 처리된 코드
-					// document.getElementById("modalAlertTitle").innerText = "확인";
-					// document.getElementById("modalAlertBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
-					// $("#modalAlert").modal("show"); // 모달 창 표시
-				}
-			},
+							location.href = "/xdm/v1/infra/member/memberXdmForm";
+						} else {
+							document.getElementById("modalAlertTitle").innerText = "확인";
+							document.getElementById("modalAlertBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
+							$("#modalAlert").modal("show");
+						}
+					},
 
-			// 요청이 실패했을 때 실행되는 콜백 함수
-			error : function(jqXHR, textStatus, errorThrown) {
-				// 에러 메시지 알림
-				console.error("AJAX 요청 오류:", textStatus, errorThrown); // 오류 정보 출력
-				alert("ajaxUpdate " + jqXHR.textStatus + " : "
-						+ jqXHR.errorThrown);
-			}
-		});
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.error("AJAX 요청 오류:", textStatus, errorThrown);
+						alert("ajaxUpdate " + jqXHR.textStatus + " : "
+								+ jqXHR.errorThrown);
+					}
+				});
 
-		// 폼의 action 속성을 설정 (서버로 요청을 보낼 URL)
 		form.action = "/xdm/v1/infra/member/membersignupXdmForm";
-		// 폼을 제출하여 서버로 요청
 		form.submit();
 	}
 </script>

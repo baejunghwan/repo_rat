@@ -1,157 +1,213 @@
 package com.zoo.infra.product;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ProductDto {
+	
+//	날짜 타입 정하는 법 : (db)에서 datetime으로 설정 > dto (정의되어 있는 필드) String으로 타입 - @Datetimeformat 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String pdSeq;
+	private String pdName;
+	private Boolean pdUseNy;
+	private Integer pdOrder;
+	private String pdDesc;
+	private Boolean pdDelNy;
+	private String regDateTime;
+	private String modDateTime;
+	private Integer pdPrice;
+	private Integer pdPriceDcRate;
+	private Boolean pdfavorite;
+	private Integer pdMedia;
+	private Integer pdTerm;
+	private String pdImg;
+	private Integer pdRating;
+	private String memberMemberSeq;
 
-	private Integer productSeq;
-	private String productName;
-	private Integer productUseNy;
-	private Integer productOrder;
-	private String productDesc;
-	private Integer productDelNy;
-	private Date regDateTime;
-	private Date modDateTime;
-	private Integer member_memberSeq;
-
-	// 새로 추가한 칼럼들
-	private String productImg;
-	private String productTitle;
-	private String productReview;
-	private Integer productPrice;
-	private Integer productPriceDcRate;
-	private BigDecimal productRating;
-	private String productReply;
-	private Integer productfavorite;	
+	private String pdReview;
+	private String memberName;
+	
+	//member
+	private String memberId;
+	
+	private Integer pdrvSeq;
+	private String pdrvTitle;
+	private Integer pdrvRating;
+	private String pdrvReview;
+	private String productPdSeq;
+	
+	private String pdrvRegDateTime;
+	private String pdrvModDateTime;
+	private String member_memberSeq;
+	
+//	private Integer xReviewCount;
 	// ----------------------------------
 	
-	public Integer getProductSeq() {
-		return productSeq;
+	public String getPdSeq() {
+		return pdSeq;
 	}
-
-	public String getProductImg() {
-		return productImg;
+//	public Integer getxReviewCount() {
+//		return xReviewCount;
+//	}
+//	public void setxReviewCount(Integer xReviewCount) {
+//		this.xReviewCount = xReviewCount;
+//	}
+	public String getPdrvRegDateTime() {
+		return pdrvRegDateTime;
 	}
-
-	public void setProductImg(String productImg) {
-		this.productImg = productImg;
+	public void setPdrvRegDateTime(String pdrvRegDateTime) {
+		this.pdrvRegDateTime = pdrvRegDateTime;
 	}
-
-	public String getProductTitle() {
-		return productTitle;
+	public String getPdrvModDateTime() {
+		return pdrvModDateTime;
 	}
-
-	public void setProductTitle(String productTitle) {
-		this.productTitle = productTitle;
+	public void setPdrvModDateTime(String pdrvModDateTime) {
+		this.pdrvModDateTime = pdrvModDateTime;
 	}
-
-	public String getProductReview() {
-		return productReview;
+	public String getMemberId() {
+		return memberId;
 	}
-
-	public void setProductReview(String productReview) {
-		this.productReview = productReview;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-
-	public Integer getProductPrice() {
-		return productPrice;
+	public String getMemberName() {
+		return memberName;
 	}
-
-	public void setProductPrice(Integer productPrice) {
-		this.productPrice = productPrice;
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-
-	public Integer getProductPriceDcRate() {
-		return productPriceDcRate;
-	}
-
-	public void setProductPriceDcRate(Integer productPriceDcRate) {
-		this.productPriceDcRate = productPriceDcRate;
-	}
-
-	public BigDecimal getProductRating() {
-		return productRating;
-	}
-
-	public void setProductRating(BigDecimal productRating) {
-		this.productRating = productRating;
-	}
-
-	public String getProductReply() {
-		return productReply;
-	}
-
-	public void setProductReply(String productReply) {
-		this.productReply = productReply;
-	}
-
-	public void setProductSeq(Integer productSeq) {
-		this.productSeq = productSeq;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public Integer getProductUseNy() {
-		return productUseNy;
-	}
-
-	public void setProductUseNy(Integer productUseNy) {
-		this.productUseNy = productUseNy;
-	}
-
-	public Integer getProductOrder() {
-		return productOrder;
-	}
-
-	public void setProductOrder(Integer productOrder) {
-		this.productOrder = productOrder;
-	}
-
-	public String getProductDesc() {
-		return productDesc;
-	}
-
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
-
-	public Integer getProductDelNy() {
-		return productDelNy;
-	}
-
-	public void setProductDelNy(Integer productDelNy) {
-		this.productDelNy = productDelNy;
-	}
-
-	public Date getRegDateTime() {
-		return regDateTime;
-	}
-
-	public void setRegDateTime(Date regDateTime) {
-		this.regDateTime = regDateTime;
-	}
-
-	public Date getModDateTime() {
-		return modDateTime;
-	}
-
-	public void setModDateTime(Date modDateTime) {
-		this.modDateTime = modDateTime;
-	}
-
-	public Integer getMember_memberSeq() {
+	public String getMember_memberSeq() {
 		return member_memberSeq;
 	}
-
-	public void setMember_memberSeq(Integer member_memberSeq) {
+	public void setMember_memberSeq(String member_memberSeq) {
 		this.member_memberSeq = member_memberSeq;
 	}
-
+	public Integer getPdPriceDcRate() {
+		return pdPriceDcRate;
+	}
+	public void setPdPriceDcRate(Integer pdPriceDcRate) {
+		this.pdPriceDcRate = pdPriceDcRate;
+	}
+	public String getRegDateTime() {
+		return regDateTime;
+	}
+	public void setRegDateTime(String regDateTime) {
+		this.regDateTime = regDateTime;
+	}
+	public String getModDateTime() {
+		return modDateTime;
+	}
+	public void setModDateTime(String modDateTime) {
+		this.modDateTime = modDateTime;
+	}
+	public void setPdSeq(String pdSeq) {
+		this.pdSeq = pdSeq;
+	}
+	public String getPdName() {
+		return pdName;
+	}
+	public void setPdName(String pdName) {
+		this.pdName = pdName;
+	}
+	public Boolean getPdUseNy() {
+		return pdUseNy;
+	}
+	public void setPdUseNy(Boolean pdUseNy) {
+		this.pdUseNy = pdUseNy;
+	}
+	public Integer getPdOrder() {
+		return pdOrder;
+	}
+	public void setPdOrder(Integer pdOrder) {
+		this.pdOrder = pdOrder;
+	}
+	public String getPdDesc() {
+		return pdDesc;
+	}
+	public void setPdDesc(String pdDesc) {
+		this.pdDesc = pdDesc;
+	}
+	public Boolean getPdDelNy() {
+		return pdDelNy;
+	}
+	public void setPdDelNy(Boolean pdDelNy) {
+		this.pdDelNy = pdDelNy;
+	}
+	public Integer getPdPrice() {
+		return pdPrice;
+	}
+	public void setPdPrice(Integer pdPrice) {
+		this.pdPrice = pdPrice;
+	}
+	public Boolean getPdfavorite() {
+		return pdfavorite;
+	}
+	public void setPdfavorite(Boolean pdfavorite) {
+		this.pdfavorite = pdfavorite;
+	}
+	public Integer getPdMedia() {
+		return pdMedia;
+	}
+	public void setPdMedia(Integer pdMedia) {
+		this.pdMedia = pdMedia;
+	}
+	public Integer getPdTerm() {
+		return pdTerm;
+	}
+	public void setPdTerm(Integer pdTerm) {
+		this.pdTerm = pdTerm;
+	}
+	public String getPdImg() {
+		return pdImg;
+	}
+	public void setPdImg(String pdImg) {
+		this.pdImg = pdImg;
+	}
+	public Integer getPdRating() {
+		return pdRating;
+	}
+	public void setPdRating(Integer pdRating) {
+		this.pdRating = pdRating;
+	}
+	public String getMemberMemberSeq() {
+		return memberMemberSeq;
+	}
+	public void setMemberMemberSeq(String memberMemberSeq) {
+		this.memberMemberSeq = memberMemberSeq;
+	}
+	public String getPdReview() {
+		return pdReview;
+	}
+	public void setPdReview(String pdReview) {
+		this.pdReview = pdReview;
+	}
+	public Integer getPdrvSeq() {
+		return pdrvSeq;
+	}
+	public void setPdrvSeq(Integer pdrvSeq) {
+		this.pdrvSeq = pdrvSeq;
+	}
+	public String getPdrvTitle() {
+		return pdrvTitle;
+	}
+	public void setPdrvTitle(String pdrvTitle) {
+		this.pdrvTitle = pdrvTitle;
+	}
+	public Integer getPdrvRating() {
+		return pdrvRating;
+	}
+	public void setPdrvRating(Integer pdrvRating) {
+		this.pdrvRating = pdrvRating;
+	}
+	public String getPdrvReview() {
+		return pdrvReview;
+	}
+	public void setPdrvReview(String pdrvReview) {
+		this.pdrvReview = pdrvReview;
+	}
+	public String getProductPdSeq() {
+		return productPdSeq;
+	}
+	public void setProductPdSeq(String productPdSeq) {
+		this.productPdSeq = productPdSeq;
+	}
 }

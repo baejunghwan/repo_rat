@@ -61,15 +61,12 @@
 		ON b.ifcgSeq =
 		a.infrcodegroup_ifcgSeq
 		WHERE 1=1
-		<!-- 사용,삭제여부 -->
 		<if test="shUseNy != null and !shUseNy.equals('')"> AND a.ifcdUseNy= #{shUseNy}</if>
 		<if test="shDelNy != null and !shDelNy.equals('')"> AND a.ifcdDelNy = #{shDelNy}</if>
-		<!-- 일련번호, 코드이름 -->
 		<choose>
 			<when test="shOption == 1">AND a.ifcdSeq = #{shValue}</when>
 			<when test="shOption == 2">AND a.ifcdName LIKE CONCAT('%',#{shValue},'%')</when>
 		</choose>
-		<!-- 달력 -->
 		<choose>
 			<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND
 				#{shDateEnd}
@@ -83,8 +80,8 @@
 		LIMIT #{startRnumForMysql}, #{rowNumToShow}
 	</select>
 
+	<!-- mfom 용도 -->
 	<select id="selectOne" resultMap="resultMapObj">
-		<!-- mfom 용도 -->
 		SELECT
 		a.ifcdSeq
 		,a.ifcdName
@@ -126,7 +123,6 @@
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>
-
 	<update id="update">
 		UPDATE infrCode
 		SET
@@ -138,14 +134,12 @@
 		AND ifcdSeq
 		= #{ifcdSeq}
 	</update>
-
 	<delete id="delete">
 		DELETE FROM infrCode
 		WHERE 1=1
 		AND ifcdSeq =
 		#{ifcdSeq}
 	</delete>
-
 	<update id="uelete">
 		UPDATE infrCode
 		SET
@@ -155,25 +149,26 @@
 		ifcdSeq =
 		#{ifcdSeq}
 	</update>
+
 	<!-- cache -->
 	<select id="selectListCachedCodeArrayList"
 		resultMap="resultMapObj">
 		SELECT
-		a.ifcdSeq
-		, a.ifcdName
-		, b.ifcgSeq
+		ifcdSeq
+		,ifcdName
+		,infrcodegroup_ifcgSeq
 		FROM
-		infrCode AS a,
-		infrCodeGroup AS b
+		infrCode
 		WHERE 1=1
-		AND a.ifcdDelNy = 0
-		AND a.ifcdUseNy = 1
+		AND ifcdDelNy = 0
+		AND ifcdUseNy = 1
 	</select>
 
 	<!-- 전체 코드 그룹 선택 쿼리 -->
 	<select id="getAllCodeGroups"
 		resultType="com.zoo.infra.code.CodeDto">
-		SELECT ifcgSeq, ifcgName
+		SELECT ifcgSeq
+		,ifcgName
 		FROM infrCodeGroup
 		WHERE ifcgName IS
 		NOT NULL AND ifcgName != '';

@@ -20,10 +20,57 @@ public class UserVo {
 	private String userTel;
 
 	private String rtUser;
-	// ---------------------------------
 
+	private String shUseNy;
+	private String shDelNy;
+	private String shOptionDate;
+	private String shOption;
+	private Integer rowNumToShow;
+
+	// ---------------------------------
+	
 	public String getUsrSeq() {
 		return userSeq;
+	}
+
+	public Integer getRowNumToShow() {
+		return rowNumToShow;
+	}
+
+	public void setRowNumToShow(Integer rowNumToShow) {
+		this.rowNumToShow = rowNumToShow;
+	}
+
+	public String getShOption() {
+		return shOption;
+	}
+
+	public void setShOption(String shOption) {
+		this.shOption = shOption;
+	}
+
+	public String getShOptionDate() {
+		return shOptionDate;
+	}
+
+	public void setShOptionDate(String shOptionDate) {
+		this.shOptionDate = shOptionDate;
+	}
+
+	public String getShDelNy() {
+		return shDelNy;
+	}
+
+	public void setShDelNy(String shDelNy) {
+		this.shDelNy = shDelNy;
+	}
+
+	public String getShUseNy() {
+		return shUseNy;
+	}
+
+	public void setShUseNy(String shUseNy) {
+		this.shUseNy = shUseNy;
 	}
 
 	public String getUserSeq() {

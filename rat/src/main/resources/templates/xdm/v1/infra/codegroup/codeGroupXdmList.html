@@ -357,7 +357,8 @@
 				action="/xdm/v1/infra/codegroup/codeGroupXdmList" autocomplete="off">
 				<input type="hidden" name="thisPage" th:value="${vo.thisPage}"
 					default="1" /> <input type="hidden" id="rowNumToShow"
-					name="rowNumToShow" th:value="${vo.rowNumToShow}" />
+					name="rowNumToShow" th:value="${vo.rowNumToShow}"
+					enctype="multipart/form-data" />
 				<!-- Content wrapper scroll start -->
 				<div class="content-wrapper">
 					<div class="content-wrapper-scroll">
@@ -403,7 +404,7 @@
 							<br>
 							<div>
 								<select id="shOption" name="shOption" class="form-select"
-									aria-label="Default select example">s
+									aria-label="Default select example">
 									<option value="" th:selected="${vo.shOption == null}" hidden>검색구분</option>
 									<option value="1" th:selected="${vo.shOption == 1}">일련번호</option>
 									<option value="2" th:selected="${vo.shOption == 2}">코드그룹
@@ -490,44 +491,41 @@
 															<p>There are no data!</p>
 														</td>
 													</tr>
-													<tr th:if="${!#lists.isEmpty(list)}"
-														th:each="list : ${list}">
-														<td>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox"
-																	id="flexCheckChecked" checked>
-															</div>
-														</td>
-														<!-- # = 순번처리  -->
-														<!--<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td> -->
-														<td th:text="${list.ifcgSeq}"></td>
-														<td class="ifcgSeq align-middle fw-semi-bold"><a
-															th:href="@{/xdm/v1/infra/codegroup/codeGroupXdmMfom(ifcgSeq=${list.ifcgSeq})}"
-															th:text="${list?.ifcgName}"></a></td>
-
-														<td th:text="${list.ifcdSeq}"></td>
-														<td
-															th:text="${list.ifcdSeq == list.ifcgSeq ? list.ifcdName : ''}"></td>
-
-														<td th:text="${list.xifcgSeqCount}"></td>
-														<td th:text="${list?.ifcgOrder}"></td>
-														<td th:if="${list.ifcgUseNy eq 0}"
-															class="ifcgUseNy align-middle">N</td>
-														<td th:unless="${list.ifcgUseNy eq 0}"
-															class="ifcgUseNy align-middle">Y</td>
-														<td th:if="${list.ifcgDelNy eq 0}"
-															class="ifcgDelNy align-middle">N</td>
-														<td th:unless="${list.ifcgDelNy eq 0}"
-															class="ifcgDelNy align-middle">Y</td>
-														<td
-															th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-															class="regDateTime align-middle"></td>
-														<td
-															th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}"
-															class="modDateTime align-middle"></td>
-													</tr>
-												</tbody>
-											</table>
+<!-- 													<tr th:if="${!#lists.isEmpty(list)}" -->
+<!-- 														<td> -->
+<!-- 															<div class="form-check"> -->
+<!-- 																<input class="form-check-input" type="checkbox" -->
+<!-- 																	id="flexCheckChecked" checked> -->
+<!-- 															</div> -->
+<!-- 														</td> -->
+<!-- 														# = 순번처리  -->
+<!-- 														<td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}" class="align-middle"></td> -->
+<!-- <!-- 														<td th:text="${list.ifcgSeq}"></td> --> -->
+<!-- 														<td class="ifcgSeq align-middle fw-semi-bold"><a -->
+<!-- 															th:href="@{/xdm/v1/infra/codegroup/codeGroupXdmMfom(ifcgSeq=${list.ifcgSeq})}" -->
+<!-- 															th:text="${list?.ifcgName}"></a></td> -->
+<!-- 														<td th:text="${list.ifcdSeq}"></td> -->
+<!-- 														<td -->
+<!-- 															th:text="${list.ifcdSeq == list.ifcgSeq ? list.ifcdName : ''}"></td> -->
+<!-- 														<td th:text="${list.xifcgSeqCount}"></td> -->
+<!-- 														<td th:text="${list?.ifcgOrder}"></td> -->
+<!-- 														<td th:if="${list.ifcgUseNy eq 0}" -->
+<!-- 															class="ifcgUseNy align-middle">N</td> -->
+<!-- 														<td th:unless="${list.ifcgUseNy eq 0}" -->
+<!-- 															class="ifcgUseNy align-middle">Y</td> -->
+<!-- 														<td th:if="${list.ifcgDelNy eq 0}" -->
+<!-- 															class="ifcgDelNy align-middle">N</td> -->
+<!-- 														<td th:unless="${list.ifcgDelNy eq 0}" -->
+<!-- 															class="ifcgDelNy align-middle">Y</td> -->
+<!-- 														<td -->
+<!-- 															th:text="${#dates.format(list.regDateTime, 'yyyy-MM-dd HH:mm:ss')}" -->
+<!-- 															class="regDateTime align-middle"></td> -->
+<!-- 														<td -->
+<!-- 															th:text="${#dates.format(list.modDateTime, 'yyyy-MM-dd HH:mm:ss')}" -->
+<!-- 															class="modDateTime align-middle"></td> -->
+<!-- 													</tr> -->
+<!-- 												</tbody> -->
+<!-- 											</table> -->
 
 											<!-- pagination -->
 											<div class="container-fluid px-0 mt-2 mb-2">
@@ -585,6 +583,15 @@
 														</div>
 													</div>
 												</div>
+
+												<!-- AWS -->
+												<div class="col-md-12">
+													<label for="uploadFiles" class="form-label fs--1">file</label>
+													<input type="file" id="uploadFiles" name="uploadFiles"
+														multiple class="form-control" />
+													<div class="invalid-feedback" id="uploadFilesFeedback"></div>
+												</div>
+
 												<button type="button" class="btn btn-input1"
 													data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 													<div class="icon1">
@@ -635,6 +642,7 @@
 					</div>
 				</div>
 		</div>
+
 		</form>
 		<!-- Content wrapper scroll end -->
 

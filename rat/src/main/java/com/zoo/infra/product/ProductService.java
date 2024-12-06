@@ -7,22 +7,33 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
-	// 로직 알고리즘 영역 = service
 	@Autowired
-	public ProductDao productDao;
+	ProductDao productDao;
 
 	public List<ProductDto> selectList(ProductVo productVo) {
 		return productDao.selectList(productVo);
 	}
-
-	public int insert(ProductDto productDto) {
-		return productDao.insert(productDto);
-	}
-
 	public ProductDto selectOne(ProductDto productDto) {
 		return productDao.selectOne(productDto);
 	}
-//  함수 선언은 (데이터 타입, 데이터) 사용은 (하나만) : 이게 제일큰 차이점.
+	
+//	public int selectOneCount(ProductVo productVo) {
+//		return productDao.selectOneCount(productVo);
+//	}
+
+	//Review
+	public List<ProductDto> selectListReview(ProductDto productDto) {
+		return productDao.selectListReview(productDto);
+	}
+
+	public Integer selectListReviewCount(ProductDto productDto) {
+		return productDao.selectListReviewCount(productDto);
+	}
+
+	// CRUD
+	public int insert(ProductDto productDto) {
+		return productDao.insert(productDto);
+	}
 
 	public int update(ProductDto productDto) {
 		return productDao.update(productDto);
@@ -35,5 +46,4 @@ public class ProductService {
 	public int uelete(ProductDto productDto) {
 		return productDao.uelete(productDto);
 	}
-
 }

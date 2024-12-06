@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.zoo.infra.codegroup.CodeGroupDto;
-
 public class CodeDto {
 
+	//Seq : java = string, db = int
 	private String ifcdSeq;
 	private String ifcdName;
 	private Integer ifcdUseNy;
@@ -18,11 +15,9 @@ public class CodeDto {
 	private Integer ifcdDelNy;
 	private Date regDateTime;
 	private Date modDateTime;
-	private Integer infrcodegroup_ifcgSeq;
+	private String infrcodegroup_ifcgSeq;
 
-	// 포맷된 날짜 문자열 (등록 일시)
 	private String formattedRegDateTime;
-	// 포맷된 날짜 문자열 (수정 일시)
 	private String formattedModDateTime;
 
 	// count
@@ -40,15 +35,18 @@ public class CodeDto {
 
 	// for cache
 	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
-
-	// ----------------------
-
-	public static List<CodeDto> getCachedCodeArrayList() {
-		return cachedCodeArrayList;
-	}
-
+	// -------------------------------------------
+	
 	public String getIfcdSeq() {
 		return ifcdSeq;
+	}
+
+	public String getInfrcodegroup_ifcgSeq() {
+		return infrcodegroup_ifcgSeq;
+	}
+
+	public void setInfrcodegroup_ifcgSeq(String infrcodegroup_ifcgSeq) {
+		this.infrcodegroup_ifcgSeq = infrcodegroup_ifcgSeq;
 	}
 
 	public void setIfcdSeq(String ifcdSeq) {
@@ -109,14 +107,6 @@ public class CodeDto {
 
 	public void setModDateTime(Date modDateTime) {
 		this.modDateTime = modDateTime;
-	}
-
-	public Integer getInfrcodegroup_ifcgSeq() {
-		return infrcodegroup_ifcgSeq;
-	}
-
-	public void setInfrcodegroup_ifcgSeq(Integer infrcodegroup_ifcgSeq) {
-		this.infrcodegroup_ifcgSeq = infrcodegroup_ifcgSeq;
 	}
 
 	public String getFormattedRegDateTime() {
@@ -191,8 +181,13 @@ public class CodeDto {
 		this.shValue = shValue;
 	}
 
+	public static List<CodeDto> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+
 	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
 		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
 	}
 
+	
 }

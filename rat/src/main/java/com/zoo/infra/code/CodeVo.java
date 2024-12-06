@@ -4,7 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class CodeVo {
 
-	private Integer ifcdSeq;
+	private String ifcdSeq;
 	private String ifcdName;
 	private Integer ifcdUseNy;
 	private Integer ifcdOrder;
@@ -91,12 +91,16 @@ public class CodeVo {
 
 //	------------------------------------------------------------
 
-	public Integer getIfcdSeq() {
+	public String getRegDateTime() {
+		return regDateTime;
+	}
+
+	public String getIfcdSeq() {
 		return ifcdSeq;
 	}
 
-	public String getRegDateTime() {
-		return regDateTime;
+	public void setIfcdSeq(String ifcdSeq) {
+		this.ifcdSeq = ifcdSeq;
 	}
 
 	public void setRegDateTime(String regDateTime) {
@@ -109,10 +113,6 @@ public class CodeVo {
 
 	public void setModDateTime(String modDateTime) {
 		this.modDateTime = modDateTime;
-	}
-
-	public void setIfcdSeq(Integer ifcdSeq) {
-		this.ifcdSeq = ifcdSeq;
 	}
 
 	public String getIfcdName() {

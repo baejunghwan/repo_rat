@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.zoo.infra.codegroup.CodeGroupDto;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class MemberDto {
 
@@ -14,9 +14,10 @@ public class MemberDto {
 	private Integer memberOrder;
 	private String memberDesc;
 	private Integer memberDelNy;
+	private Integer memberGender;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regDateTime;
 	private Date modDateTime;
-	private Integer memberGender;
 
 	// 포맷된 날짜 문자열 (등록 일시)
 	private String formattedRegDateTime;
@@ -28,11 +29,10 @@ public class MemberDto {
 	private String memberPw;
 	private String memberEmail;
 	private String memberTel;
+	private String memberAddress;
+	private Integer memberType;
 
 	private String rtMember;
-
-	// gender
-	private String gender;
 
 	// count
 	private Integer memberSeqCount;
@@ -40,33 +40,8 @@ public class MemberDto {
 	// for cache
 	public static List<MemberDto> cachedCodeArrayList = new ArrayList<MemberDto>();
 	// ----------------------------
-
 	public Integer getMemberSeq() {
 		return memberSeq;
-	}
-
-	public String getFormattedRegDateTime() {
-		return formattedRegDateTime;
-	}
-
-	public void setFormattedRegDateTime(String formattedRegDateTime) {
-		this.formattedRegDateTime = formattedRegDateTime;
-	}
-
-	public String getFormattedModDateTime() {
-		return formattedModDateTime;
-	}
-
-	public void setFormattedModDateTime(String formattedModDateTime) {
-		this.formattedModDateTime = formattedModDateTime;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public void setMemberSeq(Integer memberSeq) {
@@ -113,6 +88,14 @@ public class MemberDto {
 		this.memberDelNy = memberDelNy;
 	}
 
+	public Integer getMemberGender() {
+		return memberGender;
+	}
+
+	public void setMemberGender(Integer memberGender) {
+		this.memberGender = memberGender;
+	}
+
 	public Date getRegDateTime() {
 		return regDateTime;
 	}
@@ -129,12 +112,20 @@ public class MemberDto {
 		this.modDateTime = modDateTime;
 	}
 
-	public Integer getMemberGender() {
-		return memberGender;
+	public String getFormattedRegDateTime() {
+		return formattedRegDateTime;
 	}
 
-	public void setMemberGender(Integer memberGender) {
-		this.memberGender = memberGender;
+	public void setFormattedRegDateTime(String formattedRegDateTime) {
+		this.formattedRegDateTime = formattedRegDateTime;
+	}
+
+	public String getFormattedModDateTime() {
+		return formattedModDateTime;
+	}
+
+	public void setFormattedModDateTime(String formattedModDateTime) {
+		this.formattedModDateTime = formattedModDateTime;
 	}
 
 	public String getMemberId() {
@@ -167,6 +158,22 @@ public class MemberDto {
 
 	public void setMemberTel(String memberTel) {
 		this.memberTel = memberTel;
+	}
+
+	public String getMemberAddress() {
+		return memberAddress;
+	}
+
+	public void setMemberAddress(String memberAddress) {
+		this.memberAddress = memberAddress;
+	}
+
+	public Integer getMemberType() {
+		return memberType;
+	}
+
+	public void setMemberType(Integer memberType) {
+		this.memberType = memberType;
 	}
 
 	public String getRtMember() {

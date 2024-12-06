@@ -5,120 +5,130 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zoo.infra.mail.MailService;
+
 import jakarta.servlet.http.HttpSession;
 
-// 회원 관련 요청을 처리하는 컨트롤러
 @Controller
 public class MemberController {
 
 	@Autowired
-	MemberService memberService; // MemberService를 자동 주입
+	MemberService memberService;
 
-	// 회원 목록 페이지 요청
+	@Autowired
+	MailService mailService;
+
+	// Spring Hash (Controller)
+	public String encodeBcrypt(String planeText, int strength) {
+		return new BCryptPasswordEncoder(strength).encode(planeText);
+	}
+
+	public boolean matchesBcrypt(String planeText, String hashValue, int strength) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(strength);
+		return passwordEncoder.matches(planeText, hashValue);
+	}
+
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmList")
 	public String memberXdmList(@ModelAttribute("vo") MemberVo vo, Model model) throws Exception {
-		List<MemberDto> memberSeq = memberService.selectList(vo); // 회원 목록 조회
+		List<MemberDto> memberSeq = memberService.selectList(vo);
 		for (MemberDto memberDto : memberSeq) {
-			System.out.println("MemberDto memberDto : " + memberDto.getModDateTime()); // 수정 시간 출력
+			System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); 
 		}
 
-		model.addAttribute("list", memberService.selectList(vo)); // 모델에 회원 목록 추가
-		vo.setParamsPaging(memberService.selectOneCount(vo)); // 페이징 정보 설정
+		model.addAttribute("list", memberService.selectList(vo));
+		vo.setParamsPaging(memberService.selectOneCount(vo));
 
-		return "/xdm/v1/infra/member/memberXdmList"; // 회원 목록 페이지 반환
+		return "xdm/v1/infra/member/memberXdmList";
 	}
 
-	// 회원 등록 폼 요청
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmForm")
 	public String memberXdmForm() {
-		return "/xdm/v1/infra/member/memberXdmForm"; // 회원 등록 폼 페이지 반환
+		return "xdm/v1/infra/member/memberXdmForm";
 	}
 
-	// 회원 등록 처리
-	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmInst")
-	public String memberXdmInst(MemberDto memberDto) {
-		System.out.println("memberDto.getMemberName(): " + memberDto.getMemberName()); // 회원 이름 출력
-		int a = memberService.insert(memberDto); // 회원 정보 등록
-		System.out.println("memberService.insert(memberDto): " + a); // 등록 결과 출력
-		return "redirect:/xdm/v1/infra/member/memberXdmList"; // 회원 목록 페이지로 리다이렉트
-	}
-
-	// 회원 상세 정보 요청
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmMfom")
 	public String memberXdmMfom(MemberDto memberDto, Model model) {
-		model.addAttribute("item", memberService.selectOne(memberDto)); // 회원 상세 정보 조회
+		model.addAttribute("item", memberService.selectOne(memberDto)); 
 		System.out.println("memberMfom Gender : " + memberService.selectOne(memberDto).getMemberGender()); // 성별 출력
-		return "/xdm/v1/infra/member/memberXdmMfom"; // 상세 정보 페이지 반환
+		return "xdm/v1/infra/member/memberXdmMfom"; 
 	}
 
-	// 회원 정보 업데이트 처리
+	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmInst")
+	public String memberXdmInst(MemberDto memberDto) {
+
+		System.out.println("memberDto.getMemberName(): " + memberDto.getMemberName()); 
+		int a = memberService.insert(memberDto); 
+		System.out.println("memberService.insert(memberDto): " + a); 
+		return "redirect:/xdm/v1/infra/member/memberXdmList"; 
+	}
+
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmUpdate")
 	public String memberXdmUpdate(MemberDto memberDto) {
-		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); // 회원 시퀀스 출력
-		int b = memberService.update(memberDto); // 회원 정보 업데이트
-		System.out.println("memberService.update(memberDto): " + b); // 업데이트 결과 출력
-		return "redirect:/xdm/v1/infra/member/memberXdmList"; // 회원 목록 페이지로 리다이렉트
+		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); 
+		int b = memberService.update(memberDto); 
+		System.out.println("memberService.update(memberDto): " + b); 
+		return "redirect:/xdm/v1/infra/member/memberXdmList"; 
 	}
 
-	// 회원 삭제 처리
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmDelete")
 	public String memberXdmDelete(MemberDto memberDto) {
-		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); // 회원 시퀀스 출력
-		int c = memberService.delete(memberDto); // 회원 삭제
-		System.out.println("memberService.delete(memberDto): " + c); // 삭제 결과 출력
-		return "redirect:/xdm/v1/infra/member/memberXdmList"; // 회원 목록 페이지로 리다이렉트
+		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); 
+		int c = memberService.delete(memberDto); 
+		System.out.println("memberService.delete(memberDto): " + c); 
+		return "redirect:/xdm/v1/infra/member/memberXdmList"; 
 	}
 
-	// 회원 비활성화 처리
 	@RequestMapping(value = "/xdm/v1/infra/member/memberXdmUelete")
 	public String memberXdmUelete(MemberDto memberDto) {
-		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); // 회원 시퀀스 출력
-		int d = memberService.uelete(memberDto); // 회원 비활성화
-		System.out.println("memberService.uelete(memberDto): " + d); // 비활성화 결과 출력
-		return "redirect:/xdm/v1/infra/member/memberXdmList"; // 회원 목록 페이지로 리다이렉트
+		System.out.println("memberDto.getMemberSeq(): " + memberDto.getMemberSeq()); 
+		int d = memberService.uelete(memberDto); 
+		System.out.println("memberService.uelete(memberDto): " + d); 
+		return "redirect:/xdm/v1/infra/member/memberXdmList"; 
 	}
 
-	// 로그인 폼 요청
 	@RequestMapping(value = "/xdm/v1/infra/member/membersigninXdmForm")
 	public String membersigninXdmForm() {
-		return "/xdm/v1/infra/member/membersigninXdmForm"; // 로그인 폼 페이지 반환
+		return "xdm/v1/infra/member/membersigninXdmForm"; 
 	}
 
 	// AJAX 로그인 처리
 	@ResponseBody // 이 메서드의 반환값이 HTTP 응답 본문으로 직접 사용됨을 나타냄
-	@RequestMapping(value = "/xdm/v1/infra/member/membersigninProc") // 이 URL로 요청이 들어오면 해당 메서드 호출
+	@RequestMapping(value = "/xdm/v1/infra/member/membersigninProc") 
 	public Map<String, Object> membersigninProc(MemberDto memberdto, HttpSession httpSession) throws Exception {
-		Map<String, Object> returnMap = new HashMap<String, Object>(); // 결과를 담을 맵 생성
+		Map<String, Object> returnMap = new HashMap<String, Object>(); 
 
-		// 로그인 요청 로그 추가
 		System.out.println("로그인 요청 - ID: " + memberdto.getMemberId() + ", PW: " + memberdto.getMemberPw());
 
-		// 로그인 정보를 조회하여 MemberDto 객체로 반환
-		MemberDto rtMember = memberService.selectOneLogin(memberdto); // 로그인 정보 조회
+		MemberDto rtMember = memberService.selectOneLogin(memberdto); 
 		System.out.println("로그인 정보 조회 결과: " + rtMember);
 
-		if (rtMember != null) { // 로그인 성공 시
-			System.out.println("rtMember ID: " + rtMember.getMemberId()); // 로그인 성공 메시지 출력
+		// 로그인 성공 시
+		if (rtMember != null) {
+			System.out.println("rtMember ID: " + rtMember.getMemberId()); 
 			httpSession.setMaxInactiveInterval(60 * 30); // 세션 만료 시간 설정 (60초 * 30분)
-			httpSession.setAttribute("sessSeqXdm", rtMember.getMemberSeq()); // 세션에 회원 시퀀스 저장
+			httpSession.setAttribute("sessSeqXdm", rtMember.getMemberSeq()); 
 			httpSession.setAttribute("sessIdXdm", rtMember.getMemberId()); // 세션에 회원 ID 저장
-			httpSession.setAttribute("sessNameXdm", rtMember.getMemberName()); // 세션에 회원 이름 저장
+			httpSession.setAttribute("sessNameXdm", rtMember.getMemberName()); 
 
-			System.out.println("세션에 저장할 ID: " + rtMember.getMemberId());
+			// Spring Hash (로그인시)
+			if (matchesBcrypt(memberdto.getMemberPw(), rtMember.getMemberPw(), 10))
+
+				System.out.println("세션에 저장할 ID: " + rtMember.getMemberId());
 			System.out.println("세션의 sessIdXdm: " + httpSession.getAttribute("sessIdXdm")); // 세션에 저장된 ID 출력
 
-			returnMap.put("rt", "success"); // 결과 맵에 "success" 추가
-		} else { // 로그인 실패 시
-			System.out.println("로그인 실패: " + memberdto.getMemberId()); // 실패 메시지 및 입력한 ID 출력
-			returnMap.put("rt", "fail"); // 결과 맵에 "fail" 추가
+			returnMap.put("rt", "success"); 
+		} else { 
+			System.out.println("로그인 실패: " + memberdto.getMemberId()); 
+			returnMap.put("rt", "fail"); 
 		}
-		return returnMap; // 결과 맵 반환
+		return returnMap; 
 	}
 	// ------------------------------------------------
 //	*slack구문
@@ -175,28 +185,32 @@ public class MemberController {
 
 	// ------------------------------------------------
 	// 로그아웃 처리 : 세션 무효화 (역할)
-	@ResponseBody
+	@ResponseBody // HTTP 응답 본문을 JSON 형식으로 반환함을 나타냄
 	@RequestMapping(value = "/xdm/v1/infra/member/membersignoutXdmProc")
 	public Map<String, Object> membersignoutXdmProc(HttpSession httpSession) throws Exception {
-		Map<String, Object> returnMap = new HashMap<>(); // 결과를 담을 맵
-		httpSession.invalidate(); // 세션 무효화
-		System.out.println("Member Session 무효화 성공"); // 콘솔에 로그 출력
-		returnMap.put("rt", "success"); // 결과에 성공 추가
-		returnMap.put("redirectUrl", "/xdm/v1/infra/member/membersigninXdmForm");
-		return returnMap; // 결과 반환
+		Map<String, Object> returnMap = new HashMap<>();
+		httpSession.invalidate(); 
+		System.out.println("Member Session 무효화 성공");
+		returnMap.put("rt", "success"); 
+		returnMap.put("redirectUrl", "xdm/v1/infra/member/membersigninXdmForm");
+		return returnMap; 
 	}
 
-	// 회원가입 요청
 	@RequestMapping(value = "/xdm/v1/infra/member/membersignupXdmForm")
 	public String membersignupXdmForm() {
-		return "/xdm/v1/infra/member/membersignupXdmForm"; // 회원가입 페이지 반환
+		return "xdm/v1/infra/member/membersignupXdmForm";
 	}
 
-	// USR 경로
-	// index 요청
+	@RequestMapping(value = "/xdm/v1/infra/member/membersignupXdmProc")
+	public String membersignupXdmProc(MemberDto memberDto, HttpSession httpSession) {
+
+		// spring Hash (회원가입시)
+		memberDto.setMemberPw(encodeBcrypt(memberDto.getMemberPw(), 10));
+		return "xdm/v1/infra/member/membersignupXdmProc";
+	}
+
 	@RequestMapping(value = "/xdm/v1/infra/member/memberIndex")
 	public String memberIndex() {
-		return "/xdm/v1/infra/member/memberIndex"; // 회원가입 페이지 반환
+		return "xdm/v1/infra/member/memberIndex";
 	}
-
 }

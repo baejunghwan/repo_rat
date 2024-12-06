@@ -1,5 +1,10 @@
 package com.zoo.infra.code;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zoo.infra.codegroup.CodeGroupDto;
 import com.zoo.infra.codegroup.CodeGroupService;
 
@@ -27,7 +34,7 @@ public class CodeController {
 
 		List<CodeGroupDto> codeGroups = codeGroupService.getAllCodeGroups(); // 코드 그룹 가져오기
 		model.addAttribute("codeGroups", codeGroups); // 코드 그룹을 모델에 추가
-		return "/xdm/v1/infra/code/codeXdmForm";
+		return "xdm/v1/infra/code/codeXdmForm";
 	}
 
 	@RequestMapping(value = "/xdm/v1/infra/code/codeXdmInst")
@@ -36,7 +43,7 @@ public class CodeController {
 //		System.out.println("codeDto.getIfcdName(): " + codeDto.getIfcdName());
 
 		int a = codeService.insert(codeDto);
-//		System.out.println("codeService.insert(codeDto): " + a);
+		System.out.println("codeService.insert(codeDto): " + a);
 
 		return "redirect:/xdm/v1/infra/code/codeXdmList";
 		// return값이 아니라 주소를 써넣어야 한다.
@@ -49,7 +56,7 @@ public class CodeController {
 	@RequestMapping(value = "/xdm/v1/infra/code/codeXdmMfom")
 	public String codeXdmMfom(CodeDto codeDto, Model model) {
 		model.addAttribute("item", codeService.selectOne(codeDto));
-		return "/xdm/v1/infra/code/codeXdmMfom";
+		return "xdm/v1/infra/code/codeXdmMfom";
 	}
 
 ////	#내가 임의로 Update 작성한 부분 
@@ -155,7 +162,44 @@ public class CodeController {
 		System.out.println("startPage: " + codeVo.getStartPage());
 		System.out.println("endPage: " + codeVo.getEndPage());
 
-		return "/xdm/v1/infra/code/codeXdmList";
+		
+		//공공데이터 API
+	    StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/CovidDagnsRgntProdExprtStusService/getCovidDagnsRgntProdExprtStusInq"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=7%2FqfkBurY8fWkrCwDHilm5Pi8IkL4BXdxifBaclLvJ2ZKmEku5y6JasjAA0WtJAPAydvDlhc%2FwJdRXjKs0xLUw%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*응답데이터 형식(xml/json) default : xml*/
+        urlBuilder.append("&" + URLEncoder.encode("YYYY","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*년도*/
+        urlBuilder.append("&" + URLEncoder.encode("MM","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*실적월*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        System.out.println(sb.toString());
+        
+        //Slack구문 추가 (Json형식의 데이터를 뽑아내는 코드)
+    	ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode node = objectMapper.readTree(sb.toString());
+		
+		System.out.println("node.get(\"header\").get(\"resultCode\").asText(): " + node.get("header").get("resultCode").asText());
+		System.out.println("node.get(\"header\").get(\"resultMsg\").asText(): " + node.get("header").get("resultMsg").asText());
+		System.out.println("node.get(\"header\").get(\"resultMsg\").asText(): " + node.get("body").get("items").get(0).get("KIT_PROD_QTY").asText());
+        
+		return "xdm/v1/infra/code/codeXdmList";
 	}
 
 }

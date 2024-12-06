@@ -5432,7 +5432,7 @@ footer .widget_title {
 .product_size_switch span {
 	cursor: pointer;
 	text-transform: uppercase;
-	width: 32px;
+	width: 50px;
 	display: inline-block;
 	border: 2px solid #ddd;
 	text-align: center;

@@ -511,8 +511,12 @@
 														<td th:text="${list.memberSeq}"></td>
 														<td th:text="${list.memberName}"></td>
 
-														<td><span th:if="${list.memberGender == 1}">남성</span>
-															<span th:if="${list.memberGender == 21}">여성</span> <span</td>
+														<td>
+														<span th:text="${@codeService.selectOneCachedCode(list?.memberGender)}"></span>
+<!-- 														<span th:text="${@codeService.selectOneCachedCode(list?.memberGender)}"></span> -->
+<!-- 															<span th:text="${list?.memberGender}"></span> -->
+<!-- 															<span th:if="${list.memberGender == 3}">기타</span> -->
+														</td>
 
 														<td th:if="${list.memberUseNy eq 0}"
 															class="memberUseNy align-middle">N</td>

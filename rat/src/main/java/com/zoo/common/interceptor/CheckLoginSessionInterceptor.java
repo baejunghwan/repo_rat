@@ -2,8 +2,6 @@ package com.zoo.common.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.zoo.common.constants.Constants;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,12 +14,12 @@ public class CheckLoginSessionInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-//		System.out.println("현재 세션 ID: " + request.getSession().getId());
-		System.out.println("세션의 sessIdXdm: " + request.getSession().getAttribute("sessIdXdm"));
 
 //		 세션에서 로그인 여부 확인
 //		if (request.getSession().getAttribute("sessIdXdm") != null) {
 //			// 로그인된 상태일 경우, 요청을 계속 처리
+//			System.out.println("현재 세션 ID: " + request.getSession().getId());
+//			System.out.println("세션의 sessIdXdm: " + request.getSession().getAttribute("sessIdXdm"));
 //			System.out.println("세션 로그인o : 요청 계속 처리");
 //		} else {
 //			// 로그인되지 않은 상태일 경우, 상수에 정의된 로그인 페이지로 리다이렉트
